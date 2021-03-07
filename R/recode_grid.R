@@ -1,13 +1,13 @@
-#'Recodifica id asignados a provincias o departamentos de Argentina
-#'   (\emph{Recode Argentina's districs id})
+#'Recodifica id de grillas asignados a  provincias o departamentos de Argentina
+#'   (\emph{Recode Argentina's districs id in grids})
 #'@description
 #'
-#'Función que permite recodificar etiquetas para utilización de grillas de Argentina y de departamentos para los 24 distritos
-#'  subnacionales. Ello permite hacer mas sencilla la vinculación con bases de datos de diversas fuentes.
+#'Función que permite re codificar etiquetas para utilización de grillas de Argentina y de departamentos para los 24 distritos
+#'  sub nacionales. Ello permite hacer mas sencilla la vinculación con bases de datos de diversas fuentes.
 #'
 #'@return Los valores por defecto en \code{\link{get_grid}} son \code{codprov} para provincia y \code{coddepto} para departamentos, respectivamente.
 #' Estos corresponden a la codificación de los escrutinios provisorios de elecciones nacionales y se etiquetaron como \code{'indra'} .
-#' Se puede optar por la nomenclautra de \code{'indec'}, con la familia \code{\*_censo}, para ambos niveles, o la de \code{'iso'} con \code{\*_iso} ,
+#' Se puede optar por la nomenclatura de \code{'indec'}, con la familia \code{\*_censo}, para ambos niveles, o la de \code{'iso'} con \code{\*_iso} ,
 #' para el nivel provincial.
 #'
 #'@details Respecto el origen de los datos se puede consultar la documentación de

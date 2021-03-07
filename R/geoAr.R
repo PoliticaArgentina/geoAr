@@ -28,7 +28,9 @@ if(getRversion() >= "2.15.1")
                            "name_iso",
                            "name_prov",
                            "name_provincia",
-                           "nomdepto_censo"))
+                           "nomdepto_censo",
+                           "geometry",
+                           "provincia"))
 
 
 
