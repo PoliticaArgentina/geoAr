@@ -10,10 +10,12 @@
 #'
 #'@param geo un character con el nombre del district que se quiere descargar. Se pueden chequear el id con \code{\link{show_arg_codes}}.
 #'@param level parametro opcional para descargar geometrías a nivel 'departamento' cuando se solicita mapa nacional \code{get_geo(geo = "ARGNTINA", level = "departamento")}.
+#'@param simplified por defecto es TRUE y determina la descarga de una versión simplificada de las geometrias. Con FALSE descarga la versión original de INDEC
 #'@export
 
 get_geo <- function(geo = NULL,
-                    level = "departamento") {
+                    level = "departamento",
+                    simplified = TRUE) {
 
   ## Check for internet conection
   attempt::stop_if_not(.x = curl::has_internet(),
@@ -43,8 +45,15 @@ No se detecto acceso a internet. Por favor chequear la conexion.")
 
     if(level == "departamento"){
 
+      if(simplified == TRUE){
 
-      url <-  "https://github.com/electorArg/PolAr_Data/raw/master/geo/departamentos.geojson"
+        url <-  "https://github.com/electorArg/PolAr_Data/raw/master/geo/localidades_simplified.geojson"
+
+      } else {
+
+        url <-  "https://github.com/electorArg/PolAr_Data/raw/master/geo/localidades.geojson"
+
+      }
 
       check <- httr::GET(url)
 
@@ -52,13 +61,21 @@ No se detecto acceso a internet. Por favor chequear la conexion.")
                             task = "Fail to download data. Source is not available // La fuente de datos no esta disponible")
 
 
-      sf::read_sf(url) %>%
-        dplyr::rename(coddepto = coddept) %>%
-        dplyr::select(-depto)
+      sf::read_sf(url)
 
     } else {
 
-      url <- "https://github.com/electorArg/PolAr_Data/raw/master/geo/provincias.geojson"
+      if(simplified == TRUE){
+
+      url <- "https://github.com/electorArg/PolAr_Data/raw/master/geo/provincias_simplified.geojson"
+
+
+      } else {
+
+
+        url <- "https://github.com/electorArg/PolAr_Data/raw/master/geo/provincias.geojson"
+
+      }
 
       ## FAIL SAFELEY
 
@@ -76,7 +93,30 @@ No se detecto acceso a internet. Por favor chequear la conexion.")
   } else {
 
 
-    url <-  "https://github.com/electorArg/PolAr_Data/raw/master/geo/departamentos.geojson"
+    if(simplified == TRUE){
+
+      url <-  "https://github.com/electorArg/PolAr_Data/raw/master/geo/localidades_simplified.geojson"
+
+
+      check <- httr::GET(url)
+
+      httr::stop_for_status(x = check,
+                            task = "Fail to download geo data. Source is not available // La fuente de datos geograficos no esta disponible")
+
+
+      temp <- geoAr::show_arg_codes(viewer = FALSE) %>%
+        dplyr::filter(id == geo) %>%
+        dplyr::pull(codprov_censo)
+
+      sf::read_sf(url) %>%
+        dplyr::filter(codprov_censo %in% temp)
+
+
+
+    } else {
+
+      url <-  "https://github.com/electorArg/PolAr_Data/raw/master/geo/localidades.geojson"
+
 
     check <- httr::GET(url)
 
@@ -86,12 +126,12 @@ No se detecto acceso a internet. Por favor chequear la conexion.")
 
     temp <- geoAr::show_arg_codes(viewer = FALSE) %>%
       dplyr::filter(id == geo) %>%
-      dplyr::pull(codprov)
+      dplyr::pull(codprov_censo)
 
     sf::read_sf(url) %>%
-      dplyr::rename(coddepto = coddept) %>%
-      dplyr::select(-depto) %>%
-      dplyr::filter(codprov %in% temp)
+      dplyr::filter(codprov_censo %in% temp)
+
+   }
 
   }
 

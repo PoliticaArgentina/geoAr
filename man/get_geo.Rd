@@ -5,12 +5,14 @@
 \title{Carga poligonos geográficos de distritos de Argentina
 (\emph{Load Argentina's districts geometries})}
 \usage{
-get_geo(geo = NULL, level = "departamento")
+get_geo(geo = NULL, level = "departamento", simplified = TRUE)
 }
 \arguments{
 \item{geo}{un character con el nombre del district que se quiere descargar. Se pueden chequear el id con \code{\link{show_arg_codes}}.}
 
 \item{level}{parametro opcional para descargar geometrías a nivel 'departamento' cuando se solicita mapa nacional \code{get_geo(geo = "ARGNTINA", level = "departamento")}.}
+
+\item{simplified}{por defecto es TRUE y determina la descarga de una versión simplificada de las geometrias. Con FALSE descarga la versión original de INDEC}
 }
 \description{
 Función que descarga (\emph{geometry}) para graficar con mapas
