@@ -105,9 +105,9 @@ recode_grid<- function(data,
                                                     Debe elegir una opcion entre 'indra'o 'indec'"))
 
 
-    #### hack para filtrar grilla de deprtamento que se quiere recodear
+    #### hack para filtrar grilla de departamento que se quiere recodear
 
-    # Me traigo todos los id de depto de tdas las provincias y genero un id unico
+    # Me traigo todos los id de depto de todas las provincias y genero un id unico
     full_codes <- geo_metadata %>%
       dplyr::select(coddepto, nomdepto_censo,coddepto_censo, name_prov) %>%
       dplyr::mutate(nomdepto_censo = stringr::str_to_upper(nomdepto_censo),

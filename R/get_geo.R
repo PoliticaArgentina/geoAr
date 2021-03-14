@@ -55,13 +55,14 @@ No se detecto acceso a internet. Por favor chequear la conexion.")
 
       }
 
+
       check <- httr::GET(url)
 
       httr::stop_for_status(x = check,
                             task = "Fail to download data. Source is not available // La fuente de datos no esta disponible")
 
 
-      sf::read_sf(url)
+    df <-   sf::read_sf(url)
 
     } else {
 
@@ -84,14 +85,16 @@ No se detecto acceso a internet. Por favor chequear la conexion.")
       httr::stop_for_status(x = check,
                             task = "Fail to download data. Source is not available // La fuente de datos no esta disponible")
 
-      sf::read_sf(url)
+      df <-   sf::read_sf(url)
 
       # PROVINCES MAPS
 
-    }
+      }
 
-  } else {
+    } else {
 
+      assertthat::assert_that(level  == "departamento",
+                              msg = "Provincial geography can be downloaded only at 'departamento' level" )
 
     if(simplified == TRUE){
 
@@ -108,7 +111,7 @@ No se detecto acceso a internet. Por favor chequear la conexion.")
         dplyr::filter(id == geo) %>%
         dplyr::pull(codprov_censo)
 
-      sf::read_sf(url) %>%
+      df <-   sf::read_sf(url) %>%
         dplyr::filter(codprov_censo %in% temp)
 
 
@@ -128,11 +131,13 @@ No se detecto acceso a internet. Por favor chequear la conexion.")
       dplyr::filter(id == geo) %>%
       dplyr::pull(codprov_censo)
 
-    sf::read_sf(url) %>%
+    df <- sf::read_sf(url) %>%
       dplyr::filter(codprov_censo %in% temp)
 
    }
 
   }
 
-}
+  df
+
+  }
