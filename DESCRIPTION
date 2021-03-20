@@ -1,5 +1,5 @@
 Package: geoAr
-Title: Caja de Herramientas GEO de Argentina
+Title: Argentina's Spatial Data Toolbox
 Version: 0.0.0.9000
 Authors@R: 
     person(given = "Juan Pablo",
@@ -7,7 +7,7 @@ Authors@R:
            role = c("aut", "cre", "cph"),
            email = "juanpabloruiznicolini@gmail.com",
            comment = c(ORCID = "0000-0002-3138-6343"))
-Description: What the package does (one paragraph).
+Description: Caja de Herramientas para Datos Espaciales de Argentina. El paquete facilita el acceso a datos y  herramietnas para el análisis de datos espaciales de Argentina. 
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true

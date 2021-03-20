@@ -1,5 +1,5 @@
 #' Agrega columnas con id geográficos asignados a poligonos de provincias o departamentos de Argentina
-#'   (\emph{Augment Argentina's districs polygons id})
+#'   (\emph{Augment Argentina's districts polygons id})
 #'@description
 #'
 #'Función que permite agregar columnas con ids geográficos para utilización de mapas de Argentina y de departamentos para los 24 distritos
