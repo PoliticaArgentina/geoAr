@@ -3,7 +3,7 @@
 \name{add_geo_codes}
 \alias{add_geo_codes}
 \title{Agrega columnas con id geográficos asignados a poligonos de provincias o departamentos de Argentina
-(\emph{Augment Argentina's districs polygons id})}
+(\emph{Augment Argentina's districts polygons id})}
 \usage{
 add_geo_codes(data)
 }
