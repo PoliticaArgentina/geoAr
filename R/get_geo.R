@@ -37,107 +37,73 @@ No se detecto acceso a internet. Por favor chequear la conexion.")
                                      "SAN JUAN", "SAN LUIS", "TIERRA DEL FUEGO", "TUCUMAN"),
                           msg = "no es un geo valido. Chequearlos con show_arg_codes()")
 
-  # ARG MAP
+
+
+  url <- if(level == "departamento" & simplified == TRUE){
+
+    "https://github.com/politicaargentina/data_warehouse/raw/master/geoAr/data/localidades_simplified.geojson"
+
+  } else if (level == "departamento" & simplified == FALSE){
+
+    "https://github.com/politicaargentina/data_warehouse/raw/master/geoAr/data_raw/localidades.geojson"
+
+  } else if (geo == "ARGENTINA" & level == "provincia" & simplified == TRUE){
+
+    "https://github.com/politicaargentina/data_warehouse/raw/master/geoAr/data/provincias_simplified.geojson"
+
+  } else if (geo == "ARGENTINA" & level != "provincia" & simplified == FALSE){
+
+    "https://github.com/politicaargentina/data_warehouse/raw/master/geoAr/data_raw/provincias.geojson"
+
+  }
+
+
+  # Set default value for try()
+
+  default <- NULL
+
+  df <- base::suppressWarnings(base::try(default <- sf::read_sf(url), silent = TRUE))
+
+  if(is.null(default)){
+
+    df <- base::message("Fail to download data. Source is not available // La fuente de datos no esta disponible")
+
+  } else {
+
+    df <- df
+
+  }
+
+
+  ############## ARG MAP###############
+
+
   if(geo == "ARGENTINA") {
 
     assertthat::assert_that(level %in% c("departamento", "provincia"),
                             msg = "National geography can be downloaded only at 'departamento' or 'provincia' level" )
 
-    if(level == "departamento"){
-
-      if(simplified == TRUE){
-
-        url <-  "https://github.com/electorArg/PolAr_Data/raw/master/geo/localidades_simplified.geojson"
-
-      } else {
-
-        url <-  "https://github.com/electorArg/PolAr_Data/raw/master/geo/localidades.geojson"
-
-      }
+    df
 
 
-      check <- httr::GET(url)
+  } else {
 
-      httr::stop_for_status(x = check,
-                            task = "Fail to download data. Source is not available // La fuente de datos no esta disponible")
+    ##############  PROVINCES MAPS ######################
 
-
-    df <-   sf::read_sf(url)
-
-    } else {
-
-      if(simplified == TRUE){
-
-      url <- "https://github.com/electorArg/PolAr_Data/raw/master/geo/provincias_simplified.geojson"
-
-
-      } else {
-
-
-        url <- "https://github.com/electorArg/PolAr_Data/raw/master/geo/provincias.geojson"
-
-      }
-
-      ## FAIL SAFELEY
-
-      check <- httr::GET(url)
-
-      httr::stop_for_status(x = check,
-                            task = "Fail to download data. Source is not available // La fuente de datos no esta disponible")
-
-      df <-   sf::read_sf(url)
-
-      # PROVINCES MAPS
-
-      }
-
-    } else {
-
-      assertthat::assert_that(level  == "departamento",
-                              msg = "Provincial geography can be downloaded only at 'departamento' level" )
-
-    if(simplified == TRUE){
-
-      url <-  "https://github.com/electorArg/PolAr_Data/raw/master/geo/localidades_simplified.geojson"
-
-
-      check <- httr::GET(url)
-
-      httr::stop_for_status(x = check,
-                            task = "Fail to download geo data. Source is not available // La fuente de datos geograficos no esta disponible")
-
-
-      temp <- geoAr::show_arg_codes(viewer = FALSE) %>%
-        dplyr::filter(id == geo) %>%
-        dplyr::pull(codprov_censo)
-
-      df <-   sf::read_sf(url) %>%
-        dplyr::filter(codprov_censo %in% temp)
-
-
-
-    } else {
-
-      url <-  "https://github.com/electorArg/PolAr_Data/raw/master/geo/localidades.geojson"
-
-
-    check <- httr::GET(url)
-
-    httr::stop_for_status(x = check,
-                          task = "Fail to download geo data. Source is not available // La fuente de datos geograficos no esta disponible")
+    assertthat::assert_that(level  == "departamento",
+                            msg = "Provincial geography can be downloaded only at 'departamento' level" )
 
 
     temp <- geoAr::show_arg_codes(viewer = FALSE) %>%
       dplyr::filter(id == geo) %>%
       dplyr::pull(codprov_censo)
 
-    df <- sf::read_sf(url) %>%
-      dplyr::filter(codprov_censo %in% temp)
 
-   }
+    df <-   df %>%
+      dplyr::filter(codprov_censo %in% temp)
 
   }
 
   df
 
-  }
+}

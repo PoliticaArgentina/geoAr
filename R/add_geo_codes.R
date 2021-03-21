@@ -45,9 +45,36 @@ add_geo_codes <- function(data){
                           msg = glue::glue("{data} debe ser un 'data.frame' obtenido con la funcion get_geo()"))
 
 
+
+
+  level <-  base::names(data)
+
+
+  if("coddepto_censo" %in% level){
+
+
   data %>%
     dplyr::left_join(geo_metadata, by = c("codprov_censo", "coddepto_censo")) %>%
     dplyr::relocate(geometry, .after = dplyr::last_col())
+
+
+
+  } else {
+
+
+    data %>%
+      dplyr::left_join(geo_metadata %>%
+                         dplyr::select(dplyr::contains("codprov"), name_iso) %>%
+                         dplyr::distinct(), by = c("codprov_censo")) %>%
+      dplyr::relocate(geometry, .after = dplyr::last_col())
+
+
+
+
+  }
+
+
+
 
 }
 
