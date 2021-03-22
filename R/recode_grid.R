@@ -75,22 +75,24 @@ recode_grid<- function(data,
 
       data %>%
         dplyr::left_join(full_codes, by = c("code" = "codprov")) %>%
-        dplyr::select(2, 3, 5, code = codprov_censo)
+        dplyr::select(name, row, col, code = codprov_censo)
 
 
     } else if(type == "iso"){
 
       data %>%
         dplyr::left_join(full_codes, by = c("code" = "codprov")) %>%
-        dplyr::select(2, 3, 5, code = codprov_iso)
+        dplyr::select(name, row, col, code = codprov_iso)
 
 
     } else{
 
-      data
+      data %>%
+        dplyr::select(name, row, col, code)
 
     }
-  }else{
+
+  } else {
 
     assertthat::assert_that(is.character(type),
                             msg = "type debe ser del tipo 'character'")
@@ -139,7 +141,7 @@ recode_grid<- function(data,
     # filtro la grilla de interes
     data <- grillas_depto_id %>%
       dplyr::filter(id %in% filtro_id) %>%
-      dplyr::select(name, code, row, col)
+      dplyr::select(name, row, col, code)
 
     #######################################################################
 
@@ -148,7 +150,8 @@ recode_grid<- function(data,
       data %>%
         dplyr::mutate(code = dplyr::case_when(
           code == filtro_provincia$coddepto ~ filtro_provincia$coddepto_censo
-        ))
+        )) %>%
+        dplyr::select(name, row, col, code)
 
 
     } else{
