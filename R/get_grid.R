@@ -44,6 +44,8 @@ get_grid <- function(district = NULL) {
 
   grillas %>%
     dplyr::filter(name_provincia == district) %>%
-    tidyr::unnest(cols = c(data)) %>% as.data.frame()
+    tidyr::unnest(cols = c(data)) %>%
+    dplyr::select(name, row, col, code) %>%
+    as.data.frame()
 
 }
