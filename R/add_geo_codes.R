@@ -7,9 +7,9 @@
 #'
 #'@return Los valores por defecto en \code{\link{get_geo}} son \code{codprov_censo} para provincia y \code{coddepto_censo} para departamentos, respectivamente.
 #' Estos corresponden a la codificación de INDEC.
-#' Se puede optar por la nomenclatura de \code{'indra'} - correspondiente a los escrutinios provisorios de elecciones nacionales,
-#'  con las variantes \code{codprov} y \code{coddepto}, o la de \code{'iso'} con \code{\*_iso} ,
-#' para el nivel provincial.
+#' Con el agregado usando \code{add_geo_codes} se puede optar por las nomenclaturas de \code{'indra'} - correspondiente a los escrutinios provisorios de elecciones nacionales,
+#'  con las variantes \code{codprov} y \code{coddepto}, o la de \code{'iso'} con \code{\*_iso} , estas últimas hasta el nivel
+#'  provincial.
 #'
 #'@details Respecto el origen de los datos se puede consultar la documentación de
 #' \href{https://www.iso.org/obp/ui/#iso:code:3166:AR}{\code{ISO 3166-2} - International Organization for Standardization} y
@@ -17,6 +17,7 @@
 #'
 #'@details \code{codprov} y \code{coddepto} son las codificaciones de las bases de datos de \emph{INDRA}, empresa encargada por
 #' muchos años de la tarea del escrutinio provisorio y utilizados en \href{https://electorarg.github.io/polAr/}{polAr}.
+#
 #'@param data data.frame obtenido con \code{\link{get_geo}}. Los mapas disponibles
 #' se pueden chequear con \code{\link{show_arg_codes}}.
 #'
@@ -24,7 +25,7 @@
 #'
 #' @examples
 #'
-#' get_geo("ARGENTINA")
+#' get_geo("TUCUMAN")
 #'
 #'
 #' get_geo("TUCUMAN") %>%
