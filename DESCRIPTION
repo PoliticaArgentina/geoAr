@@ -30,3 +30,5 @@ Imports:
     curl,
     glue,
     leaflet
+URL: https://github.com/PoliticaArgentina/geoAr
+BugReports: https://github.com/PoliticaArgentina/geoAr/issues
