@@ -9,12 +9,19 @@
 <title>Recodifica id de grillas asignados a  provincias o departamentos de Argentina
 (Recode Argentina's districs id in grids) — recode_grid • geoAr</title>
 
+<!-- favicons -->
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/cerulean/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
 
@@ -44,6 +51,7 @@
 (Recode Argentina's districs id in grids) — recode_grid" />
 <meta property="og:description" content="Función que permite re codificar etiquetas para utilización de grillas de Argentina y de departamentos para los 24 distritos
 sub nacionales. Ello permite hacer mas sencilla la vinculación con bases de datos de diversas fuentes." />
+<meta property="og:image" content="https://politicaargentina.github.io/opinAr/logo.png" />
 
 
 
@@ -75,7 +83,7 @@ sub nacionales. Ello permite hacer mas sencilla la vinculación con bases de dat
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">geoAr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1.0</span>
       </span>
     </div>
 
@@ -92,7 +100,12 @@ sub nacionales. Ello permite hacer mas sencilla la vinculación con bases de dat
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/PoliticaArgentina/geoAr/">
+    <span class="fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -108,7 +121,7 @@ sub nacionales. Ello permite hacer mas sencilla la vinculación con bases de dat
     <div class="page-header">
     <h1>Recodifica id de grillas asignados a  provincias o departamentos de Argentina
 (<em>Recode Argentina's districs id in grids</em>)</h1>
-    
+    <small class="dont-index">Source: <a href='https://github.com/PoliticaArgentina/geoAr/blob/master/R/recode_grid.R'><code>R/recode_grid.R</code></a></small>
     <div class="hidden name"><code>recode_grid.Rd</code></div>
     </div>
 
@@ -150,59 +163,59 @@ muchos años de la tarea del escrutinio provisorio y utilizados en <a href='http
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
 <span class='fu'><a href='get_grid.html'>get_grid</a></span><span class='op'>(</span><span class='st'>"ARGENTINA"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;    name_provincia row col code                name
-#&gt; 1       ARGENTINA   1   1   10               JUJUY
-#&gt; 2       ARGENTINA   2   3   09             FORMOSA
-#&gt; 3       ARGENTINA   2   5   14            MISIONES
-#&gt; 4       ARGENTINA   2   1   17               SALTA
-#&gt; 5       ARGENTINA   2   2   23             TUCUMAN
-#&gt; 6       ARGENTINA   3   1   03           CATAMARCA
-#&gt; 7       ARGENTINA   3   3   06               CHACO
-#&gt; 8       ARGENTINA   3   4   05          CORRIENTES
-#&gt; 9       ARGENTINA   3   2   22 SANTIAGO DEL ESTERO
-#&gt; 10      ARGENTINA   4   2   04             CORDOBA
-#&gt; 11      ARGENTINA   4   4   08          ENTRE RIOS
-#&gt; 12      ARGENTINA   4   1   12            LA RIOJA
-#&gt; 13      ARGENTINA   4   3   21            SANTA FE
-#&gt; 14      ARGENTINA   5   3   02        BUENOS AIRES
-#&gt; 15      ARGENTINA   5   4   01                CABA
-#&gt; 16      ARGENTINA   5   1   18            SAN JUAN
-#&gt; 17      ARGENTINA   5   2   19            SAN LUIS
-#&gt; 18      ARGENTINA   6   2   11            LA PAMPA
-#&gt; 19      ARGENTINA   6   1   13             MENDOZA
-#&gt; 20      ARGENTINA   7   1   15             NEUQUEN
-#&gt; 21      ARGENTINA   7   2   16           RIO NEGRO
-#&gt; 22      ARGENTINA   8   1   07              CHUBUT
-#&gt; 23      ARGENTINA   9   1   20          SANTA CRUZ
-#&gt; 24      ARGENTINA  10   1   24    TIERRA DEL FUEGO</div><div class='input'>
+</div><div class='output co'>#&gt; <span class='message'>Adding missing grouping variables: `name_provincia`</span></div><div class='output co'>#&gt;    name_provincia                name row col code
+#&gt; 1       ARGENTINA               JUJUY   1   1   10
+#&gt; 2       ARGENTINA             FORMOSA   2   3   09
+#&gt; 3       ARGENTINA            MISIONES   2   5   14
+#&gt; 4       ARGENTINA               SALTA   2   1   17
+#&gt; 5       ARGENTINA             TUCUMAN   2   2   23
+#&gt; 6       ARGENTINA           CATAMARCA   3   1   03
+#&gt; 7       ARGENTINA               CHACO   3   3   06
+#&gt; 8       ARGENTINA          CORRIENTES   3   4   05
+#&gt; 9       ARGENTINA SANTIAGO DEL ESTERO   3   2   22
+#&gt; 10      ARGENTINA             CORDOBA   4   2   04
+#&gt; 11      ARGENTINA          ENTRE RIOS   4   4   08
+#&gt; 12      ARGENTINA            LA RIOJA   4   1   12
+#&gt; 13      ARGENTINA            SANTA FE   4   3   21
+#&gt; 14      ARGENTINA        BUENOS AIRES   5   3   02
+#&gt; 15      ARGENTINA                CABA   5   4   01
+#&gt; 16      ARGENTINA            SAN JUAN   5   1   18
+#&gt; 17      ARGENTINA            SAN LUIS   5   2   19
+#&gt; 18      ARGENTINA            LA PAMPA   6   2   11
+#&gt; 19      ARGENTINA             MENDOZA   6   1   13
+#&gt; 20      ARGENTINA             NEUQUEN   7   1   15
+#&gt; 21      ARGENTINA           RIO NEGRO   7   2   16
+#&gt; 22      ARGENTINA              CHUBUT   8   1   07
+#&gt; 23      ARGENTINA          SANTA CRUZ   9   1   20
+#&gt; 24      ARGENTINA    TIERRA DEL FUEGO  10   1   24</div><div class='input'>
 
 <span class='fu'><a href='get_grid.html'>get_grid</a></span><span class='op'>(</span><span class='st'>"ARGENTINA"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
    <span class='fu'>recode_grid</span><span class='op'>(</span>type <span class='op'>=</span> <span class='st'>"iso"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;    row col                name code
-#&gt; 1    1   1               JUJUY AR-Y
-#&gt; 2    2   3             FORMOSA AR-P
-#&gt; 3    2   5            MISIONES AR-N
-#&gt; 4    2   1               SALTA AR-A
-#&gt; 5    2   2             TUCUMAN AR-T
-#&gt; 6    3   1           CATAMARCA AR-K
-#&gt; 7    3   3               CHACO AR-H
-#&gt; 8    3   4          CORRIENTES AR-W
-#&gt; 9    3   2 SANTIAGO DEL ESTERO AR-G
-#&gt; 10   4   2             CORDOBA AR-X
-#&gt; 11   4   4          ENTRE RIOS AR-E
-#&gt; 12   4   1            LA RIOJA AR-F
-#&gt; 13   4   3            SANTA FE AR-S
-#&gt; 14   5   3        BUENOS AIRES AR-B
-#&gt; 15   5   4                CABA AR-C
-#&gt; 16   5   1            SAN JUAN AR-J
-#&gt; 17   5   2            SAN LUIS AR-D
-#&gt; 18   6   2            LA PAMPA AR-L
-#&gt; 19   6   1             MENDOZA AR-M
-#&gt; 20   7   1             NEUQUEN AR-Q
-#&gt; 21   7   2           RIO NEGRO AR-R
-#&gt; 22   8   1              CHUBUT AR-U
-#&gt; 23   9   1          SANTA CRUZ AR-Z
-#&gt; 24  10   1    TIERRA DEL FUEGO AR-V</div><div class='input'>
+</div><div class='output co'>#&gt; <span class='message'>Adding missing grouping variables: `name_provincia`</span></div><div class='output co'>#&gt;                   name row col code
+#&gt; 1                JUJUY   1   1 AR-Y
+#&gt; 2              FORMOSA   2   3 AR-P
+#&gt; 3             MISIONES   2   5 AR-N
+#&gt; 4                SALTA   2   1 AR-A
+#&gt; 5              TUCUMAN   2   2 AR-T
+#&gt; 6            CATAMARCA   3   1 AR-K
+#&gt; 7                CHACO   3   3 AR-H
+#&gt; 8           CORRIENTES   3   4 AR-W
+#&gt; 9  SANTIAGO DEL ESTERO   3   2 AR-G
+#&gt; 10             CORDOBA   4   2 AR-X
+#&gt; 11          ENTRE RIOS   4   4 AR-E
+#&gt; 12            LA RIOJA   4   1 AR-F
+#&gt; 13            SANTA FE   4   3 AR-S
+#&gt; 14        BUENOS AIRES   5   3 AR-B
+#&gt; 15                CABA   5   4 AR-C
+#&gt; 16            SAN JUAN   5   1 AR-J
+#&gt; 17            SAN LUIS   5   2 AR-D
+#&gt; 18            LA PAMPA   6   2 AR-L
+#&gt; 19             MENDOZA   6   1 AR-M
+#&gt; 20             NEUQUEN   7   1 AR-Q
+#&gt; 21           RIO NEGRO   7   2 AR-R
+#&gt; 22              CHUBUT   8   1 AR-U
+#&gt; 23          SANTA CRUZ   9   1 AR-Z
+#&gt; 24    TIERRA DEL FUEGO  10   1 AR-V</div><div class='input'>
 
 </div></pre>
   </div>
@@ -216,7 +229,7 @@ muchos años de la tarea del escrutinio provisorio y utilizados en <a href='http
 
       <footer>
       <div class="copyright">
-  <p>Developed by Juan Pablo Ruiz Nicolini.</p>
+  <p>Developed by <a href='https://tuqmano.ar'>Juan Pablo Ruiz Nicolini</a>.</p>
 </div>
 
 <div class="pkgdown">

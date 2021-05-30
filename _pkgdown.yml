@@ -1,0 +1,9 @@
+url: https://politicaargentina.github.io/opinAr/
+template:
+  params:
+    bootswatch: cerulean
+home:
+  strip_header: true
+authors:
+  Juan Pablo Ruiz Nicolini:
+    href: https://tuqmano.ar

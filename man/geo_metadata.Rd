@@ -3,7 +3,8 @@
 \docType{data}
 \name{geo_metadata}
 \alias{geo_metadata}
-\title{Un archivo de datos que contiene identificadores geográficos para los departamentos de Argentina y sus provincias}
+\title{Un archivo de datos que contiene identificadores geográficos para los departamentos de Argentina y sus provincias
+(\emph{"A data file containing geographic identifiers for the departments of Argentina and their provinces"})}
 \format{
 Un tibble con 526 filas y 8 variables:
 \describe{
@@ -20,5 +21,6 @@ geo_metadata
 }
 \description{
 Un archivo de datos que contiene identificadores geográficos para los departamentos de Argentina y sus provincias
+(\emph{"A data file containing geographic identifiers for the departments of Argentina and their provinces"})
 }
 \keyword{datasets}

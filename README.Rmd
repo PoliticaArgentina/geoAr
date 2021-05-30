@@ -1,0 +1,77 @@
+---
+output: github_document
+---
+
+
+##  `geo`grafía `Ar`rgentina usando `R` <a><img src="man/figures/logo.png" width="200" align="right" /></a>
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+<!-- badges: start -->
+[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental) 
+[![CRAN status](https://www.r-pkg.org/badges/version/opinAr)](https://CRAN.R-project.org/package=opinAr)
+[![R build status](https://github.com/PoliticaArgentina/opinAr/workflows/R-CMD-check/badge.svg)](https://github.com/PoliticaArgentina/opinAr/actions)
+
+<!-- badges: end -->
+
+`{geoAr}` brinda herramientas que facilitan el acceso y el trabajo con datos espaciales de Argentina desde `R`. 
+
+
+---
+
+### INSTALACIÓN
+
+### Versión en desarrollo (*Development version*) 
+
+```r
+
+# install.packages('devtools') si no tiene instalado devtools
+
+devtools::install_github("politicaargentina/geoAr")
+
+```
+### Ejemplo de uso (*Usage*)
+
+```{r}
+
+library(geoAr)
+
+
+show_arg_codes() # Preview avialable data 
+
+
+(tucuman <- get_geo(geo = "TUCUMAN")) # geo id parameter
+
+
+(tucuman_names <- tucuman %>%
+  add_geo_codes()) # Augment data with metadata as districts names or alternative id codes
+
+
+# MAPING
+
+ggplot2::ggplot(data = tucuman_names) +
+  ggplot2::geom_sf() +
+  ggplot2::geom_sf_label(ggplot2::aes(label = nomdepto_censo))
+
+
+# GRIDS AS IF THEY WHERE MAPS FOR {geofacet}
+
+(grid_tucuman <- get_grid("TUCUMAN"))
+
+geofacet::grid_preview(grid_tucuman, label = "name")
+
+
+
+```
+
+
+

@@ -14,9 +14,9 @@ se pueden chequear con \code{\link{show_arg_codes}}.}
 \value{
 Los valores por defecto en \code{\link{get_geo}} son \code{codprov_censo} para provincia y \code{coddepto_censo} para departamentos, respectivamente.
 Estos corresponden a la codificación de INDEC.
-Se puede optar por la nomenclatura de \code{'indra'} - correspondiente a los escrutinios provisorios de elecciones nacionales,
-con las variantes \code{codprov} y \code{coddepto}, o la de \code{'iso'} con \code{\*_iso} ,
-para el nivel provincial.
+Con el agregado usando \code{add_geo_codes} se puede optar por las nomenclaturas de \code{'indra'} - correspondiente a los escrutinios provisorios de elecciones nacionales,
+con las variantes \code{codprov} y \code{coddepto}, o la de \code{'iso'} con \code{\*_iso} , estas últimas hasta el nivel
+provincial.
 }
 \description{
 Función que permite agregar columnas con ids geográficos para utilización de mapas de Argentina y de departamentos para los 24 distritos
@@ -32,7 +32,7 @@ muchos años de la tarea del escrutinio provisorio y utilizados en \href{https:/
 }
 \examples{
 
-get_geo("ARGENTINA")
+get_geo("TUCUMAN")
 
 
 get_geo("TUCUMAN") \%>\%

@@ -9,12 +9,19 @@
 <title>Agrega columnas con id geográficos asignados a poligonos de provincias o departamentos de Argentina
 (Augment Argentina's districts polygons id) — add_geo_codes • geoAr</title>
 
+<!-- favicons -->
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/cerulean/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
 
@@ -44,6 +51,7 @@
 (Augment Argentina's districts polygons id) — add_geo_codes" />
 <meta property="og:description" content="Función que permite agregar columnas con ids geográficos para utilización de mapas de Argentina y de departamentos para los 24 distritos
 sub nacionales para una más sencilla la vinculación con bases de datos de diversas fuentes." />
+<meta property="og:image" content="https://politicaargentina.github.io/opinAr/logo.png" />
 
 
 
@@ -75,7 +83,7 @@ sub nacionales para una más sencilla la vinculación con bases de datos de dive
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">geoAr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1.0</span>
       </span>
     </div>
 
@@ -92,7 +100,12 @@ sub nacionales para una más sencilla la vinculación con bases de datos de dive
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/PoliticaArgentina/geoAr/">
+    <span class="fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -108,7 +121,7 @@ sub nacionales para una más sencilla la vinculación con bases de datos de dive
     <div class="page-header">
     <h1>Agrega columnas con id geográficos asignados a poligonos de provincias o departamentos de Argentina
 (<em>Augment Argentina's districts polygons id</em>)</h1>
-    
+    <small class="dont-index">Source: <a href='https://github.com/PoliticaArgentina/geoAr/blob/master/R/add_geo_codes.R'><code>R/add_geo_codes.R</code></a></small>
     <div class="hidden name"><code>add_geo_codes.Rd</code></div>
     </div>
 
@@ -133,9 +146,9 @@ se pueden chequear con <code><a href='show_arg_codes.html'>show_arg_codes</a></c
 
     <p>Los valores por defecto en <code><a href='get_geo.html'>get_geo</a></code> son <code>codprov_censo</code> para provincia y <code>coddepto_censo</code> para departamentos, respectivamente.
 Estos corresponden a la codificación de INDEC.
-Se puede optar por la nomenclatura de <code>'indra'</code> - correspondiente a los escrutinios provisorios de elecciones nacionales,
-con las variantes <code>codprov</code> y <code>coddepto</code>, o la de <code>'iso'</code> con <code>\*_iso</code> ,
-para el nivel provincial.</p>
+Con el agregado usando <code>add_geo_codes</code> se puede optar por las nomenclaturas de <code>'indra'</code> - correspondiente a los escrutinios provisorios de elecciones nacionales,
+con las variantes <code>codprov</code> y <code>coddepto</code>, o la de <code>'iso'</code> con <code>\*_iso</code> , estas últimas hasta el nivel
+provincial.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Respecto el origen de los datos se puede consultar la documentación de
@@ -146,34 +159,40 @@ muchos años de la tarea del escrutinio provisorio y utilizados en <a href='http
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='fu'><a href='get_geo.html'>get_geo</a></span><span class='op'>(</span><span class='st'>"ARGENTINA"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Simple feature collection with 526 features and 2 fields
-#&gt; geometry type:  MULTIPOLYGON
-#&gt; dimension:      XY
-#&gt; bbox:           xmin: -73.57219 ymin: -55.05744 xmax: -53.64222 ymax: -21.74506
-#&gt; geographic CRS: WGS 84
-#&gt; <span style='color: #949494;'># A tibble: 526 x 3</span><span>
+<span class='fu'><a href='get_geo.html'>get_geo</a></span><span class='op'>(</span><span class='st'>"TUCUMAN"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Simple feature collection with 17 features and 2 fields
+#&gt; Geometry type: MULTIPOLYGON
+#&gt; Dimension:     XY
+#&gt; Bounding box:  xmin: -66.18101 ymin: -28.01575 xmax: -64.48315 ymax: -26.06037
+#&gt; Geodetic CRS:  WGS 84
+#&gt; <span style='color: #949494;'># A tibble: 17 x 3</span><span>
 #&gt;    codprov_censo coddepto_censo                                         geometry
-#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>         </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>                                        </span><span style='color: #949494;font-style: italic;'>&lt;MULTIPOLYGON [°]&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> 02            001            (((-58.37501 -34.57959, -58.36018 -34.5833, -58~
-#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> 02            002            (((-58.40084 -34.57126, -58.37015 -34.57725, -5~
-#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> 02            003            (((-58.39365 -34.60154, -58.39189 -34.62916, -5~
-#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> 02            004            (((-58.35695 -34.6198, -58.34056 -34.62002, -58~
-#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> 06            091            (((-58.01702 -34.7812, -58.14787 -34.88854, -58~
-#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> 74            056            (((-67.18339 -33.11857, -66.80601 -33.10576, -6~
-#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> 02            005            (((-58.41672 -34.59976, -58.41122 -34.63762, -5~
-#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> 02            006            (((-58.45919 -34.6064, -58.43405 -34.60458, -58~
-#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> 06            147            (((-61.53276 -35.38011, -61.28866 -35.57524, -6~
-#&gt; </span><span style='color: #BCBCBC;'>10</span><span> 02            007            (((-58.46017 -34.6158, -58.45229 -34.63255, -58~
-#&gt; </span><span style='color: #949494;'># ... with 516 more rows</span><span></div><div class='input'>
+#&gt;  </span><span style='color: #BCBCBC;'>*</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>         </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>                                        </span><span style='color: #949494;font-style: italic;'>&lt;MULTIPOLYGON [°]&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> 90            007            (((-64.49919 -26.23353, -64.49857 -26.26325, -6~
+#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> 90            014            (((-65.13782 -26.74975, -65.10095 -26.75771, -6~
+#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> 90            021            (((-65.94729 -27.08444, -65.93885 -27.0989, -65~
+#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> 90            028            (((-65.62733 -26.87134, -65.62598 -26.84177, -6~
+#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> 90            035            (((-65.47532 -27.53838, -65.43503 -27.5425, -65~
+#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> 90            042            (((-65.51768 -27.54528, -65.53685 -27.62278, -6~
+#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> 90            049            (((-65.51348 -27.62978, -65.52091 -27.66553, -6~
+#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> 90            056            (((-65.12933 -27.02488, -65.12589 -27.01659, -6~
+#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> 90            063            (((-65.43583 -26.83751, -65.38124 -26.84196, -6~
+#&gt; </span><span style='color: #BCBCBC;'>10</span><span> 90            070            (((-65.86853 -26.99852, -65.85796 -27.01388, -6~
+#&gt; </span><span style='color: #BCBCBC;'>11</span><span> 90            077            (((-65.93481 -27.39544, -65.89887 -27.3702, -65~
+#&gt; </span><span style='color: #BCBCBC;'>12</span><span> 90            084            (((-65.16293 -26.82289, -65.18562 -26.86204, -6~
+#&gt; </span><span style='color: #BCBCBC;'>13</span><span> 90            091            (((-65.33499 -27.20478, -65.33462 -27.21948, -6~
+#&gt; </span><span style='color: #BCBCBC;'>14</span><span> 90            098            (((-66.08361 -26.23547, -66.06621 -26.23792, -6~
+#&gt; </span><span style='color: #BCBCBC;'>15</span><span> 90            105            (((-65.70111 -26.52317, -65.65078 -26.5263, -65~
+#&gt; </span><span style='color: #BCBCBC;'>16</span><span> 90            112            (((-65.52483 -26.09667, -65.4682 -26.09253, -65~
+#&gt; </span><span style='color: #BCBCBC;'>17</span><span> 90            119            (((-65.27025 -26.84087, -65.28587 -26.83549, -6~</div><div class='input'>
 
 <span class='fu'><a href='get_geo.html'>get_geo</a></span><span class='op'>(</span><span class='st'>"TUCUMAN"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
    <span class='fu'>add_geo_codes</span><span class='op'>(</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; Simple feature collection with 17 features and 8 fields
-#&gt; geometry type:  MULTIPOLYGON
-#&gt; dimension:      XY
-#&gt; bbox:           xmin: -66.18101 ymin: -28.01579 xmax: -64.48315 ymax: -26.06159
-#&gt; geographic CRS: WGS 84
+#&gt; Geometry type: MULTIPOLYGON
+#&gt; Dimension:     XY
+#&gt; Bounding box:  xmin: -66.18101 ymin: -28.01575 xmax: -64.48315 ymax: -26.06037
+#&gt; Geodetic CRS:  WGS 84
 #&gt; </span><span style='color: #949494;'># A tibble: 17 x 9</span><span>
 #&gt;    codprov_censo coddepto_censo codprov coddepto nomdepto_censo  name_prov
 #&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>         </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>          </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>           </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>    
@@ -209,7 +228,7 @@ muchos años de la tarea del escrutinio provisorio y utilizados en <a href='http
 
       <footer>
       <div class="copyright">
-  <p>Developed by Juan Pablo Ruiz Nicolini.</p>
+  <p>Developed by <a href='https://tuqmano.ar'>Juan Pablo Ruiz Nicolini</a>.</p>
 </div>
 
 <div class="pkgdown">
