@@ -153,3 +153,7 @@ geofacet::grid_preview(grid_tucuman, label = "name")
 ```
 
 <img src="man/figures/README-unnamed-chunk-2-2.png" width="100%" />
+
+## `{geoAr}` es parte del universo de paquetes **polAr**
+
+<img src="https://github.com/PoliticaArgentina/data_warehouse/raw/master/hex/collage.png" width="100%" />

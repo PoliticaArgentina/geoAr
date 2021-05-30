@@ -74,4 +74,12 @@ geofacet::grid_preview(grid_tucuman, label = "name")
 ```
 
 
+## `{geoAr}` es parte del universo de paquetes **polAr**
+
+
+```{r, echo=FALSE}
+
+knitr::include_graphics("https://github.com/PoliticaArgentina/data_warehouse/raw/master/hex/collage.png")
+
+```
 
