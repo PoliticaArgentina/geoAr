@@ -773,4 +773,4 @@ names(grillas_geofacet) <- c("ARGENTINA","CABA", "CATAMARCA", "CHACO", "CHUBUT",
 
 
 
-usethis::use_data(grillas_geofacet,overwrite = TRUE)
+usethis::use_data(grillas_geofacet,overwrite = TRUE, internal = TRUE)
