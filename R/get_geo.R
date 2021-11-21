@@ -8,9 +8,12 @@
 #'
 #' get_geo("TUCUMAN")
 #'
-#'@param geo un character con el nombre del district que se quiere descargar. Se pueden chequear el id con \code{\link{show_arg_codes}}.
-#'@param level parametro opcional para descargar geometrías a nivel 'departamento' cuando se solicita mapa nacional \code{get_geo(geo = "ARGNTINA", level = "departamento")}.
-#'@param simplified por defecto es TRUE y determina la descarga de una versión simplificada de las geometrias. Con FALSE descarga la versión original de INDEC
+#'@param geo un character con el nombre del district que se quiere descargar.
+#'Se pueden chequear el id con \code{\link{show_arg_codes}}.
+#'@param level parametro opcional para descargar geometrías a nivel 'departamento' o 'censal'
+#'cuando se solicita mapa nacional \code{get_geo(geo = "ARGNTINA", level = "departamento")}.
+#'@param simplified por defecto es TRUE y determina la descarga de una versión simplificada de las geometrias.
+#'Con FALSE descarga la versión original de INDEC
 #'@export
 
 get_geo <- function(geo = NULL,
@@ -47,15 +50,47 @@ No se detecto acceso a internet. Por favor chequear la conexion.")
 
     "https://github.com/politicaargentina/data_warehouse/raw/master/geoAr/data_raw/localidades.geojson"
 
+  }  else if (level == "censal" & simplified == TRUE){
+
+      "https://github.com/PoliticaArgentina/data_warehouse/raw/master/geoAr/data/radios_simplified.geojson"
+
   } else if (geo == "ARGENTINA" & level == "provincia" & simplified == TRUE){
 
     "https://github.com/politicaargentina/data_warehouse/raw/master/geoAr/data/provincias_simplified.geojson"
 
-  } else if (geo == "ARGENTINA" & level != "provincia" & simplified == FALSE){
+  } else if (geo == "ARGENTINA" & level == "departamento" & simplified == FALSE){
 
     "https://github.com/politicaargentina/data_warehouse/raw/master/geoAr/data_raw/provincias.geojson"
 
+  } else if (level == "censal" & simplified == FALSE){
+
+    link <- "https://github.com/PoliticaArgentina/data_warehouse/raw/master/geoAr/data_raw/raw_radios_censales.zip"
+
+    # Download file from URL
+
+    # Create temfiles
+
+    temp <- base::tempfile()
+
+    temp2 <- base::tempfile()
+
+    # Download .zip
+
+    utils::download.file(url = link,  temp, quiet = TRUE)
+
+
+    # Unzip files
+
+    utils::unzip(zipfile = temp, exdir = temp2)
+
+    # Select geojson file path
+    (url <- base::list.files(temp2, pattern = "geojson$", full.names=TRUE))
+
   }
+
+
+
+
 
 
   # Set default value for try()
@@ -75,13 +110,33 @@ No se detecto acceso a internet. Por favor chequear la conexion.")
   }
 
 
+  if("link" %in% names(df)){ # CENSUS TRACT DATA
+
+    df <- df %>%
+      dplyr::mutate(codprov_censo  = stringr::str_sub(string = link,
+                                                      start = 1, end = 2),
+                    coddepto_censo = stringr::str_sub(string = link,
+                                                      start = 3, end = 5),
+                    fraccion_censal = stringr::str_sub(string = link,
+                                                       start = 6, end = 7),
+                    radio_censal = stringr::str_sub(string = link,
+                                                    start = 8, end = 9))
+
+
+
+      }else{
+
+        df <- df
+
+        }
+
   ############## ARG MAP###############
 
 
   if(geo == "ARGENTINA") {
 
-    assertthat::assert_that(level %in% c("departamento", "provincia"),
-                            msg = "National geography can be downloaded only at 'departamento' or 'provincia' level" )
+    assertthat::assert_that(level %in% c("departamento", "provincia", "censal"),
+                            msg = "National geography can be downloaded only at 'censal', 'departamento' or 'provincia' level" )
 
     df
 
@@ -90,8 +145,8 @@ No se detecto acceso a internet. Por favor chequear la conexion.")
 
     ##############  PROVINCES MAPS ######################
 
-    assertthat::assert_that(level  == "departamento",
-                            msg = "Provincial geography can be downloaded only at 'departamento' level" )
+    assertthat::assert_that(level  %in% c("departamento", "censal"),
+                            msg = "Provincial geography can be downloaded only at 'departamento' or 'censal' level" )
 
 
     temp <- geoAr::show_arg_codes(viewer = FALSE) %>%

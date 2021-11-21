@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">geoAr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1.2</span>
       </span>
     </div>
 
@@ -138,15 +138,18 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>geo</th>
-      <td><p>un character con el nombre del district que se quiere descargar. Se pueden chequear el id con <code><a href='show_arg_codes.html'>show_arg_codes</a></code>.</p></td>
+      <td><p>un character con el nombre del district que se quiere descargar.
+Se pueden chequear el id con <code><a href='show_arg_codes.html'>show_arg_codes</a></code>.</p></td>
     </tr>
     <tr>
       <th>level</th>
-      <td><p>parametro opcional para descargar geometrías a nivel 'departamento' cuando se solicita mapa nacional <code>get_geo(geo = "ARGNTINA", level = "departamento")</code>.</p></td>
+      <td><p>parametro opcional para descargar geometrías a nivel 'departamento' o 'censal'
+cuando se solicita mapa nacional <code>get_geo(geo = "ARGNTINA", level = "departamento")</code>.</p></td>
     </tr>
     <tr>
       <th>simplified</th>
-      <td><p>por defecto es TRUE y determina la descarga de una versión simplificada de las geometrias. Con FALSE descarga la versión original de INDEC</p></td>
+      <td><p>por defecto es TRUE y determina la descarga de una versión simplificada de las geometrias.
+Con FALSE descarga la versión original de INDEC</p></td>
     </tr>
     </table>
 

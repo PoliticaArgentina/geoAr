@@ -2,7 +2,7 @@ pandoc: 2.11.2
 pkgdown: 1.6.1
 pkgdown_sha: ~
 articles: {}
-last_built: 2021-07-20T15:24Z
+last_built: 2021-11-21T13:14Z
 urls:
   reference: https://politicaargentina.github.io/opinAr//reference
   article: https://politicaargentina.github.io/opinAr//articles
