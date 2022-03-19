@@ -1,9 +1,11 @@
 pandoc: 2.11.2
 pkgdown: 1.6.1
 pkgdown_sha: ~
-articles: {}
-last_built: 2021-11-21T13:14Z
+articles:
+  geoAr_geofacet: geoAr_geofacet.html
+  geoAr_leaflet: geoAr_leaflet.html
+last_built: 2022-03-19T21:52Z
 urls:
-  reference: https://politicaargentina.github.io/opinAr//reference
-  article: https://politicaargentina.github.io/opinAr//articles
+  reference: https://politicaargentina.github.io/geoAr//reference
+  article: https://politicaargentina.github.io/geoAr//articles
 

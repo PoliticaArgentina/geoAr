@@ -15,7 +15,9 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
 Suggests: 
     testthat,
-    gt
+    gt,
+    knitr,
+    rmarkdown
 Depends: 
     R (>= 2.10)
 Imports: 
@@ -32,3 +34,4 @@ Imports:
     leaflet
 URL: https://github.com/PoliticaArgentina/geoAr
 BugReports: https://github.com/PoliticaArgentina/geoAr/issues
+VignetteBuilder: knitr

@@ -80,7 +80,7 @@ show_arg_codes <- function(viewer = FALSE,
         title = gt::md("**Diccionario de equivalencias para identificadores geo**"),
         subtitle = gt::md(glue::glue(("**Argentina - Nivel {selection}**")))) %>%
       gt::tab_source_note(
-        source_note = gt::md("**Fuente:** geofaceteAR  - *https://electorarg.github.io/geofaceteAR*"))
+        source_note = gt::md("**Fuente:** geoAr  - *https://politicaargentina.github.io/geoAr/*"))
 
 
 

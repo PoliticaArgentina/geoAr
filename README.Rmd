@@ -39,7 +39,7 @@ knitr::opts_chunk$set(
 devtools::install_github("politicaargentina/geoAr")
 
 ```
-### Ejemplo de uso (*Usage*)
+### Ejemplo de uso básico (*Basic Usage*)
 
 ```{r}
 
@@ -49,33 +49,41 @@ library(geoAr)
 show_arg_codes() # Preview avialable data 
 
 
-(tucuman <- get_geo(geo = "TUCUMAN")) # geo id parameter
+(tucuman <- get_geo(geo = "TUCUMAN")) # geo id parameter from show_arg_codes() function
+
+```
+
+## Paquetes similares para otros países
+
+* `{geoUy}` - https://github.com/RichDeto/geouy
+* `{geoBr}` - https://ipeagit.github.io/geobr/
+* `{chilemapas}` - https://pacha.dev/chilemapas/
 
 
-(tucuman_names <- tucuman %>%
-  add_geo_codes()) # Augment data with metadata as districts names or alternative id codes
+## Citation
+
+To cite package ‘geoAr’ in publications use:
+
+  Juan Pablo Ruiz Nicolini (2022). geoAr: Argentina's Spatial Data Toolbox. R package version 0.0.1.2.
+  https://github.com/PoliticaArgentina/geoAr
+
+A BibTeX entry for LaTeX users is
 
 
-# MAPING
-
-ggplot2::ggplot(data = tucuman_names) +
-  ggplot2::geom_sf() +
-  ggplot2::geom_sf_label(ggplot2::aes(label = nomdepto_censo))
-
-
-# GRIDS AS IF THEY WHERE MAPS FOR {geofacet}
-
-(grid_tucuman <- get_grid("TUCUMAN"))
-
-geofacet::grid_preview(grid_tucuman, label = "name")
-
-
+```
+  @Manual{,
+    title = {geoAr: Argentina's Spatial Data Toolbox},
+    author = {Juan Pablo {Ruiz Nicolini}},
+    year = {2022},
+    note = {R package version 0.0.1.2},
+    url = {https://github.com/PoliticaArgentina/geoAr},
+  }
 
 ```
 
 
-## `{geoAr}` es parte del universo de paquetes **polAr**
 
+## `{geoAr}` es parte del [universo de paquetes **polAr**](https://github.com/PoliticaArgentina/polArverse)
 
 ```{r, echo=FALSE}
 

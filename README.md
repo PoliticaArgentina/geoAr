@@ -28,7 +28,7 @@ datos espaciales de Argentina desde `R`.
 devtools::install_github("politicaargentina/geoAr")
 ```
 
-### Ejemplo de uso (*Usage*)
+### Ejemplo de uso básico (*Basic Usage*)
 
 ``` r
 library(geoAr)
@@ -51,7 +51,7 @@ show_arg_codes() # Preview avialable data
 #> # ... with 16 more rows
 
 
-(tucuman <- get_geo(geo = "TUCUMAN")) # geo id parameter
+(tucuman <- get_geo(geo = "TUCUMAN")) # geo id parameter from show_arg_codes() function
 #> Simple feature collection with 17 features and 2 fields
 #> Geometry type: MULTIPOLYGON
 #> Dimension:     XY
@@ -77,83 +77,32 @@ show_arg_codes() # Preview avialable data
 #> 15 90            105            (((-65.70111 -26.52317, -65.65078 -26.5263, -65~
 #> 16 90            112            (((-65.52483 -26.09667, -65.4682 -26.09253, -65~
 #> 17 90            119            (((-65.27025 -26.84087, -65.28587 -26.83549, -6~
-
-
-(tucuman_names <- tucuman %>%
-  add_geo_codes()) # Augment data with metadata as districts names or alternative id codes
-#> Simple feature collection with 17 features and 8 fields
-#> Geometry type: MULTIPOLYGON
-#> Dimension:     XY
-#> Bounding box:  xmin: -66.18101 ymin: -28.01575 xmax: -64.48315 ymax: -26.06037
-#> Geodetic CRS:  WGS 84
-#> # A tibble: 17 x 9
-#>    codprov_censo coddepto_censo codprov coddepto nomdepto_censo  name_prov
-#>    <chr>         <chr>          <chr>   <chr>    <chr>           <chr>    
-#>  1 90            007            23      013      BURRUYACU       TUCUMAN  
-#>  2 90            014            23      012      CRUZ ALTA       TUCUMAN  
-#>  3 90            021            23      005      CHICLIGASTA     TUCUMAN  
-#>  4 90            028            23      003      FAMAILLA        TUCUMAN  
-#>  5 90            035            23      009      GRANEROS        TUCUMAN  
-#>  6 90            042            23      007      JUAN B. ALBERDI TUCUMAN  
-#>  7 90            049            23      008      LA COCHA        TUCUMAN  
-#>  8 90            056            23      011      LEALES          TUCUMAN  
-#>  9 90            063            23      002      LULES           TUCUMAN  
-#> 10 90            070            23      004      MONTEROS        TUCUMAN  
-#> 11 90            077            23      006      RIO CHICO       TUCUMAN  
-#> 12 90            084            23      001      CAPITAL         TUCUMAN  
-#> 13 90            091            23      010      SIMOCA          TUCUMAN  
-#> 14 90            098            23      017      TAFI DEL VALLE  TUCUMAN  
-#> 15 90            105            23      016      TAFI VIEJO      TUCUMAN  
-#> 16 90            112            23      014      TRANCAS         TUCUMAN  
-#> 17 90            119            23      015      YERBA BUENA     TUCUMAN  
-#> # ... with 3 more variables: codprov_iso <chr>, name_iso <chr>,
-#> #   geometry <MULTIPOLYGON [°]>
-
-
-# MAPING
-
-ggplot2::ggplot(data = tucuman_names) +
-  ggplot2::geom_sf() +
-  ggplot2::geom_sf_label(ggplot2::aes(label = nomdepto_censo))
-#> Warning in st_point_on_surface.sfc(sf::st_zm(x)): st_point_on_surface may not
-#> give correct results for longitude/latitude data
 ```
 
-<img src="man/figures/README-unnamed-chunk-2-1.png" width="100%" />
+## Paquetes similares para otros países
 
-``` r
+-   `{geoUy}` - <https://github.com/RichDeto/geouy>
+-   `{geoBr}` - <https://ipeagit.github.io/geobr/>
+-   `{chilemapas}` - <https://pacha.dev/chilemapas/>
 
-# GRIDS AS IF THEY WHERE MAPS FOR {geofacet}
+## Citation
 
-(grid_tucuman <- get_grid("TUCUMAN"))
-#>    name_provincia row col code            name
-#> 1         TUCUMAN   1   4  013       BURRUYACU
-#> 2         TUCUMAN   2   4  001         CAPITAL
-#> 3         TUCUMAN   4   2  005     CHICLIGASTA
-#> 4         TUCUMAN   2   5  012       CRUZ ALTA
-#> 5         TUCUMAN   3   3  003        FAMAILLA
-#> 6         TUCUMAN   5   4  009        GRANEROS
-#> 7         TUCUMAN   5   3  007 JUAN B. ALBERDI
-#> 8         TUCUMAN   6   3  008        LA COCHA
-#> 9         TUCUMAN   3   5  011          LEALES
-#> 10        TUCUMAN   3   4  002           LULES
-#> 11        TUCUMAN   3   2  004        MONTEROS
-#> 12        TUCUMAN   4   3  006       RIO CHICO
-#> 13        TUCUMAN   4   4  010          SIMOCA
-#> 14        TUCUMAN   2   1  017  TAFI DEL VALLE
-#> 15        TUCUMAN   2   2  016      TAFI VIEJO
-#> 16        TUCUMAN   1   3  014         TRANCAS
-#> 17        TUCUMAN   2   3  015     YERBA BUENA
+To cite package ‘geoAr’ in publications use:
 
-geofacet::grid_preview(grid_tucuman, label = "name")
-#> Note: You provided a user-specified grid. If this is a generally-useful
-#>   grid, please consider submitting it to become a part of the geofacet
-#>   package. You can do this easily by calling:
-#>   grid_submit(__grid_df_name__)
-```
+Juan Pablo Ruiz Nicolini (2022). geoAr: Argentina’s Spatial Data
+Toolbox. R package version 0.0.1.2.
+<https://github.com/PoliticaArgentina/geoAr>
 
-<img src="man/figures/README-unnamed-chunk-2-2.png" width="100%" />
+A BibTeX entry for LaTeX users is
 
-## `{geoAr}` es parte del universo de paquetes **polAr**
+      @Manual{,
+        title = {geoAr: Argentina's Spatial Data Toolbox},
+        author = {Juan Pablo {Ruiz Nicolini}},
+        year = {2022},
+        note = {R package version 0.0.1.2},
+        url = {https://github.com/PoliticaArgentina/geoAr},
+      }
+
+## `{geoAr}` es parte del [universo de paquetes **polAr**](https://github.com/PoliticaArgentina/polArverse)
 
 <img src="https://github.com/PoliticaArgentina/data_warehouse/raw/master/hex/collage.png" width="100%" />

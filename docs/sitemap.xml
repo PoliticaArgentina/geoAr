@@ -1,36 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://politicaargentina.github.io/opinAr//index.html</loc>
+    <loc>https://politicaargentina.github.io/geoAr//index.html</loc>
   </url>
   <url>
-    <loc>https://politicaargentina.github.io/opinAr//reference/addArgTiles.html</loc>
+    <loc>https://politicaargentina.github.io/geoAr//reference/addArgTiles.html</loc>
   </url>
   <url>
-    <loc>https://politicaargentina.github.io/opinAr//reference/add_geo_codes.html</loc>
+    <loc>https://politicaargentina.github.io/geoAr//reference/add_geo_codes.html</loc>
   </url>
   <url>
-    <loc>https://politicaargentina.github.io/opinAr//reference/geoAr.html</loc>
+    <loc>https://politicaargentina.github.io/geoAr//reference/geoAr.html</loc>
   </url>
   <url>
-    <loc>https://politicaargentina.github.io/opinAr//reference/geo_metadata.html</loc>
+    <loc>https://politicaargentina.github.io/geoAr//reference/geo_metadata.html</loc>
   </url>
   <url>
-    <loc>https://politicaargentina.github.io/opinAr//reference/get_geo.html</loc>
+    <loc>https://politicaargentina.github.io/geoAr//reference/get_geo.html</loc>
   </url>
   <url>
-    <loc>https://politicaargentina.github.io/opinAr//reference/get_grid.html</loc>
+    <loc>https://politicaargentina.github.io/geoAr//reference/get_grid.html</loc>
   </url>
   <url>
-    <loc>https://politicaargentina.github.io/opinAr//reference/grillas_geofacet.html</loc>
+    <loc>https://politicaargentina.github.io/geoAr//reference/grillas_geofacet.html</loc>
   </url>
   <url>
-    <loc>https://politicaargentina.github.io/opinAr//reference/pipe.html</loc>
+    <loc>https://politicaargentina.github.io/geoAr//reference/pipe.html</loc>
   </url>
   <url>
-    <loc>https://politicaargentina.github.io/opinAr//reference/recode_grid.html</loc>
+    <loc>https://politicaargentina.github.io/geoAr//reference/recode_grid.html</loc>
   </url>
   <url>
-    <loc>https://politicaargentina.github.io/opinAr//reference/show_arg_codes.html</loc>
+    <loc>https://politicaargentina.github.io/geoAr//reference/show_arg_codes.html</loc>
+  </url>
+  <url>
+    <loc>https://politicaargentina.github.io/geoAr//articles/geoAr_geofacet.html</loc>
+  </url>
+  <url>
+    <loc>https://politicaargentina.github.io/geoAr//articles/geoAr_leaflet.html</loc>
   </url>
 </urlset>
