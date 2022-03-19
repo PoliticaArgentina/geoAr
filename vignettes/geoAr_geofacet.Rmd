@@ -2,7 +2,7 @@
 title: "geoAr & geofacet"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{geoAr_geofacet}
+  %\VignetteIndexEntry{geoAr & geofacet}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

@@ -2,8 +2,7 @@
 output: github_document
 ---
 
-
-##  `geo`grafía `Ar`rgentina usando `R` <a><img src="man/figures/logo.png" width="200" align="right" /></a>
+## `geo`grafía `Ar`rgentina usando `R` <a><img src="man/figures/logo.png" width="200" align="right"/></a>
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
@@ -17,28 +16,25 @@ knitr::opts_chunk$set(
 ```
 
 <!-- badges: start -->
-[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental) 
-[![CRAN status](https://www.r-pkg.org/badges/version/opinAr)](https://CRAN.R-project.org/package=opinAr)
-[![R build status](https://github.com/PoliticaArgentina/opinAr/workflows/R-CMD-check/badge.svg)](https://github.com/PoliticaArgentina/opinAr/actions)
+
+[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental) [![CRAN status](https://www.r-pkg.org/badges/version/opinAr)](https://CRAN.R-project.org/package=opinAr) [![R build status](https://github.com/PoliticaArgentina/opinAr/workflows/R-CMD-check/badge.svg)](https://github.com/PoliticaArgentina/opinAr/actions)
 
 <!-- badges: end -->
 
-`{geoAr}` brinda herramientas que facilitan el acceso y el trabajo con datos espaciales de Argentina desde `R`. 
+`{geoAr}` brinda herramientas que facilitan el acceso y el trabajo con datos espaciales de Argentina desde `R`.
 
-
----
+------------------------------------------------------------------------
 
 ### INSTALACIÓN
 
-### Versión en desarrollo (*Development version*) 
+### Versión en desarrollo (*Development version*)
 
-```r
-
+``` r
 # install.packages('devtools') si no tiene instalado devtools
 
 devtools::install_github("politicaargentina/geoAr")
-
 ```
+
 ### Ejemplo de uso básico (*Basic Usage*)
 
 ```{r}
@@ -53,35 +49,41 @@ show_arg_codes() # Preview avialable data
 
 ```
 
-## Paquetes similares para otros países
+## Información Disponible (*Available Data*)
 
-* `{geoUy}` - https://github.com/RichDeto/geouy
-* `{geoBr}` - https://ipeagit.github.io/geobr/
-* `{chilemapas}` - https://pacha.dev/chilemapas/
+**GEOMETRÍAS**
 
+-   ARGENTINA (niveles PROVINCIA, DEPARTAMENTO y RADIO CENSAL)
+
+-   24 provincias (niveles DEPARTAMENTO y RADIO CENSAL)
+
+**GRILLAS**
+
+-   Grillas para usar con [geofaet](<https://politicaargentina.github.io/geoAr/articles/geoAr_geofacet.html>) para ARGENTINA, 24 provincias y AGLOMERADOS URBANOS (para usar con {eph}
+
+-   Libro de códigos (país, provincia, departamento) y función para recodificar grillas según diccionario (ISO, INDEC, INDRA).
+
+## Paquetes similares para otros países (*Similar packages*)
+
+-   `{geoUy}` - <https://github.com/RichDeto/geouy>
+-   `{geoBr}` - <https://ipeagit.github.io/geobr/>
+-   `{chilemapas}` - <https://pacha.dev/chilemapas/>
 
 ## Citation
 
-To cite package ‘geoAr’ in publications use:
+To cite package 'geoAr' in publications use:
 
-  Juan Pablo Ruiz Nicolini (2022). geoAr: Argentina's Spatial Data Toolbox. R package version 0.0.1.2.
-  https://github.com/PoliticaArgentina/geoAr
+Juan Pablo Ruiz Nicolini (2022). geoAr: Argentina's Spatial Data Toolbox. R package version 0.0.1.2. <https://github.com/PoliticaArgentina/geoAr>
 
 A BibTeX entry for LaTeX users is
 
-
-```
-  @Manual{,
-    title = {geoAr: Argentina's Spatial Data Toolbox},
-    author = {Juan Pablo {Ruiz Nicolini}},
-    year = {2022},
-    note = {R package version 0.0.1.2},
-    url = {https://github.com/PoliticaArgentina/geoAr},
-  }
-
-```
-
-
+      @Manual{,
+        title = {geoAr: Argentina's Spatial Data Toolbox},
+        author = {Juan Pablo {Ruiz Nicolini}},
+        year = {2022},
+        note = {R package version 0.0.1.2},
+        url = {https://github.com/PoliticaArgentina/geoAr},
+      }
 
 ## `{geoAr}` es parte del [universo de paquetes **polAr**](https://github.com/PoliticaArgentina/polArverse)
 
@@ -90,4 +92,3 @@ A BibTeX entry for LaTeX users is
 knitr::include_graphics("https://github.com/PoliticaArgentina/data_warehouse/raw/master/hex/collage.png")
 
 ```
-

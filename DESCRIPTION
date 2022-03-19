@@ -17,7 +17,9 @@ Suggests:
     testthat,
     gt,
     knitr,
-    rmarkdown
+    rmarkdown, 
+    geofacet, 
+    ggplot2
 Depends: 
     R (>= 2.10)
 Imports: 

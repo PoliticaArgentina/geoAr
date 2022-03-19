@@ -1,5 +1,5 @@
 
-## `geo`grafía `Ar`rgentina usando `R` <a><img src="man/figures/logo.png" width="200" align="right" /></a>
+## `geo`grafía `Ar`rgentina usando `R` <a><img src="man/figures/logo.png" width="200" align="right"/></a>
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 <!-- badges: start -->
@@ -79,7 +79,25 @@ show_arg_codes() # Preview avialable data
 #> 17 90            119            (((-65.27025 -26.84087, -65.28587 -26.83549, -6~
 ```
 
-## Paquetes similares para otros países
+## Información Disponible (*Available Data*)
+
+**GEOMETRÍAS**
+
+-   ARGENTINA (niveles PROVINCIA, DEPARTAMENTO y RADIO CENSAL)
+
+-   24 provincias (niveles DEPARTAMENTO y RADIO CENSAL)
+
+**GRILLAS**
+
+-   Grillas para usar con
+    [geofaet](https://politicaargentina.github.io/geoAr/articles/geoAr_geofacet.html)
+    para ARGENTINA, 24 provincias y AGLOMERADOS URBANOS (para usar con
+    {eph}
+
+-   Libro de códigos (país, provincia, departamento) y función para
+    recodificar grillas según diccionario (ISO, INDEC, INDRA).
+
+## Paquetes similares para otros países (*Similar packages*)
 
 -   `{geoUy}` - <https://github.com/RichDeto/geouy>
 -   `{geoBr}` - <https://ipeagit.github.io/geobr/>

@@ -4,7 +4,7 @@ pkgdown_sha: ~
 articles:
   geoAr_geofacet: geoAr_geofacet.html
   geoAr_leaflet: geoAr_leaflet.html
-last_built: 2022-03-19T21:52Z
+last_built: 2022-03-19T22:20Z
 urls:
   reference: https://politicaargentina.github.io/geoAr//reference
   article: https://politicaargentina.github.io/geoAr//articles
