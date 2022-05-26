@@ -58,7 +58,7 @@ No se detecto acceso a internet. Por favor chequear la conexion.")
 
     "https://github.com/politicaargentina/data_warehouse/raw/master/geoAr/data/provincias_simplified.geojson"
 
-  } else if (geo == "ARGENTINA" & level == "departamento" & simplified == FALSE){
+  } else if (geo == "ARGENTINA" & level == "provincia" & simplified == FALSE){
 
     "https://github.com/politicaargentina/data_warehouse/raw/master/geoAr/data_raw/provincias.geojson"
 
