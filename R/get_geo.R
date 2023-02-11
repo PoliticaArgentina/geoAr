@@ -123,7 +123,6 @@ No se detecto acceso a internet. Por favor chequear la conexion.")
                                                     start = 8, end = 9))
 
 
-
       }else{
 
         df <- df
@@ -147,6 +146,7 @@ No se detecto acceso a internet. Por favor chequear la conexion.")
 
     assertthat::assert_that(level  %in% c("departamento", "censal"),
                             msg = "Provincial geography can be downloaded only at 'departamento' or 'censal' level" )
+
 
 
     temp <- geoAr::show_arg_codes(viewer = FALSE) %>%
