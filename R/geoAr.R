@@ -31,7 +31,8 @@ if(getRversion() >= "2.15.1")
                            "name_provincia",
                            "nomdepto_censo",
                            "geometry",
-                           "provincia"))
+                           "provincia",
+                           "censos"))
 
 
 
