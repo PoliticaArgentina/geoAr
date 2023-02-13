@@ -26,6 +26,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -38,23 +40,17 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">geoAr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.0.1.3</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -74,7 +70,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/PoliticaArgentina/geoAr/">
+  <a href="https://github.com/PoliticaArgentina/geoAr/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -89,13 +85,13 @@
 
       
 
-      </header><script src="geoAr_geofacet_files/header-attrs-2.9/header-attrs.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>geoAr &amp; geofacet</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/PoliticaArgentina/geoAr/blob/master/vignettes/geoAr_geofacet.Rmd"><code>vignettes/geoAr_geofacet.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/PoliticaArgentina/geoAr/blob/HEAD/vignettes/geoAr_geofacet.Rmd" class="external-link"><code>vignettes/geoAr_geofacet.Rmd</code></a></small>
       <div class="hidden name"><code>geoAr_geofacet.Rmd</code></div>
 
     </div>
@@ -103,56 +99,57 @@
     
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/PoliticaArgentina/geoAr">geoAr</a></span><span class="op">)</span> <span class="co"># Argentina's Spatial Data Toolbox, [github::PoliticaArgentina/geoAr] v0.0.1.2</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/hafen/geofacet">geofacet</a></span><span class="op">)</span> <span class="co"># 'ggplot2' Faceting Utilities for Geographical Data, CRAN v0.2.0</span></code></pre></div>
-<p><a href="https://github.com/PoliticaArgentina/geoAr">geoAr</a> está pensado para facilitar el acceso a datos y el trabajo con información geográfica de argentina. Una de las posibilidades es la descarga de capas ge geometrías con el objetivo de visualizar información. Una alternativa típica es utilizar <a href="https://r-spatial.github.io/sf/">sf</a> para trabajar con datos de este tipo y combinarlo con <a href="https://ggplot2.tidyverse.org">ggplot2</a> (y su función <code>geom_sf()</code> para visualizar capas geográficas.)</p>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/PoliticaArgentina/geoAr" class="external-link">geoAr</a></span><span class="op">)</span> <span class="co"># Argentina's Spatial Data Toolbox, [github::PoliticaArgentina/geoAr] v0.0.1.2</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/hafen/geofacet" class="external-link">geofacet</a></span><span class="op">)</span> <span class="co"># 'ggplot2' Faceting Utilities for Geographical Data, CRAN v0.2.0</span></span>
+<span><span class="co">#&gt; Warning: package 'geofacet' was built under R version 4.1.3</span></span></code></pre></div>
+<p><a href="https://github.com/PoliticaArgentina/geoAr" class="external-link">geoAr</a> está pensado para facilitar el acceso a datos y el trabajo con información geográfica de argentina. Una de las posibilidades es la descarga de capas ge geometrías con el objetivo de visualizar información. Una alternativa típica es utilizar <a href="https://r-spatial.github.io/sf/" class="external-link">sf</a> para trabajar con datos de este tipo y combinarlo con <a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a> (y su función <code>geom_sf()</code> para visualizar capas geográficas.)</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R">
-<span class="va">tucuman</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_geo.html">get_geo</a></span><span class="op">(</span>geo <span class="op">=</span> <span class="st">"TUCUMAN"</span><span class="op">)</span>
-
-<span class="op">(</span><span class="va">tucuman_names</span> <span class="op">&lt;-</span> <span class="va">tucuman</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="../reference/add_geo_codes.html">add_geo_codes</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="co"># Augment data with metadata as districts names or alternative id codes</span>
-<span class="co">#&gt; Simple feature collection with 17 features and 8 fields</span>
-<span class="co">#&gt; Geometry type: MULTIPOLYGON</span>
-<span class="co">#&gt; Dimension:     XY</span>
-<span class="co">#&gt; Bounding box:  xmin: -66.18101 ymin: -28.01575 xmax: -64.48315 ymax: -26.06037</span>
-<span class="co">#&gt; Geodetic CRS:  WGS 84</span>
-<span class="co">#&gt; # A tibble: 17 x 9</span>
-<span class="co">#&gt;    codprov_censo coddepto_censo codprov coddepto nomdepto_censo  name_prov</span>
-<span class="co">#&gt;    &lt;chr&gt;         &lt;chr&gt;          &lt;chr&gt;   &lt;chr&gt;    &lt;chr&gt;           &lt;chr&gt;    </span>
-<span class="co">#&gt;  1 90            007            23      013      BURRUYACU       TUCUMAN  </span>
-<span class="co">#&gt;  2 90            014            23      012      CRUZ ALTA       TUCUMAN  </span>
-<span class="co">#&gt;  3 90            021            23      005      CHICLIGASTA     TUCUMAN  </span>
-<span class="co">#&gt;  4 90            028            23      003      FAMAILLA        TUCUMAN  </span>
-<span class="co">#&gt;  5 90            035            23      009      GRANEROS        TUCUMAN  </span>
-<span class="co">#&gt;  6 90            042            23      007      JUAN B. ALBERDI TUCUMAN  </span>
-<span class="co">#&gt;  7 90            049            23      008      LA COCHA        TUCUMAN  </span>
-<span class="co">#&gt;  8 90            056            23      011      LEALES          TUCUMAN  </span>
-<span class="co">#&gt;  9 90            063            23      002      LULES           TUCUMAN  </span>
-<span class="co">#&gt; 10 90            070            23      004      MONTEROS        TUCUMAN  </span>
-<span class="co">#&gt; 11 90            077            23      006      RIO CHICO       TUCUMAN  </span>
-<span class="co">#&gt; 12 90            084            23      001      CAPITAL         TUCUMAN  </span>
-<span class="co">#&gt; 13 90            091            23      010      SIMOCA          TUCUMAN  </span>
-<span class="co">#&gt; 14 90            098            23      017      TAFI DEL VALLE  TUCUMAN  </span>
-<span class="co">#&gt; 15 90            105            23      016      TAFI VIEJO      TUCUMAN  </span>
-<span class="co">#&gt; 16 90            112            23      014      TRANCAS         TUCUMAN  </span>
-<span class="co">#&gt; 17 90            119            23      015      YERBA BUENA     TUCUMAN  </span>
-<span class="co">#&gt; # ... with 3 more variables: codprov_iso &lt;chr&gt;, name_iso &lt;chr&gt;,</span>
-<span class="co">#&gt; #   geometry &lt;MULTIPOLYGON [°]&gt;</span>
-
-
-<span class="co"># MAPING</span>
-
-<span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">tucuman_names</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf_label</a></span><span class="op">(</span><span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>label <span class="op">=</span> <span class="va">nomdepto_censo</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; Warning in st_point_on_surface.sfc(sf::st_zm(x)): st_point_on_surface may not</span>
-<span class="co">#&gt; give correct results for longitude/latitude data</span></code></pre></div>
+<code class="sourceCode R"><span></span>
+<span><span class="va">tucuman</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_geo.html">get_geo</a></span><span class="op">(</span>geo <span class="op">=</span> <span class="st">"TUCUMAN"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="op">(</span><span class="va">tucuman_names</span> <span class="op">&lt;-</span> <span class="va">tucuman</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/add_geo_codes.html">add_geo_codes</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="co"># Augment data with metadata as districts names or alternative id codes</span></span>
+<span><span class="co">#&gt; Simple feature collection with 17 features and 8 fields</span></span>
+<span><span class="co">#&gt; Geometry type: MULTIPOLYGON</span></span>
+<span><span class="co">#&gt; Dimension:     XY</span></span>
+<span><span class="co">#&gt; Bounding box:  xmin: -66.18101 ymin: -28.01575 xmax: -64.48315 ymax: -26.06037</span></span>
+<span><span class="co">#&gt; Geodetic CRS:  WGS 84</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 17 x 9</span></span></span>
+<span><span class="co">#&gt;    codprov_censo coddepto_censo codprov coddepto nomde~1 name_~2 codpr~3 name_~4</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> 90            007            23      013      BURRUY~ TUCUMAN AR-T    Tucumán</span>n</span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> 90            014            23      012      CRUZ A~ TUCUMAN AR-T    Tucumán</span>n</span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> 90            021            23      005      CHICLI~ TUCUMAN AR-T    Tucumán</span>n</span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> 90            028            23      003      FAMAIL~ TUCUMAN AR-T    Tucumán</span>n</span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> 90            035            23      009      GRANER~ TUCUMAN AR-T    Tucumán</span>n</span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> 90            042            23      007      JUAN B~ TUCUMAN AR-T    Tucumán</span>n</span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> 90            049            23      008      LA COC~ TUCUMAN AR-T    Tucumán</span>n</span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> 90            056            23      011      LEALES  TUCUMAN AR-T    Tucumán</span>n</span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 90            063            23      002      LULES   TUCUMAN AR-T    Tucumán</span>n</span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> 90            070            23      004      MONTER~ TUCUMAN AR-T    Tucumán</span>n</span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span> 90            077            23      006      RIO CH~ TUCUMAN AR-T    Tucumán</span>n</span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span> 90            084            23      001      CAPITAL TUCUMAN AR-T    Tucumán</span>n</span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">13</span> 90            091            23      010      SIMOCA  TUCUMAN AR-T    Tucumán</span>n</span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">14</span> 90            098            23      017      TAFI D~ TUCUMAN AR-T    Tucumán</span>n</span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">15</span> 90            105            23      016      TAFI V~ TUCUMAN AR-T    Tucumán</span>n</span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">16</span> 90            112            23      014      TRANCAS TUCUMAN AR-T    Tucumán</span>n</span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">17</span> 90            119            23      015      YERBA ~ TUCUMAN AR-T    Tucumán</span>n</span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ... with 1 more variable: geometry &lt;MULTIPOLYGON [°]&gt;, and abbreviated</span></span>m</span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   variable names 1: nomdepto_censo, 2: name_prov, 3: codprov_iso, 4: name_iso</span></span></span>
+<span></span>
+<span></span>
+<span><span class="co"># MAPING</span></span>
+<span></span>
+<span><span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">tucuman_names</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf_label</a></span><span class="op">(</span><span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>label <span class="op">=</span> <span class="va">nomdepto_censo</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning in st_point_on_surface.sfc(sf::st_zm(x)): st_point_on_surface may not</span></span>
+<span><span class="co">#&gt; give correct results for longitude/latitude data</span></span></code></pre></div>
 <p><img src="geoAr_geofacet_files/figure-html/unnamed-chunk-2-1.png" width="700"></p>
-<p>No obstante, existen ocaciones en las que la visualización de información geográfica a través de mapas convencionales puede no ser la mejor opción. <a href="https://github.com/hafen/geofacet">geofacet</a> es un paquete que busca sacar provecho de la potencia de <a href="https://ggplot2.tidyverse.org">ggplot2</a> y utilizar el <em>facetado</em> de un modo que cada caja de una grilla represente una entidad y que la suma de estas guarden relación con su distribución espacial.</p>
-<div id="ejemplo" class="section level3">
-<h3 class="hasAnchor">
-<a href="#ejemplo" class="anchor"></a>Ejemplo</h3>
+<p>No obstante, existen ocaciones en las que la visualización de información geográfica a través de mapas convencionales puede no ser la mejor opción. <a href="https://github.com/hafen/geofacet" class="external-link">geofacet</a> es un paquete que busca sacar provecho de la potencia de <a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a> y utilizar el <em>facetado</em> de un modo que cada caja de una grilla represente una entidad y que la suma de estas guarden relación con su distribución espacial.</p>
+<div class="section level3">
+<h3 id="ejemplo">Ejemplo<a class="anchor" aria-label="anchor" href="#ejemplo"></a>
+</h3>
 <p>En los gráficos que siguen se representa un indicador tipico de la Ciencia Política (el <em>Número Efectivo de Partidos</em>) para una serie de tiempo para todas las provincias de Argentina. En el primer caso esto está facilitado al generar un <em>facet</em> a partir de la variable PROVINCIA, generando un pequeño gráfico para cada distrito (<em>small multiple</em>).</p>
 <p><img src="https://tuqmanor.netlify.app/post/Geofacetear_files/figure-html/unnamed-chunk-1-1.png"><!-- --></p>
 <p>En el segundo se utiliza geofacet para acomodar esta grilla <em>cómo si fuera un mapa</em> de Argentina. Facilitando de este modo una mirada que tenga en cuenta (y conocimiento) de la distribución geográfica de las provincias.</p>
@@ -160,81 +157,81 @@
 <blockquote>
 <p>“El paquete geofacet amplía ggplot2 de una manera que facilita la creación de visualizaciones geográficamente facetadas en R. Para usar geofacet se toman datos que representan diferentes entidades geográficas y se aplica un método de visualización para cada entidad. El conjunto resultante de visualizaciones conforma una cuadrícula que imita la topología geográfica original”.</p>
 </blockquote>
-<p>(Traducción propia de la nota intorudctoria del autor, Ryan Haffen. Fuente: <a href="https://tuqmano.ar/2019/01/21/geofacetear/" class="uri">https://tuqmano.ar/2019/01/21/geofacetear/</a>)</p>
+<p>(Traducción propia de la nota intorudctoria del autor, Ryan Haffen. Fuente: <a href="https://tuqmano.ar/2019/01/21/geofacetear/" class="external-link uri">https://tuqmano.ar/2019/01/21/geofacetear/</a>)</p>
 <p>Los siguientes puntos resumen las ventajas potenciales para el uso de esta herramientas en comparación de otras técnicas para representar información a través de mapas u otras alterantivas (como cartogramas, tilemaps, etc.):</p>
 <ul>
 <li><p>se pueden graficar múltiples variables para cada unidad geográfica</p></li>
 <li><p>se pueden aplicar otros esquemas de codificación visual más allá del color</p></li>
 <li><p>cada unidad geográfica tiene asignada la misma proporción espacial</p></li>
 </ul>
-<p>Una particularidad del paquete <a href="https://github.com/hafen/geofacet">geofacet</a> es que propicia el desarrollo de grillas por parte de usuaries. Tanto para uso <em>ad hoc</em> como para contribuir con un <a href="https://hafen.github.io/geofacet/articles/geofacet.html#list-available-grids">repositorio de grillas que alimenta el paquete</a>. Esta iniciativa nos impulsó a desarrollar grillas para Argentina y todas sus provincias, que terminaron conformando <code>{geofacetAR}</code>, antecedente de este proyecto que tuvo sus primeros pasos en el marco del <em>1° LatinR</em> en el que presentamos <em>Geofaceting Argentina</em></p>
-<p><a href="https://github.com/TuQmano/geofacet_ARG/blob/master/.LatinR/Geofaceting_Argentina_RuizNicolini.pdf">Abstract</a> | 📊 <a href="https://www.researchgate.net/publication/327382101_Geofaceting_Argentina_LatinR_2018">Slides</a> | 📦 <a href="https://electorarg.github.io/geofaceteAR/">{geofaceteAR}</a> | ⌨️ <a href="https://www.tuqmano.com/2020/05/22/empaquetar/">blogpost</a>.</p>
+<p>Una particularidad del paquete <a href="https://github.com/hafen/geofacet" class="external-link">geofacet</a> es que propicia el desarrollo de grillas por parte de usuaries. Tanto para uso <em>ad hoc</em> como para contribuir con un <a href="https://hafen.github.io/geofacet/articles/geofacet.html#list-available-grids" class="external-link">repositorio de grillas que alimenta el paquete</a>. Esta iniciativa nos impulsó a desarrollar grillas para Argentina y todas sus provincias, que terminaron conformando <code>{geofacetAR}</code>, antecedente de este proyecto que tuvo sus primeros pasos en el marco del <em>1° LatinR</em> en el que presentamos <em>Geofaceting Argentina</em></p>
+<p><a href="https://github.com/TuQmano/geofacet_ARG/blob/master/.LatinR/Geofaceting_Argentina_RuizNicolini.pdf" class="external-link">Abstract</a> | 📊 <a href="https://www.researchgate.net/publication/327382101_Geofaceting_Argentina_LatinR_2018" class="external-link">Slides</a> | 📦 <a href="https://electorarg.github.io/geofaceteAR/" class="external-link">{geofaceteAR}</a> | ⌨️ <a href="https://www.tuqmano.com/2020/05/22/empaquetar/" class="external-link">blogpost</a>.</p>
 </div>
-<div id="get_grid" class="section level3">
-<h3 class="hasAnchor">
-<a href="#get_grid" class="anchor"></a>get_grid()</h3>
+<div class="section level3">
+<h3 id="get_grid">get_grid()<a class="anchor" aria-label="anchor" href="#get_grid"></a>
+</h3>
 <p>Así como <code><a href="../reference/get_geo.html">get_geo()</a></code> permite descargar un set de datos que incluyen una variable <code>geometry</code> con información geográfica para la generación de mapas, <code><a href="../reference/get_grid.html">get_grid()</a></code> permite descargar grillas pre diseñadas para Argentina y cada una de las provincias.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R">
-<span class="op">(</span><span class="va">tucuman_names</span> <span class="op">&lt;-</span> <span class="va">tucuman</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="../reference/add_geo_codes.html">add_geo_codes</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="co"># Augment data with metadata as districts names or alternative id codes</span>
-<span class="co">#&gt; Simple feature collection with 17 features and 8 fields</span>
-<span class="co">#&gt; Geometry type: MULTIPOLYGON</span>
-<span class="co">#&gt; Dimension:     XY</span>
-<span class="co">#&gt; Bounding box:  xmin: -66.18101 ymin: -28.01575 xmax: -64.48315 ymax: -26.06037</span>
-<span class="co">#&gt; Geodetic CRS:  WGS 84</span>
-<span class="co">#&gt; # A tibble: 17 x 9</span>
-<span class="co">#&gt;    codprov_censo coddepto_censo codprov coddepto nomdepto_censo  name_prov</span>
-<span class="co">#&gt;    &lt;chr&gt;         &lt;chr&gt;          &lt;chr&gt;   &lt;chr&gt;    &lt;chr&gt;           &lt;chr&gt;    </span>
-<span class="co">#&gt;  1 90            007            23      013      BURRUYACU       TUCUMAN  </span>
-<span class="co">#&gt;  2 90            014            23      012      CRUZ ALTA       TUCUMAN  </span>
-<span class="co">#&gt;  3 90            021            23      005      CHICLIGASTA     TUCUMAN  </span>
-<span class="co">#&gt;  4 90            028            23      003      FAMAILLA        TUCUMAN  </span>
-<span class="co">#&gt;  5 90            035            23      009      GRANEROS        TUCUMAN  </span>
-<span class="co">#&gt;  6 90            042            23      007      JUAN B. ALBERDI TUCUMAN  </span>
-<span class="co">#&gt;  7 90            049            23      008      LA COCHA        TUCUMAN  </span>
-<span class="co">#&gt;  8 90            056            23      011      LEALES          TUCUMAN  </span>
-<span class="co">#&gt;  9 90            063            23      002      LULES           TUCUMAN  </span>
-<span class="co">#&gt; 10 90            070            23      004      MONTEROS        TUCUMAN  </span>
-<span class="co">#&gt; 11 90            077            23      006      RIO CHICO       TUCUMAN  </span>
-<span class="co">#&gt; 12 90            084            23      001      CAPITAL         TUCUMAN  </span>
-<span class="co">#&gt; 13 90            091            23      010      SIMOCA          TUCUMAN  </span>
-<span class="co">#&gt; 14 90            098            23      017      TAFI DEL VALLE  TUCUMAN  </span>
-<span class="co">#&gt; 15 90            105            23      016      TAFI VIEJO      TUCUMAN  </span>
-<span class="co">#&gt; 16 90            112            23      014      TRANCAS         TUCUMAN  </span>
-<span class="co">#&gt; 17 90            119            23      015      YERBA BUENA     TUCUMAN  </span>
-<span class="co">#&gt; # ... with 3 more variables: codprov_iso &lt;chr&gt;, name_iso &lt;chr&gt;,</span>
-<span class="co">#&gt; #   geometry &lt;MULTIPOLYGON [°]&gt;</span>
-
-
-<span class="co"># GRIDS AS IF THEY WHERE MAPS FOR {geofacet}</span>
-
-<span class="op">(</span><span class="va">grid_tucuman</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_grid.html">get_grid</a></span><span class="op">(</span><span class="st">"TUCUMAN"</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; Adding missing grouping variables: `name_provincia`</span>
-<span class="co">#&gt;    name_provincia            name row col code</span>
-<span class="co">#&gt; 1         TUCUMAN       BURRUYACU   1   4  013</span>
-<span class="co">#&gt; 2         TUCUMAN         CAPITAL   2   4  001</span>
-<span class="co">#&gt; 3         TUCUMAN     CHICLIGASTA   4   2  005</span>
-<span class="co">#&gt; 4         TUCUMAN       CRUZ ALTA   2   5  012</span>
-<span class="co">#&gt; 5         TUCUMAN        FAMAILLA   3   3  003</span>
-<span class="co">#&gt; 6         TUCUMAN        GRANEROS   5   4  009</span>
-<span class="co">#&gt; 7         TUCUMAN JUAN B. ALBERDI   5   3  007</span>
-<span class="co">#&gt; 8         TUCUMAN        LA COCHA   6   3  008</span>
-<span class="co">#&gt; 9         TUCUMAN          LEALES   3   5  011</span>
-<span class="co">#&gt; 10        TUCUMAN           LULES   3   4  002</span>
-<span class="co">#&gt; 11        TUCUMAN        MONTEROS   3   2  004</span>
-<span class="co">#&gt; 12        TUCUMAN       RIO CHICO   4   3  006</span>
-<span class="co">#&gt; 13        TUCUMAN          SIMOCA   4   4  010</span>
-<span class="co">#&gt; 14        TUCUMAN  TAFI DEL VALLE   2   1  017</span>
-<span class="co">#&gt; 15        TUCUMAN      TAFI VIEJO   2   2  016</span>
-<span class="co">#&gt; 16        TUCUMAN         TRANCAS   1   3  014</span>
-<span class="co">#&gt; 17        TUCUMAN     YERBA BUENA   2   3  015</span>
-
-<span class="fu">geofacet</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/geofacet/man/grid_preview.html">grid_preview</a></span><span class="op">(</span><span class="va">grid_tucuman</span>, label <span class="op">=</span> <span class="st">"name"</span><span class="op">)</span>
-<span class="co">#&gt; Note: You provided a user-specified grid. If this is a generally-useful</span>
-<span class="co">#&gt;   grid, please consider submitting it to become a part of the geofacet</span>
-<span class="co">#&gt;   package. You can do this easily by calling:</span>
-<span class="co">#&gt;   grid_submit(__grid_df_name__)</span></code></pre></div>
+<code class="sourceCode R"><span></span>
+<span><span class="op">(</span><span class="va">tucuman_names</span> <span class="op">&lt;-</span> <span class="va">tucuman</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/add_geo_codes.html">add_geo_codes</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="co"># Augment data with metadata as districts names or alternative id codes</span></span>
+<span><span class="co">#&gt; Simple feature collection with 17 features and 8 fields</span></span>
+<span><span class="co">#&gt; Geometry type: MULTIPOLYGON</span></span>
+<span><span class="co">#&gt; Dimension:     XY</span></span>
+<span><span class="co">#&gt; Bounding box:  xmin: -66.18101 ymin: -28.01575 xmax: -64.48315 ymax: -26.06037</span></span>
+<span><span class="co">#&gt; Geodetic CRS:  WGS 84</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 17 x 9</span></span></span>
+<span><span class="co">#&gt;    codprov_censo coddepto_censo codprov coddepto nomde~1 name_~2 codpr~3 name_~4</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> 90            007            23      013      BURRUY~ TUCUMAN AR-T    Tucumán</span>n</span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> 90            014            23      012      CRUZ A~ TUCUMAN AR-T    Tucumán</span>n</span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> 90            021            23      005      CHICLI~ TUCUMAN AR-T    Tucumán</span>n</span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> 90            028            23      003      FAMAIL~ TUCUMAN AR-T    Tucumán</span>n</span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> 90            035            23      009      GRANER~ TUCUMAN AR-T    Tucumán</span>n</span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> 90            042            23      007      JUAN B~ TUCUMAN AR-T    Tucumán</span>n</span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> 90            049            23      008      LA COC~ TUCUMAN AR-T    Tucumán</span>n</span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> 90            056            23      011      LEALES  TUCUMAN AR-T    Tucumán</span>n</span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 90            063            23      002      LULES   TUCUMAN AR-T    Tucumán</span>n</span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> 90            070            23      004      MONTER~ TUCUMAN AR-T    Tucumán</span>n</span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span> 90            077            23      006      RIO CH~ TUCUMAN AR-T    Tucumán</span>n</span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span> 90            084            23      001      CAPITAL TUCUMAN AR-T    Tucumán</span>n</span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">13</span> 90            091            23      010      SIMOCA  TUCUMAN AR-T    Tucumán</span>n</span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">14</span> 90            098            23      017      TAFI D~ TUCUMAN AR-T    Tucumán</span>n</span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">15</span> 90            105            23      016      TAFI V~ TUCUMAN AR-T    Tucumán</span>n</span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">16</span> 90            112            23      014      TRANCAS TUCUMAN AR-T    Tucumán</span>n</span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">17</span> 90            119            23      015      YERBA ~ TUCUMAN AR-T    Tucumán</span>n</span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ... with 1 more variable: geometry &lt;MULTIPOLYGON [°]&gt;, and abbreviated</span></span>m</span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   variable names 1: nomdepto_censo, 2: name_prov, 3: codprov_iso, 4: name_iso</span></span></span>
+<span></span>
+<span></span>
+<span><span class="co"># GRIDS AS IF THEY WHERE MAPS FOR {geofacet}</span></span>
+<span></span>
+<span><span class="op">(</span><span class="va">grid_tucuman</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_grid.html">get_grid</a></span><span class="op">(</span><span class="st">"TUCUMAN"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Adding missing grouping variables: `name_provincia`</span></span>
+<span><span class="co">#&gt;    name_provincia            name row col code</span></span>
+<span><span class="co">#&gt; 1         TUCUMAN       BURRUYACU   1   4  013</span></span>
+<span><span class="co">#&gt; 2         TUCUMAN         CAPITAL   2   4  001</span></span>
+<span><span class="co">#&gt; 3         TUCUMAN     CHICLIGASTA   4   2  005</span></span>
+<span><span class="co">#&gt; 4         TUCUMAN       CRUZ ALTA   2   5  012</span></span>
+<span><span class="co">#&gt; 5         TUCUMAN        FAMAILLA   3   3  003</span></span>
+<span><span class="co">#&gt; 6         TUCUMAN        GRANEROS   5   4  009</span></span>
+<span><span class="co">#&gt; 7         TUCUMAN JUAN B. ALBERDI   5   3  007</span></span>
+<span><span class="co">#&gt; 8         TUCUMAN        LA COCHA   6   3  008</span></span>
+<span><span class="co">#&gt; 9         TUCUMAN          LEALES   3   5  011</span></span>
+<span><span class="co">#&gt; 10        TUCUMAN           LULES   3   4  002</span></span>
+<span><span class="co">#&gt; 11        TUCUMAN        MONTEROS   3   2  004</span></span>
+<span><span class="co">#&gt; 12        TUCUMAN       RIO CHICO   4   3  006</span></span>
+<span><span class="co">#&gt; 13        TUCUMAN          SIMOCA   4   4  010</span></span>
+<span><span class="co">#&gt; 14        TUCUMAN  TAFI DEL VALLE   2   1  017</span></span>
+<span><span class="co">#&gt; 15        TUCUMAN      TAFI VIEJO   2   2  016</span></span>
+<span><span class="co">#&gt; 16        TUCUMAN         TRANCAS   1   3  014</span></span>
+<span><span class="co">#&gt; 17        TUCUMAN     YERBA BUENA   2   3  015</span></span>
+<span></span>
+<span><span class="fu">geofacet</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/geofacet/man/grid_preview.html" class="external-link">grid_preview</a></span><span class="op">(</span><span class="va">grid_tucuman</span>, label <span class="op">=</span> <span class="st">"name"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Note: You provided a user-specified grid. If this is a generally-useful</span></span>
+<span><span class="co">#&gt;   grid, please consider submitting it to become a part of the geofacet</span></span>
+<span><span class="co">#&gt;   package. You can do this easily by calling:</span></span>
+<span><span class="co">#&gt;   grid_submit(__grid_df_name__)</span></span></code></pre></div>
 <p><img src="geoAr_geofacet_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
 </div>
   </div>
@@ -248,11 +245,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by <a href="https://tuqmano.ar">Juan Pablo Ruiz Nicolini</a>.</p>
+  <p></p>
+<p>Developed by <a href="https://tuqmano.ar" class="external-link">Juan Pablo Ruiz Nicolini</a>.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>
@@ -260,6 +259,8 @@
 
   
 
+
+  
 
   </body>
 </html>

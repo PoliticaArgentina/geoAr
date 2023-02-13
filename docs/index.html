@@ -26,6 +26,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -38,23 +40,17 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">geoAr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.0.1.3</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -74,7 +70,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/PoliticaArgentina/geoAr/">
+  <a href="https://github.com/PoliticaArgentina/geoAr/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -92,126 +88,124 @@
       </header><div class="row">
   <div class="contents col-md-9">
 
-<div id="geografía-arrgentina-usando-r-" class="section level2">
-<h2 class="hasAnchor">
-<a href="#geograf%C3%ADa-arrgentina-usando-r-" class="anchor"></a><code>geo</code>grafía <code>Ar</code>rgentina usando <code>R</code> <a><img src="reference/figures/logo.png" width="200" align="right"></a>
+<div class="section level2">
+<h2 id="geografía-arrgentina-usando-r-">
+<code>geo</code>grafía <code>Ar</code>rgentina usando <code>R</code> <a><img src="reference/figures/logo.png" width="200" align="right"></a>
+<a class="anchor" aria-label="anchor" href="#geograf%C3%ADa-arrgentina-usando-r-"></a>
 </h2>
-<!-- README.md is generated from README.Rmd. Please edit that file -->
-<!-- badges: start -->
-
-<!-- badges: end -->
-<p><a href="https://github.com/PoliticaArgentina/geoAr">geoAr</a> brinda herramientas que facilitan el acceso y el trabajo con datos espaciales de Argentina desde <code>R</code>.</p>
+<!-- README.md is generated from README.Rmd. Please edit that file --><!-- badges: start -->
+<!-- badges: end --><p><a href="https://github.com/PoliticaArgentina/geoAr" class="external-link">geoAr</a> brinda herramientas que facilitan el acceso y el trabajo con datos espaciales de Argentina desde <code>R</code>.</p>
 <hr>
-<div id="instalación" class="section level3">
-<h3 class="hasAnchor">
-<a href="#instalaci%C3%B3n" class="anchor"></a>INSTALACIÓN</h3>
-</div>
-<div id="versión-en-desarrollo-development-version" class="section level3">
-<h3 class="hasAnchor">
-<a href="#versi%C3%B3n-en-desarrollo-development-version" class="anchor"></a>Versión en desarrollo (<em>Development version</em>)</h3>
+<div class="section level3"><h3 id="instalación">INSTALACIÓN<a class="anchor" aria-label="anchor" href="#instalaci%C3%B3n"></a>
+</h3></div>
+<div class="section level3">
+<h3 id="versión-en-desarrollo-development-version">Versión en desarrollo (<em>Development version</em>)<a class="anchor" aria-label="anchor" href="#versi%C3%B3n-en-desarrollo-development-version"></a>
+</h3>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># install.packages('devtools') si no tiene instalado devtools</span>
-
-<span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/remote-reexports.html">install_github</a></span><span class="op">(</span><span class="st">"politicaargentina/geoAr"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># install.packages('devtools') si no tiene instalado devtools</span></span>
+<span></span>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"politicaargentina/geoAr"</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="ejemplo-de-uso-básico-basic-usage" class="section level3">
-<h3 class="hasAnchor">
-<a href="#ejemplo-de-uso-b%C3%A1sico-basic-usage" class="anchor"></a>Ejemplo de uso básico (<em>Basic Usage</em>)</h3>
+<div class="section level3">
+<h3 id="ejemplo-de-uso-básico-basic-usage">Ejemplo de uso básico (<em>Basic Usage</em>)<a class="anchor" aria-label="anchor" href="#ejemplo-de-uso-b%C3%A1sico-basic-usage"></a>
+</h3>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/PoliticaArgentina/geoAr">geoAr</a></span><span class="op">)</span>
-
-
-<span class="fu"><a href="reference/show_arg_codes.html">show_arg_codes</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># Preview avialable data </span>
-<span class="co">#&gt; # A tibble: 26 x 5</span>
-<span class="co">#&gt;    id           codprov codprov_censo codprov_iso name_iso                      </span>
-<span class="co">#&gt;    &lt;chr&gt;        &lt;chr&gt;   &lt;chr&gt;         &lt;chr&gt;       &lt;chr&gt;                         </span>
-<span class="co">#&gt;  1 ARGENTINA    " "     " "           AR          Argentina                     </span>
-<span class="co">#&gt;  2 CABA         "01"    "02"          AR-C        Ciudad Autónoma de Buenos Air~</span>
-<span class="co">#&gt;  3 BUENOS AIRES "02"    "06"          AR-B        Buenos Aires                  </span>
-<span class="co">#&gt;  4 CATAMARCA    "03"    "10"          AR-K        Catamarca                     </span>
-<span class="co">#&gt;  5 CORDOBA      "04"    "14"          AR-X        Córdoba                       </span>
-<span class="co">#&gt;  6 CORRIENTES   "05"    "18"          AR-W        Corrientes                    </span>
-<span class="co">#&gt;  7 CHACO        "06"    "22"          AR-H        Chaco                         </span>
-<span class="co">#&gt;  8 CHUBUT       "07"    "26"          AR-U        Chubut                        </span>
-<span class="co">#&gt;  9 ENTRE RIOS   "08"    "30"          AR-E        Entre Ríos                    </span>
-<span class="co">#&gt; 10 FORMOSA      "09"    "34"          AR-P        Formosa                       </span>
-<span class="co">#&gt; # ... with 16 more rows</span>
-
-
-<span class="op">(</span><span class="va">tucuman</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/get_geo.html">get_geo</a></span><span class="op">(</span>geo <span class="op">=</span> <span class="st">"TUCUMAN"</span><span class="op">)</span><span class="op">)</span> <span class="co"># geo id parameter from show_arg_codes() function</span>
-<span class="co">#&gt; Simple feature collection with 17 features and 2 fields</span>
-<span class="co">#&gt; Geometry type: MULTIPOLYGON</span>
-<span class="co">#&gt; Dimension:     XY</span>
-<span class="co">#&gt; Bounding box:  xmin: -66.18101 ymin: -28.01575 xmax: -64.48315 ymax: -26.06037</span>
-<span class="co">#&gt; Geodetic CRS:  WGS 84</span>
-<span class="co">#&gt; # A tibble: 17 x 3</span>
-<span class="co">#&gt;    codprov_censo coddepto_censo                                         geometry</span>
-<span class="co">#&gt;  * &lt;chr&gt;         &lt;chr&gt;                                        &lt;MULTIPOLYGON [°]&gt;</span>
-<span class="co">#&gt;  1 90            007            (((-64.49919 -26.23353, -64.49857 -26.26325, -6~</span>
-<span class="co">#&gt;  2 90            014            (((-65.13782 -26.74975, -65.10095 -26.75771, -6~</span>
-<span class="co">#&gt;  3 90            021            (((-65.94729 -27.08444, -65.93885 -27.0989, -65~</span>
-<span class="co">#&gt;  4 90            028            (((-65.62733 -26.87134, -65.62598 -26.84177, -6~</span>
-<span class="co">#&gt;  5 90            035            (((-65.47532 -27.53838, -65.43503 -27.5425, -65~</span>
-<span class="co">#&gt;  6 90            042            (((-65.51768 -27.54528, -65.53685 -27.62278, -6~</span>
-<span class="co">#&gt;  7 90            049            (((-65.51348 -27.62978, -65.52091 -27.66553, -6~</span>
-<span class="co">#&gt;  8 90            056            (((-65.12933 -27.02488, -65.12589 -27.01659, -6~</span>
-<span class="co">#&gt;  9 90            063            (((-65.43583 -26.83751, -65.38124 -26.84196, -6~</span>
-<span class="co">#&gt; 10 90            070            (((-65.86853 -26.99852, -65.85796 -27.01388, -6~</span>
-<span class="co">#&gt; 11 90            077            (((-65.93481 -27.39544, -65.89887 -27.3702, -65~</span>
-<span class="co">#&gt; 12 90            084            (((-65.16293 -26.82289, -65.18562 -26.86204, -6~</span>
-<span class="co">#&gt; 13 90            091            (((-65.33499 -27.20478, -65.33462 -27.21948, -6~</span>
-<span class="co">#&gt; 14 90            098            (((-66.08361 -26.23547, -66.06621 -26.23792, -6~</span>
-<span class="co">#&gt; 15 90            105            (((-65.70111 -26.52317, -65.65078 -26.5263, -65~</span>
-<span class="co">#&gt; 16 90            112            (((-65.52483 -26.09667, -65.4682 -26.09253, -65~</span>
-<span class="co">#&gt; 17 90            119            (((-65.27025 -26.84087, -65.28587 -26.83549, -6~</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/PoliticaArgentina/geoAr" class="external-link">geoAr</a></span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="fu"><a href="reference/show_arg_codes.html">show_arg_codes</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># Preview avialable data </span></span>
+<span><span class="co">#&gt; # A tibble: 26 x 5</span></span>
+<span><span class="co">#&gt;    id           codprov codprov_censo codprov_iso name_iso                      </span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;        &lt;chr&gt;   &lt;chr&gt;         &lt;chr&gt;       &lt;chr&gt;                         </span></span>
+<span><span class="co">#&gt;  1 ARGENTINA    " "     " "           AR          Argentina                     </span></span>
+<span><span class="co">#&gt;  2 CABA         "01"    "02"          AR-C        Ciudad Autónoma de Buenos Air~</span></span>
+<span><span class="co">#&gt;  3 BUENOS AIRES "02"    "06"          AR-B        Buenos Aires                  </span></span>
+<span><span class="co">#&gt;  4 CATAMARCA    "03"    "10"          AR-K        Catamarca                     </span></span>
+<span><span class="co">#&gt;  5 CORDOBA      "04"    "14"          AR-X        Córdoba                       </span></span>
+<span><span class="co">#&gt;  6 CORRIENTES   "05"    "18"          AR-W        Corrientes                    </span></span>
+<span><span class="co">#&gt;  7 CHACO        "06"    "22"          AR-H        Chaco                         </span></span>
+<span><span class="co">#&gt;  8 CHUBUT       "07"    "26"          AR-U        Chubut                        </span></span>
+<span><span class="co">#&gt;  9 ENTRE RIOS   "08"    "30"          AR-E        Entre Ríos                    </span></span>
+<span><span class="co">#&gt; 10 FORMOSA      "09"    "34"          AR-P        Formosa                       </span></span>
+<span><span class="co">#&gt; # ... with 16 more rows</span></span>
+<span></span>
+<span></span>
+<span><span class="op">(</span><span class="va">tucuman</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/get_geo.html">get_geo</a></span><span class="op">(</span>geo <span class="op">=</span> <span class="st">"TUCUMAN"</span><span class="op">)</span><span class="op">)</span> <span class="co"># geo id parameter from show_arg_codes() function</span></span>
+<span><span class="co">#&gt; Simple feature collection with 17 features and 2 fields</span></span>
+<span><span class="co">#&gt; Geometry type: MULTIPOLYGON</span></span>
+<span><span class="co">#&gt; Dimension:     XY</span></span>
+<span><span class="co">#&gt; Bounding box:  xmin: -66.18101 ymin: -28.01575 xmax: -64.48315 ymax: -26.06037</span></span>
+<span><span class="co">#&gt; Geodetic CRS:  WGS 84</span></span>
+<span><span class="co">#&gt; # A tibble: 17 x 3</span></span>
+<span><span class="co">#&gt;    codprov_censo coddepto_censo                                         geometry</span></span>
+<span><span class="co">#&gt;  * &lt;chr&gt;         &lt;chr&gt;                                        &lt;MULTIPOLYGON [°]&gt;</span></span>
+<span><span class="co">#&gt;  1 90            007            (((-64.49919 -26.23353, -64.49857 -26.26325, -6~</span></span>
+<span><span class="co">#&gt;  2 90            014            (((-65.13782 -26.74975, -65.10095 -26.75771, -6~</span></span>
+<span><span class="co">#&gt;  3 90            021            (((-65.94729 -27.08444, -65.93885 -27.0989, -65~</span></span>
+<span><span class="co">#&gt;  4 90            028            (((-65.62733 -26.87134, -65.62598 -26.84177, -6~</span></span>
+<span><span class="co">#&gt;  5 90            035            (((-65.47532 -27.53838, -65.43503 -27.5425, -65~</span></span>
+<span><span class="co">#&gt;  6 90            042            (((-65.51768 -27.54528, -65.53685 -27.62278, -6~</span></span>
+<span><span class="co">#&gt;  7 90            049            (((-65.51348 -27.62978, -65.52091 -27.66553, -6~</span></span>
+<span><span class="co">#&gt;  8 90            056            (((-65.12933 -27.02488, -65.12589 -27.01659, -6~</span></span>
+<span><span class="co">#&gt;  9 90            063            (((-65.43583 -26.83751, -65.38124 -26.84196, -6~</span></span>
+<span><span class="co">#&gt; 10 90            070            (((-65.86853 -26.99852, -65.85796 -27.01388, -6~</span></span>
+<span><span class="co">#&gt; 11 90            077            (((-65.93481 -27.39544, -65.89887 -27.3702, -65~</span></span>
+<span><span class="co">#&gt; 12 90            084            (((-65.16293 -26.82289, -65.18562 -26.86204, -6~</span></span>
+<span><span class="co">#&gt; 13 90            091            (((-65.33499 -27.20478, -65.33462 -27.21948, -6~</span></span>
+<span><span class="co">#&gt; 14 90            098            (((-66.08361 -26.23547, -66.06621 -26.23792, -6~</span></span>
+<span><span class="co">#&gt; 15 90            105            (((-65.70111 -26.52317, -65.65078 -26.5263, -65~</span></span>
+<span><span class="co">#&gt; 16 90            112            (((-65.52483 -26.09667, -65.4682 -26.09253, -65~</span></span>
+<span><span class="co">#&gt; 17 90            119            (((-65.27025 -26.84087, -65.28587 -26.83549, -6~</span></span></code></pre></div>
 </div>
 </div>
-<div id="información-disponible-available-data" class="section level2">
-<h2 class="hasAnchor">
-<a href="#informaci%C3%B3n-disponible-available-data" class="anchor"></a>Información Disponible (<em>Available Data</em>)</h2>
+<div class="section level2">
+<h2 id="información-disponible-available-data">Información Disponible (<em>Available Data</em>)<a class="anchor" aria-label="anchor" href="#informaci%C3%B3n-disponible-available-data"></a>
+</h2>
 <p><strong>GEOMETRÍAS</strong></p>
 <ul>
 <li><p>ARGENTINA (niveles PROVINCIA, DEPARTAMENTO y RADIO CENSAL)</p></li>
 <li><p>24 provincias (niveles DEPARTAMENTO y RADIO CENSAL)</p></li>
+<li><p>Reconstrucción de los poligonos utilizados para los censos desde 1869 hasta 2010. Recuperado del proyecto <em>Base cartográfica de departamentos para los censos nacionales de la República Argentina desde 1869 a 2010</em> de <a href="https://ri.conicet.gov.ar/handle/11336/149867" class="external-link">Gonzalo Rodriguez y Pablo De Grande</a>.</p></li>
 </ul>
 <p><strong>GRILLAS</strong></p>
 <ul>
-<li><p>Grillas para usar con <a href="https://politicaargentina.github.io/geoAr/articles/geoAr_geofacet.html">geofaet</a> para ARGENTINA, 24 provincias y AGLOMERADOS URBANOS (para usar con {eph}</p></li>
+<li><p>Grillas para usar con <a href="https://politicaargentina.github.io/geoAr/articles/geoAr_geofacet.html">geofacet</a> para ARGENTINA, 24 provincias y AGLOMERADOS URBANOS (para usar con {eph}</p></li>
 <li><p>Libro de códigos (país, provincia, departamento) y función para recodificar grillas según diccionario (ISO, INDEC, INDRA).</p></li>
 </ul>
 </div>
-<div id="paquetes-similares-para-otros-países-similar-packages" class="section level2">
-<h2 class="hasAnchor">
-<a href="#paquetes-similares-para-otros-pa%C3%ADses-similar-packages" class="anchor"></a>Paquetes similares para otros países (<em>Similar packages</em>)</h2>
+<div class="section level2">
+<h2 id="paquetes-similares-para-otros-países-similar-packages">Paquetes similares para otros países (<em>Similar packages</em>)<a class="anchor" aria-label="anchor" href="#paquetes-similares-para-otros-pa%C3%ADses-similar-packages"></a>
+</h2>
 <ul>
 <li>
-<code>{geoUy}</code> - <a href="https://github.com/RichDeto/geouy" class="uri">https://github.com/RichDeto/geouy</a>
+<code>{geoUy}</code> - <a href="https://github.com/RichDeto/geouy" class="external-link uri">https://github.com/RichDeto/geouy</a>
 </li>
 <li>
-<code>{geoBr}</code> - <a href="https://ipeagit.github.io/geobr/" class="uri">https://ipeagit.github.io/geobr/</a>
+<code>{geoBr}</code> - <a href="https://ipeagit.github.io/geobr/" class="external-link uri">https://ipeagit.github.io/geobr/</a>
 </li>
 <li>
-<code>{chilemapas}</code> - <a href="https://pacha.dev/chilemapas/" class="uri">https://pacha.dev/chilemapas/</a>
+<a href="https://pacha.dev/chilemapas/" class="external-link">chilemapas</a> - <a href="https://pacha.dev/chilemapas/" class="external-link uri">https://pacha.dev/chilemapas/</a>
 </li>
 </ul>
 </div>
-<div id="citation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#citation" class="anchor"></a>Citation</h2>
+<div class="section level2">
+<h2 id="citation">Citation<a class="anchor" aria-label="anchor" href="#citation"></a>
+</h2>
 <p>To cite package ‘geoAr’ in publications use:</p>
-<p>Juan Pablo Ruiz Nicolini (2022). geoAr: Argentina’s Spatial Data Toolbox. R package version 0.0.1.2. <a href="https://github.com/PoliticaArgentina/geoAr" class="uri">https://github.com/PoliticaArgentina/geoAr</a></p>
+<p>Juan Pablo Ruiz Nicolini (2022). geoAr: Argentina’s Spatial Data Toolbox. R package version 0.0.1.3. <a href="https://github.com/PoliticaArgentina/geoAr" class="external-link uri">https://github.com/PoliticaArgentina/geoAr</a></p>
 <p>A BibTeX entry for LaTeX users is</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>  <span class="sc">@</span>Manual{,</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    title <span class="ot">=</span> {geoAr<span class="sc">:</span> Argentina<span class="st">'s Spatial Data Toolbox},</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="st">    author = {Juan Pablo {Ruiz Nicolini}},</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="st">    year = {2022},</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="st">    note = {R package version 0.0.1.2},</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="st">    year = {2023},</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="st">    note = {R package version 0.0.1.3},</span></span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="st">    url = {https://github.com/PoliticaArgentina/geoAr},</span></span>
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="st">  }</span></span></code></pre></div>
 </div>
-<div id="geoar-es-parte-del-universo-de-paquetes-polar" class="section level2">
-<h2 class="hasAnchor">
-<a href="#geoar-es-parte-del-universo-de-paquetes-polar" class="anchor"></a><code>{geoAr}</code> es parte del <a href="https://github.com/PoliticaArgentina/polArverse">universo de paquetes <strong>polAr</strong></a>
+<div class="section level2">
+<h2 id="geoar-es-parte-del-universo-de-paquetes-polar">
+<code>{geoAr}</code> es parte del <a href="https://github.com/PoliticaArgentina/polArverse" class="external-link">universo de paquetes <strong>polAr</strong></a>
+<a class="anchor" aria-label="anchor" href="#geoar-es-parte-del-universo-de-paquetes-polar"></a>
 </h2>
 <p><img src="https://github.com/PoliticaArgentina/data_warehouse/raw/master/hex/collage.png" width="100%"></p>
 </div>
@@ -220,47 +214,58 @@
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="links">
-<h2>Links</h2>
+<h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li>Browse source code at <br><a href="https://github.com/PoliticaArgentina/geoAr/">https://​github.com/​PoliticaArgentina/​geoAr/​</a>
-</li>
-<li>Report a bug at <br><a href="https://github.com/PoliticaArgentina/geoAr/issues">https://​github.com/​PoliticaArgentina/​geoAr/​issues</a>
-</li>
-</ul>
-</div>
-<div class="license">
-<h2>License</h2>
-<ul class="list-unstyled">
-<li><a href="LICENSE.html">Full license</a></li>
-<li><small><a href="https://opensource.org/licenses/mit-license.php">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a></small></li>
-</ul>
-</div>
-<div class="developers">
-<h2>Developers</h2>
-<ul class="list-unstyled">
-<li>
-<a href="https://tuqmano.ar">Juan Pablo Ruiz Nicolini</a> <br><small class="roles"> Author, maintainer, copyright holder </small> <a href="https://orcid.org/0000-0002-3138-6343" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li><a href="https://github.com/PoliticaArgentina/geoAr/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/PoliticaArgentina/geoAr/issues" class="external-link">Report a bug</a></li>
 </ul>
 </div>
 
-  <div class="dev-status">
-<h2>Dev status</h2>
+<div class="license">
+<h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
-<li><a href="https://lifecycle.r-lib.org/articles/stages.html#experimental"><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg" alt="Lifecycle: experimental"></a></li>
-<li><a href="https://CRAN.R-project.org/package=opinAr"><img src="https://www.r-pkg.org/badges/version/opinAr" alt="CRAN status"></a></li>
-<li><a href="https://github.com/PoliticaArgentina/opinAr/actions"><img src="https://github.com/PoliticaArgentina/opinAr/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
+<li><a href="LICENSE.html">Full license</a></li>
+<li><small><a href="https://opensource.org/licenses/mit-license.php" class="external-link">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a></small></li>
 </ul>
 </div>
+
+
+<div class="citation">
+<h2 data-toc-skip>Citation</h2>
+<ul class="list-unstyled">
+<li><a href="authors.html#citation">Citing geoAr</a></li>
+</ul>
 </div>
+
+<div class="developers">
+<h2 data-toc-skip>Developers</h2>
+<ul class="list-unstyled">
+<li>
+<a href="https://tuqmano.ar" class="external-link">Juan Pablo Ruiz Nicolini</a> <br><small class="roles"> Author, maintainer, copyright holder </small> <a href="https://orcid.org/0000-0002-3138-6343" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+</ul>
+</div>
+
+<div class="dev-status">
+<h2 data-toc-skip>Dev status</h2>
+<ul class="list-unstyled">
+<li><a href="https://lifecycle.r-lib.org/articles/stages.html#experimental" class="external-link"><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg" alt="Lifecycle: experimental"></a></li>
+<li><a href="https://CRAN.R-project.org/package=opinAr" class="external-link"><img src="https://www.r-pkg.org/badges/version/opinAr" alt="CRAN status"></a></li>
+<li><a href="https://github.com/PoliticaArgentina/opinAr/actions" class="external-link"><img src="https://github.com/PoliticaArgentina/opinAr/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
+</ul>
+</div>
+
+  </div>
 </div>
 
 
       <footer><div class="copyright">
-  <p>Developed by <a href="https://tuqmano.ar">Juan Pablo Ruiz Nicolini</a>.</p>
+  <p></p>
+<p>Developed by <a href="https://tuqmano.ar" class="external-link">Juan Pablo Ruiz Nicolini</a>.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>
@@ -268,6 +273,8 @@
 
   
 
+
+  
 
   </body>
 </html>
