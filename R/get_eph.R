@@ -12,7 +12,8 @@
 #' get_eph(geo = "TUCUMAN")
 #'
 get_eph <- function(geo = "ARGENTINA",
-                    simplified = TRUE){
+                    simplified = TRUE,
+                    centroides = TRUE){
 
   ## Check for internet conection
   attempt::stop_if_not(.x = curl::has_internet(),
@@ -84,9 +85,19 @@ No se detecto acceso a internet. Por favor chequear la conexion.")
 
   }
 
-  df
+
+  if(centroides == FALSE){
 
 
+    df
+
+  }else{
+
+
+    base::suppressWarnings(sf::st_centroid(df))
+
+
+  }
 
 
 
