@@ -9,7 +9,7 @@
 #' @export
 #'
 #' @examples
-#' get_censo(censo = "1947")
+#' get_censo(censo = "1947", simplified = TRUE)
 #'
 get_censo <- function(censo = NULL,
                       simplified = FALSE){
@@ -62,7 +62,7 @@ No se detecto acceso a internet. Por favor chequear la conexion.")
     if(base::getOption('descarga-censo', TRUE)){
 
 
-      message(glue::glue("Los datos fueron obtenidos del proyecto 'Base cartográfica de departamentos para los censos nacionales de la República Argentina desde 1869 a 2010' de Gonzalo Rodriguez y Pablo De Grande el {format(Sys.Date(), '%d %B de %Y')}. La documentacion se encuetra disponible en https://ri.conicet.gov.ar/handle/11336/149867"))
+      message(glue::glue("Los datos fueron obtenidos del proyecto 'Base cartografica de departamentos para los censos nacionales de la Republica Argentina desde 1869 a 2010' de Gonzalo Rodriguez y Pablo De Grande el {format(Sys.Date(), '%d %B de %Y')}. La documentacion se encuetra disponible en https://ri.conicet.gov.ar/handle/11336/149867"))
 
       options('descarga-censo' = FALSE)
 

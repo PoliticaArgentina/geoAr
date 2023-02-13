@@ -7,8 +7,8 @@
 get_eph(geo = "ARGENTINA", simplified = TRUE)
 }
 \arguments{
-\item{geo}{un character con el nombre del district que se quiere descargar.
-Se pueden chequear el id con \code{\link{show_arg_codes}}.}
+\item{geo}{un character con el nombre del distrito que se quiere descargar.
+Se puede chequear el id con \code{\link{show_arg_codes}}.}
 
 \item{simplified}{por defecto es TRUE y determina la descarga de una versión simplificada de las geometrias.
 Con FALSE descarga la versión original de INDEC}
