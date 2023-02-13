@@ -1,5 +1,5 @@
 
-#' Carga poligonos de los Aglomerados Urbanos correspondientes a la Encuesta Permanente de Hogares (INDEC)
+#' Carga poligonos de Censos de Población Históricos de Argentina
 #'
 #' @param censo un character con el id del año del censo del district que se quiere descargar.
 #'Se pueden chequear el id con \code{\link{show_available_censos}}.
