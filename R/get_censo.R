@@ -35,11 +35,11 @@ No se detecto acceso a internet. Por favor chequear la conexion.")
 
   url <- if(simplified == TRUE){
 
-    glue::glue("https://github.com/PoliticaArgentina/data_warehouse/raw/master/geoAr/data_raw/censos/censo_{censo}.geojson")
+    glue::glue("https://github.com/PoliticaArgentina/data_warehouse/raw/master/geoAr/data/censo{censo}_simplified.geojson")
 
   } else if (simplified == FALSE){
 
-    "https://github.com/PoliticaArgentina/data_warehouse/raw/master/geoAr/data_raw/entidades_eph.geojson"
+    glue::glue("https://github.com/PoliticaArgentina/data_warehouse/raw/master/geoAr/data_raw/censos/censo_{censo}.geojson")
 
   }
 
@@ -57,8 +57,20 @@ No se detecto acceso a internet. Por favor chequear la conexion.")
 
     df <- df
 
+
+    # download message one per session hack
+    if(base::getOption('descarga-censo', TRUE)){
+
+
+      message(glue::glue("Los datos fueron obtenidos del proyecto 'Base cartográfica de departamentos para los censos nacionales de la República Argentina desde 1869 a 2010' de Gonzalo Rodriguez y Pablo De Grande el {format(Sys.Date(), '%d %B de %Y')}. La documentacion se encuetra disponible en https://ri.conicet.gov.ar/handle/11336/149867"))
+
+      options('descarga-censo' = FALSE)
+
+    }
+
+
   }
 
-  df
+  return(df)
 }
 

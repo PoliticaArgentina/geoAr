@@ -1,8 +1,8 @@
 
 #' Carga poligonos de los Aglomerados Urbanos correspondientes a la Encuesta Permanente de Hogares (INDEC)
 #'
-#' @param geo un character con el nombre del district que se quiere descargar.
-#'Se pueden chequear el id con \code{\link{show_arg_codes}}.
+#' @param geo un character con el nombre del distrito que se quiere descargar.
+#'Se puede chequear el id con \code{\link{show_arg_codes}}.
 #'
 #' @param simplified por defecto es TRUE y determina la descarga de una versión simplificada de las geometrias.
 #'Con FALSE descarga la versión original de INDEC
