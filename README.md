@@ -87,10 +87,16 @@ show_arg_codes() # Preview avialable data
 
 -   24 provincias (niveles DEPARTAMENTO y RADIO CENSAL)
 
+-   Reconstrucción de los poligonos utilizados para los censos desde
+    1869 hasta 2010. Recuperado del proyecto *Base cartográfica de
+    departamentos para los censos nacionales de la República Argentina
+    desde 1869 a 2010* de [Gonzalo Rodriguez y Pablo De
+    Grande](https://ri.conicet.gov.ar/handle/11336/149867).
+
 **GRILLAS**
 
 -   Grillas para usar con
-    [geofaet](https://politicaargentina.github.io/geoAr/articles/geoAr_geofacet.html)
+    [geofacet](https://politicaargentina.github.io/geoAr/articles/geoAr_geofacet.html)
     para ARGENTINA, 24 provincias y AGLOMERADOS URBANOS (para usar con
     {eph}
 
@@ -108,7 +114,7 @@ show_arg_codes() # Preview avialable data
 To cite package ‘geoAr’ in publications use:
 
 Juan Pablo Ruiz Nicolini (2022). geoAr: Argentina’s Spatial Data
-Toolbox. R package version 0.0.1.2.
+Toolbox. R package version 0.0.1.3.
 <https://github.com/PoliticaArgentina/geoAr>
 
 A BibTeX entry for LaTeX users is
@@ -116,8 +122,8 @@ A BibTeX entry for LaTeX users is
       @Manual{,
         title = {geoAr: Argentina's Spatial Data Toolbox},
         author = {Juan Pablo {Ruiz Nicolini}},
-        year = {2022},
-        note = {R package version 0.0.1.2},
+        year = {2023},
+        note = {R package version 0.0.1.3},
         url = {https://github.com/PoliticaArgentina/geoAr},
       }
 
