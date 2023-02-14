@@ -59,6 +59,8 @@ show_arg_codes() # Preview avialable data
 
 -  Reconstrucción de los poligonos utilizados para los censos desde 1869 hasta 2010. Recuperado del proyecto _Base cartográfica de departamentos para los censos nacionales de la República Argentina desde 1869 a 2010_ de [Gonzalo Rodriguez y Pablo De Grande](https://ri.conicet.gov.ar/handle/11336/149867). 
 
+- Geometrías (entidades, envolventes y radios) correspondientes a la Encuesta Permanenete de Hogares (EPH) de INDEC. 
+
 **GRILLAS**
 
 -   Grillas para usar con [geofacet](<https://politicaargentina.github.io/geoAr/articles/geoAr_geofacet.html>) para ARGENTINA, 24 provincias y AGLOMERADOS URBANOS (para usar con {eph}

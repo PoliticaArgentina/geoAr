@@ -93,6 +93,9 @@ show_arg_codes() # Preview avialable data
     desde 1869 a 2010* de [Gonzalo Rodriguez y Pablo De
     Grande](https://ri.conicet.gov.ar/handle/11336/149867).
 
+-   Geometrías (entidades, envolventes y radios) correspondientes a la
+    Encuesta Permanenete de Hogares (EPH) de INDEC.
+
 **GRILLAS**
 
 -   Grillas para usar con

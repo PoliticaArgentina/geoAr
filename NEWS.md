@@ -1,6 +1,6 @@
 # geoAr 0.0.1.3.1
 
-Added `levels` (`envolvente`, `radios` and `entidades`) param to `get_eph()` function. 
+Added `levels` (`envolvente`, `radios` and `entidades`) & `centroid` (`FALSE/TRUE`)  param to `get_eph()` function. 
 
 
 # geoAr 0.0.1.3
