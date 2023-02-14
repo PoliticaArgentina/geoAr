@@ -6,6 +6,10 @@
 #'
 #' @param simplified por defecto es TRUE y determina la descarga de una versión simplificada de las geometrias.
 #'Con FALSE descarga la versión original de INDEC
+#'
+#' @param level por defecto devuelve a nivel `envolvente` pero puede descargarse a nivel `radios` y `entidades`
+#'
+#' @param centroid por defecto devuelve poligonos como geometry pero pueden descargarse puntos (centroides correspondientes al level especificado)
 #' @export
 #'
 #' @examples
@@ -13,7 +17,8 @@
 #'
 get_eph <- function(geo = "ARGENTINA",
                     simplified = TRUE,
-                    centroides = TRUE){
+                    centroid = FALSE,
+                    level = "envolventes"){
 
   ## Check for internet conection
   attempt::stop_if_not(.x = curl::has_internet(),
@@ -29,6 +34,9 @@ No se detecto acceso a internet. Por favor chequear la conexion.")
   assertthat::assert_that(is.character(geo),
                           msg = "geo debe ser del tipo 'character'. Chequear opciones con 'show_arg_codes()")
 
+  assertthat::assert_that(level %in% c("entidades", "radios", "envolventes"),
+                          msg = "level debe ser una de las siguientes opciones: 'entidades', 'radios' o 'envolventes'")
+
   assertthat::assert_that(geo %in% c("ARGENTINA", "CABA", "CATAMARCA", "CHACO", "CHUBUT", "CORDOBA", "CORRIENTES",
                                      "ENTRE RIOS", "FORMOSA", "JUJUY", "LA PAMPA", "LA RIOJA", "MENDOZA", "MISIONES",
                                      "NEUQUEN","BUENOS AIRES", "RIO NEGRO", "SALTA", "SANTA CRUZ", "SANTA FE", "SANTIAGO DEL ESTERO",
@@ -38,12 +46,36 @@ No se detecto acceso a internet. Por favor chequear la conexion.")
 
           url <- if(simplified == TRUE){
 
-            "https://github.com/PoliticaArgentina/data_warehouse/raw/master/geoAr/data/aglos_simplified.geojson"
+            if(level == "entidades"){
+
+              "https://github.com/PoliticaArgentina/data_warehouse/raw/master/geoAr/data/aglos_simplified.geojson"
+
+            }else if(level == "radios"){
+
+              "https://github.com/PoliticaArgentina/data_warehouse/raw/master/geoAr/data/radios_eph_simplified.geojson"
+
+            }else if(level == "envolventes"){
+
+              "https://github.com/PoliticaArgentina/data_warehouse/raw/master/geoAr/data/aglos_envolventes_simplified.geojson"
+            }
+
+
 
           } else if (simplified == FALSE){
 
+            if(level == "entidades"){
+
             "https://github.com/PoliticaArgentina/data_warehouse/raw/master/geoAr/data_raw/entidades_eph.geojson"
 
+            }else if(level == "radios"){
+
+            "https://github.com/PoliticaArgentina/data_warehouse/raw/master/geoAr/data_raw/radios_eph.geojson"
+
+            }else if(level == "envolventes"){
+
+            "https://github.com/PoliticaArgentina/data_warehouse/raw/master/geoAr/data_raw/aglos_envolventes.geojson"
+
+            }
           }
 
   # Set default value for try()
@@ -86,7 +118,7 @@ No se detecto acceso a internet. Por favor chequear la conexion.")
   }
 
 
-  if(centroides == FALSE){
+  if(centroid == FALSE){
 
 
     df

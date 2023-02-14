@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_censo.R
 \name{get_censo}
 \alias{get_censo}
-\title{Carga poligonos de los Aglomerados Urbanos correspondientes a la Encuesta Permanente de Hogares (INDEC)}
+\title{Carga poligonos de Censos de Población Históricos de Argentina}
 \usage{
 get_censo(censo = NULL, simplified = FALSE)
 }
@@ -14,9 +14,9 @@ Se pueden chequear el id con \code{\link{show_available_censos}}.}
 Con FALSE descarga la versión original de INDEC}
 }
 \description{
-Carga poligonos de los Aglomerados Urbanos correspondientes a la Encuesta Permanente de Hogares (INDEC)
+Carga poligonos de Censos de Población Históricos de Argentina
 }
 \examples{
-get_censo(censo = "1947")
+get_censo(censo = "1947", simplified = TRUE)
 
 }

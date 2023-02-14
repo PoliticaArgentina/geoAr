@@ -4,7 +4,12 @@
 \alias{get_eph}
 \title{Carga poligonos de los Aglomerados Urbanos correspondientes a la Encuesta Permanente de Hogares (INDEC)}
 \usage{
-get_eph(geo = "ARGENTINA", simplified = TRUE)
+get_eph(
+  geo = "ARGENTINA",
+  simplified = TRUE,
+  centroid = FALSE,
+  level = "envolventes"
+)
 }
 \arguments{
 \item{geo}{un character con el nombre del distrito que se quiere descargar.
@@ -12,6 +17,10 @@ Se puede chequear el id con \code{\link{show_arg_codes}}.}
 
 \item{simplified}{por defecto es TRUE y determina la descarga de una versión simplificada de las geometrias.
 Con FALSE descarga la versión original de INDEC}
+
+\item{centroid}{por defecto devuelve poligonos como geometry pero pueden descargarse puntos (centroides correspondientes al level especificado)}
+
+\item{level}{por defecto devuelve a nivel \code{envolvente} pero puede descargarse a nivel \code{radios} y \code{entidades}}
 }
 \description{
 Carga poligonos de los Aglomerados Urbanos correspondientes a la Encuesta Permanente de Hogares (INDEC)
