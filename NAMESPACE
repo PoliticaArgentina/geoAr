@@ -3,6 +3,7 @@
 export("%>%")
 export(addArgTiles)
 export(add_geo_codes)
+export(get_bahra)
 export(get_censo)
 export(get_eph)
 export(get_geo)

@@ -32,7 +32,8 @@ if(getRversion() >= "2.15.1")
                            "nomdepto_censo",
                            "geometry",
                            "provincia",
-                           "censos"))
+                           "censos",
+                           "cod_depto"))
 
 
 
