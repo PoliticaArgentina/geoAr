@@ -7,3 +7,32 @@ home:
 authors:
   Juan Pablo Ruiz Nicolini:
     href: https://tuqmano.ar
+reference:
+- title: Geometries
+  desc: Functions for exploring and downloading geo data.
+- subtitle: Explore
+  contents:
+  - 'show_available_censos'
+  - 'show_arg_codes'
+- subtitle: Download
+  contents:
+  - 'get_geo'
+  - 'get_eph'
+  - 'get_bahra'
+  - 'get_censo'
+- title: Grids
+  desc: Functions to work with '{geofacet}' ('ggplot2' facet grids as maps)
+  contents:
+  - contains("grid")
+- title: Data
+  desc: Helper data
+  contents:
+  - 'censos'
+  - 'geo_metadata'
+  - 'grillas_geofacet'
+- title: Other
+  desc:
+  contents:
+  - 'addArgTiles'
+  - 'add_geo_codes'
+  - 'geoAr'

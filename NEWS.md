@@ -1,3 +1,8 @@
+# geoAr 0.0.1.4
+
+`get_bahra()` function for a new data source: _Base de Asentamientos Humanos de la República Argentina_ (BAHRA) 
+
+
 # geoAr 0.0.1.3.1
 
 Added `levels` (`envolvente`, `radios` and `entidades`) & `centroid` (`FALSE/TRUE`)  param to `get_eph()` function. 
