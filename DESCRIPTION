@@ -7,7 +7,7 @@ Authors@R:
            role = c("aut", "cre", "cph"),
            email = "juanpabloruiznicolini@gmail.com",
            comment = c(ORCID = "0000-0002-3138-6343"))
-Description: Caja de Herramientas para Datos Espaciales de Argentina. El paquete facilita el acceso a datos y  herramietnas para el análisis de datos espaciales de Argentina. 
+Description: This collection of tools facilitates data access and workflow for spatial analysis of Argentina. Includes historical information from censuses, administrative limits at different levels of aggregation, location of human settlements, among others. Since it is expected that the majority of users will be Spanish-speaking, the documentation of the package prioritizes this language, although an effort is made to also offer annotations in English. 
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
