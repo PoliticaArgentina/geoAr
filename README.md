@@ -7,9 +7,9 @@
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 [![CRAN
-status](https://www.r-pkg.org/badges/version/opinAr)](https://CRAN.R-project.org/package=opinAr)
+status](https://www.r-pkg.org/badges/version/geoAr)](https://CRAN.R-project.org/package=geoAr)
 [![R build
-status](https://github.com/PoliticaArgentina/opinAr/workflows/R-CMD-check/badge.svg)](https://github.com/PoliticaArgentina/opinAr/actions)
+status](https://github.com/PoliticaArgentina/geoAr/workflows/R-CMD-check/badge.svg)](https://github.com/PoliticaArgentina/geoAr/actions)
 
 <!-- badges: end -->
 
@@ -26,6 +26,13 @@ datos espaciales de Argentina desde `R`.
 # install.packages('devtools') si no tiene instalado devtools
 
 devtools::install_github("politicaargentina/geoAr")
+```
+
+### Desde `r-universe`
+
+``` r
+# Install geoAr in R:
+install.packages('geoAr', repos = c('https://politicaargentina.r-universe.dev', 'https://cloud.r-project.org'))
 ```
 
 ### Ejemplo de uso básico (*Basic Usage*)
@@ -81,7 +88,9 @@ show_arg_codes() # Preview avialable data
 
 ## Información Disponible (*Available Data*)
 
-**GEOMETRÍAS**
+### GEOMETRÍAS
+
+**Poligonos**
 
 -   ARGENTINA (niveles PROVINCIA, DEPARTAMENTO y RADIO CENSAL)
 
@@ -96,7 +105,12 @@ show_arg_codes() # Preview avialable data
 -   Geometrías (entidades, envolventes y radios) correspondientes a la
     Encuesta Permanenete de Hogares (EPH) de INDEC.
 
-**GRILLAS**
+**PUNTOS**
+
+-   Base de Asentamientos Humanos de la República Argentina (BAHRA)
+    <http://www.bahra.gob.ar/>
+
+### GRILLAS
 
 -   Grillas para usar con
     [geofacet](https://politicaargentina.github.io/geoAr/articles/geoAr_geofacet.html)
@@ -116,8 +130,8 @@ show_arg_codes() # Preview avialable data
 
 To cite package ‘geoAr’ in publications use:
 
-Juan Pablo Ruiz Nicolini (2022). geoAr: Argentina’s Spatial Data
-Toolbox. R package version 0.0.1.3.
+Juan Pablo Ruiz Nicolini (2023). geoAr: Argentina’s Spatial Data
+Toolbox. R package version 0.0.1.4.
 <https://github.com/PoliticaArgentina/geoAr>
 
 A BibTeX entry for LaTeX users is
@@ -126,7 +140,7 @@ A BibTeX entry for LaTeX users is
         title = {geoAr: Argentina's Spatial Data Toolbox},
         author = {Juan Pablo {Ruiz Nicolini}},
         year = {2023},
-        note = {R package version 0.0.1.3},
+        note = {R package version 0.0.1.4},
         url = {https://github.com/PoliticaArgentina/geoAr},
       }
 
