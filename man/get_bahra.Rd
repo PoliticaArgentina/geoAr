@@ -10,6 +10,9 @@ get_bahra(geo = "ARGENTINA")
 \item{geo}{un character con el nombre del distrito que se quiere descargar (por defecto toda ARGENTINA)
 Se puede chequear el id con \code{\link{show_arg_codes}}.}
 }
+\value{
+tibble con datos de BAHRA
+}
 \description{
 Descarga 'base total' de Asentamientos Humanos de la República Argentina (BAHRA)
 }

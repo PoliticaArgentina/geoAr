@@ -11,6 +11,9 @@ get_grid(district = NULL)
 \item{district}{un character con el nombre del district que se quiere descargar. Disponibles grillas para Argentina
 y para las 24 provincias. Se pueden chequear los parametros con \code{\link{show_arg_codes}}.}
 }
+\value{
+tibble con datos correspondientes a diseño de grillas para utilizar con libreria \code{geofacet}
+}
 \description{
 Función que descarga grillas (\emph{facet}) para acomodarlas como si fueran mapas de provincias y deparamentos
 de Argentina.

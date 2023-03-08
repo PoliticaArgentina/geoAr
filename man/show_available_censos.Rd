@@ -7,11 +7,12 @@
 \usage{
 show_available_censos()
 }
+\value{
+tibble con información auxiliar para descarga de CENSOS históricos con  \code{\link{get_censo}}
+}
 \description{
 Función que devuelve un \emph{data.frame} con listado de las geometrías de los CENSOS disponible
 }
 \examples{
-
 show_available_censos()
-
 }

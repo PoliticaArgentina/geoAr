@@ -8,7 +8,7 @@
 #'
 #'@param nivel  Un character que permite elegir opción para ver diccionario a nivel de \code{"provincias"} o de \code{"departamentos"}.
 #'
-#'
+#' @return tibble con códigos geográficos correspondientes a distritos de Argentina descargados con \code{\link{get_geo}}
 #' @examples
 #'
 #' show_arg_codes(viewer = FALSE)

@@ -10,6 +10,7 @@
 #' @param level por defecto devuelve a nivel `envolvente` pero puede descargarse a nivel `radios` y `entidades`
 #'
 #' @param centroid por defecto devuelve poligonos como geometry pero pueden descargarse puntos (centroides correspondientes al level especificado)
+#' @return tibble con capa geografica correspondiente a alguna versión de geometrías utilizadas en la Encuesta Permanente de Hogares (EPH)
 #' @export
 #'
 #' @examples

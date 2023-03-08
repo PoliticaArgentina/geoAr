@@ -12,6 +12,9 @@ show_arg_codes(viewer = FALSE, nivel = "provincias")
 
 \item{nivel}{Un character que permite elegir opción para ver diccionario a nivel de \code{"provincias"} o de \code{"departamentos"}.}
 }
+\value{
+tibble con códigos geográficos correspondientes a distritos de Argentina descargados con \code{\link{get_geo}}
+}
 \description{
 Función que devuelve un \emph{data.frame} con códigos y equivalencias de identificación de unidades geográficas
 }

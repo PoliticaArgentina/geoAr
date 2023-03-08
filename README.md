@@ -28,7 +28,7 @@ datos espaciales de Argentina desde `R`.
 devtools::install_github("politicaargentina/geoAr")
 ```
 
-### Desde `r-universe`
+### Desde `CRAN` o `r-universe` (version en desarrollo)
 
 ``` r
 # Install geoAr in R:
@@ -140,7 +140,7 @@ A BibTeX entry for LaTeX users is
         title = {geoAr: Argentina's Spatial Data Toolbox},
         author = {Juan Pablo {Ruiz Nicolini}},
         year = {2023},
-        note = {R package version 0.0.1.4},
+        note = {R package version 0.0.1.4.2},
         url = {https://github.com/PoliticaArgentina/geoAr},
       }
 

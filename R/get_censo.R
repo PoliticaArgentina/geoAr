@@ -6,6 +6,7 @@
 #'
 #' @param simplified por defecto es TRUE y determina la descarga de una versión simplificada de las geometrias.
 #'Con FALSE descarga la versión original de INDEC
+#' @return tibble con capa geografica correspondiente a geometrías de un censo histórico
 #' @export
 #'
 #' @examples

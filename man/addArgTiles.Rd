@@ -10,6 +10,9 @@ addArgTiles(data)
 \arguments{
 \item{data}{debe ser un objeto con class "leaflet" "htmlwidget".}
 }
+\value{
+Capa base para mapas interactivos
+}
 \description{
 Función que descarga capa base de Argentina para mapa interactivo creado con la libreria \code{leaflet}.
 }

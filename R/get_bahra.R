@@ -2,7 +2,7 @@
 #'
 #' @param geo un character con el nombre del distrito que se quiere descargar (por defecto toda ARGENTINA)
 #'Se puede chequear el id con \code{\link{show_arg_codes}}.
-#'
+#' @return tibble con datos de BAHRA
 #' @export
 #'
 #' @examples get_bahra()

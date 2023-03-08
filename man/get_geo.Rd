@@ -17,6 +17,9 @@ cuando se solicita mapa nacional \code{get_geo(geo = "ARGNTINA", level = "depart
 \item{simplified}{por defecto es TRUE y determina la descarga de una versión simplificada de las geometrias.
 Con FALSE descarga la versión original de INDEC}
 }
+\value{
+tibble con capa geografica de Argentina o distrito seleccionado (a diferentes niveles de agregación) correspondientes al CENSO 2010 - INDEC
+}
 \description{
 Función que descarga (\emph{geometry}) para graficar con mapas
 }

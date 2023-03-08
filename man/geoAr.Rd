@@ -7,5 +7,5 @@
 \description{
 Caja de Herramientas GEO de Argentina
 See the README on
-\href{https://github.com/PoliticaArgentina/geoAr/README.md}{Github}
+\href{https://github.com/PoliticaArgentina/geoAr#readme}{Github}
 }

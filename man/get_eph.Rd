@@ -22,6 +22,9 @@ Con FALSE descarga la versión original de INDEC}
 
 \item{level}{por defecto devuelve a nivel \code{envolvente} pero puede descargarse a nivel \code{radios} y \code{entidades}}
 }
+\value{
+tibble con capa geografica correspondiente a alguna versión de geometrías utilizadas en la Encuesta Permanente de Hogares (EPH)
+}
 \description{
 Carga poligonos de los Aglomerados Urbanos correspondientes a la Encuesta Permanente de Hogares (INDEC)
 }

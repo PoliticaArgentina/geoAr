@@ -4,7 +4,7 @@
 #'Función que descarga grillas (\emph{facet}) para acomodarlas como si fueran mapas de provincias y deparamentos
 #' de Argentina.
 #'
-#'
+#' @return tibble con datos correspondientes a diseño de grillas para utilizar con libreria \code{geofacet}
 #' @examples
 #'
 #' get_grid("TUCUMAN")

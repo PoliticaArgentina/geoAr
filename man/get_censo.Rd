@@ -13,6 +13,9 @@ Se pueden chequear el id con \code{\link{show_available_censos}}.}
 \item{simplified}{por defecto es TRUE y determina la descarga de una versión simplificada de las geometrias.
 Con FALSE descarga la versión original de INDEC}
 }
+\value{
+tibble con capa geografica correspondiente a geometrías de un censo histórico
+}
 \description{
 Carga poligonos de Censos de Población Históricos de Argentina
 }

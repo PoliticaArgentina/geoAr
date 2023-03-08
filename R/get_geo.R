@@ -14,6 +14,7 @@
 #'cuando se solicita mapa nacional \code{get_geo(geo = "ARGNTINA", level = "departamento")}.
 #'@param simplified por defecto es TRUE y determina la descarga de una versión simplificada de las geometrias.
 #'Con FALSE descarga la versión original de INDEC
+#' @return tibble con capa geografica de Argentina o distrito seleccionado (a diferentes niveles de agregación) correspondientes al CENSO 2010 - INDEC
 #'@export
 
 get_geo <- function(geo = NULL,
