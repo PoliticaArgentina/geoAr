@@ -1,3 +1,7 @@
+# geoAr 0.0.1.4.2
+
+First CRAN version
+
 # geoAr 0.0.1.4
 
 `get_bahra()` function for a new data source: _Base de Asentamientos Humanos de la República Argentina_ (BAHRA) 
