@@ -42,7 +42,7 @@ devtools::install_github("politicaargentina/geoAr")
 #### `r-universe`
 
 Se puede agregar el repositorio de
-`[r-universe`\](<https://politicaargentina.r-universe.dev/builds>) como
+[`r-universe`](https://politicaargentina.r-universe.dev/builds) como
 parámetro a la función base `install.packages`:
 
 ``` r
@@ -54,7 +54,6 @@ install.packages('geoAr', repos = c('https://politicaargentina.r-universe.dev')
 
 ``` r
 library(geoAr)
-#> Warning: package 'geoAr' was built under R version 4.1.3
 
 
 show_arg_codes() # Preview avialable data 

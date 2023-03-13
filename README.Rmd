@@ -51,7 +51,7 @@ devtools::install_github("politicaargentina/geoAr")
 
 #### `r-universe` 
 
-Se puede agregar el repositorio de `[r-universe`](https://politicaargentina.r-universe.dev/builds) como parámetro a la función base `install.packages`:
+Se puede agregar el repositorio de [`r-universe`](https://politicaargentina.r-universe.dev/builds) como parámetro a la función base `install.packages`:
 
 ```r
 
