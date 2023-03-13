@@ -20,6 +20,15 @@ reference:
   - 'get_eph'
   - 'get_bahra'
   - 'get_censo'
+- subtitle: georef-ar API
+  contents:
+  - 'get_provincias'
+  - 'get_calles'
+  - 'get_departamentos'
+  - 'get_localidades'
+  - 'get_municipios'
+  - 'get_ubicacion'
+  - 'normalizar_direccion'
 - title: Grids
   desc: Functions to work with '{geofacet}' ('ggplot2' facet grids as maps)
   contents:

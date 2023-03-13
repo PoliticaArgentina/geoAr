@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">geoAr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.0.1.4.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.0.1.4.2.1</span>
       </span>
     </div>
 
@@ -96,27 +96,44 @@
 <!-- README.md is generated from README.Rmd. Please edit that file --><!-- badges: start -->
 <!-- badges: end --><p><a href="https://github.com/PoliticaArgentina/geoAr" class="external-link">geoAr</a> brinda herramientas que facilitan el acceso y el trabajo con datos espaciales de Argentina desde <code>R</code>.</p>
 <hr>
-<div class="section level3"><h3 id="instalación">INSTALACIÓN<a class="anchor" aria-label="anchor" href="#instalaci%C3%B3n"></a>
-</h3></div>
+</div>
+<div class="section level2">
+<h2 id="instalación-install">INSTALACIÓN (<em>Install</em>)<a class="anchor" aria-label="anchor" href="#instalaci%C3%B3n-install"></a>
+</h2>
+<div class="section level3">
+<h3 id="desde-cran-versión-estable">Desde <code>CRAN</code> (versión estable)<a class="anchor" aria-label="anchor" href="#desde-cran-versi%C3%B3n-estable"></a>
+</h3>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Install geoAr in R:</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">'geoAr'</span><span class="op">)</span></span></code></pre></div>
+</div>
 <div class="section level3">
 <h3 id="versión-en-desarrollo-development-version">Versión en desarrollo (<em>Development version</em>)<a class="anchor" aria-label="anchor" href="#versi%C3%B3n-en-desarrollo-development-version"></a>
 </h3>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<div class="section level4">
+<h4 id="desde-github">Desde <em>GitHub</em>
+<a class="anchor" aria-label="anchor" href="#desde-github"></a>
+</h4>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># install.packages('devtools') si no tiene instalado devtools</span></span>
 <span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"politicaargentina/geoAr"</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div class="section level3">
-<h3 id="desde-cran-o-r-universe-version-en-desarrollo">Desde <code>CRAN</code> o <code>r-universe</code> (version en desarrollo)<a class="anchor" aria-label="anchor" href="#desde-cran-o-r-universe-version-en-desarrollo"></a>
-</h3>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Install geoAr in R:</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">'geoAr'</span>, repos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'https://politicaargentina.r-universe.dev'</span>, <span class="st">'https://cloud.r-project.org'</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div class="section level4">
+<h4 id="r-universe">
+<code>r-universe</code><a class="anchor" aria-label="anchor" href="#r-universe"></a>
+</h4>
+<p>Se puede agregar el repositorio de <a href="https://politicaargentina.r-universe.dev/builds" class="external-link"><code>r-universe</code></a> como parámetro a la función base <code>install.packages</code>:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Install geoAr in R:</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">'geoAr'</span>, <span class="at">repos =</span> <span class="fu">c</span>(<span class="st">'https://politicaargentina.r-universe.dev'</span>)</span></code></pre></div>
 </div>
-<div class="section level3">
-<h3 id="ejemplo-de-uso-básico-basic-usage">Ejemplo de uso básico (<em>Basic Usage</em>)<a class="anchor" aria-label="anchor" href="#ejemplo-de-uso-b%C3%A1sico-basic-usage"></a>
-</h3>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+</div>
+</div>
+<div class="section level2">
+<h2 id="ejemplo-de-uso-básico-basic-usage">Ejemplo de uso básico (<em>Basic Usage</em>)<a class="anchor" aria-label="anchor" href="#ejemplo-de-uso-b%C3%A1sico-basic-usage"></a>
+</h2>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/PoliticaArgentina/geoAr" class="external-link">geoAr</a></span><span class="op">)</span></span>
 <span></span>
 <span></span>
@@ -164,30 +181,30 @@
 <span><span class="co">#&gt; 16 90            112            (((-65.52483 -26.09667, -65.4682 -26.09253, -65~</span></span>
 <span><span class="co">#&gt; 17 90            119            (((-65.27025 -26.84087, -65.28587 -26.83549, -6~</span></span></code></pre></div>
 </div>
-</div>
 <div class="section level2">
 <h2 id="información-disponible-available-data">Información Disponible (<em>Available Data</em>)<a class="anchor" aria-label="anchor" href="#informaci%C3%B3n-disponible-available-data"></a>
 </h2>
 <div class="section level3">
 <h3 id="geometrías">GEOMETRÍAS<a class="anchor" aria-label="anchor" href="#geometr%C3%ADas"></a>
 </h3>
-<p><strong>Poligonos</strong></p>
+<p><strong>Polígonos</strong></p>
 <ul>
 <li><p>ARGENTINA (niveles PROVINCIA, DEPARTAMENTO y RADIO CENSAL)</p></li>
 <li><p>24 provincias (niveles DEPARTAMENTO y RADIO CENSAL)</p></li>
-<li><p>Reconstrucción de los poligonos utilizados para los censos desde 1869 hasta 2010. Recuperado del proyecto <em>Base cartográfica de departamentos para los censos nacionales de la República Argentina desde 1869 a 2010</em> de <a href="https://ri.conicet.gov.ar/handle/11336/149867" class="external-link">Gonzalo Rodriguez y Pablo De Grande</a>.</p></li>
-<li><p>Geometrías (entidades, envolventes y radios) correspondientes a la Encuesta Permanenete de Hogares (EPH) de INDEC.</p></li>
+<li><p>Reconstrucción de los polígonos utilizados para los censos desde 1869 hasta 2010. Recuperado del proyecto <em>Base cartográfica de departamentos para los censos nacionales de la República Argentina desde 1869 a 2010</em> de <a href="https://ri.conicet.gov.ar/handle/11336/149867" class="external-link">Gonzalo Rodriguez y Pablo De Grande</a>.</p></li>
+<li><p>Geometrías (entidades, envolventes y radios) correspondientes a la Encuesta Permanente de Hogares (EPH) de INDEC.</p></li>
 </ul>
-<p><strong>PUNTOS</strong></p>
+<p><strong>Puntos (coordenadas)</strong></p>
 <ul><li>Base de Asentamientos Humanos de la República Argentina (BAHRA) <a href="http://www.bahra.gob.ar/" class="external-link uri">http://www.bahra.gob.ar/</a>
 </li></ul>
 </div>
 <div class="section level3">
-<h3 id="grillas">GRILLAS<a class="anchor" aria-label="anchor" href="#grillas"></a>
+<h3 id="grillas-geofacet">Grillas <code>geofacet</code>
+<a class="anchor" aria-label="anchor" href="#grillas-geofacet"></a>
 </h3>
 <ul>
 <li><p>Grillas para usar con <a href="https://politicaargentina.github.io/geoAr/articles/geoAr_geofacet.html">geofacet</a> para ARGENTINA, 24 provincias y AGLOMERADOS URBANOS (para usar con {eph}</p></li>
-<li><p>Libro de códigos (país, provincia, departamento) y función para recodificar grillas según diccionario (ISO, INDEC, INDRA).</p></li>
+<li><p>Libro de códigos (país, provincia, departamento) y función para re-codificar grillas según diccionario (ISO, INDEC, INDRA).</p></li>
 </ul>
 </div>
 </div>
@@ -212,13 +229,13 @@
 <p>To cite package ‘geoAr’ in publications use:</p>
 <p>Juan Pablo Ruiz Nicolini (2023). geoAr: Argentina’s Spatial Data Toolbox. R package version 0.0.1.4. <a href="https://github.com/PoliticaArgentina/geoAr" class="external-link uri">https://github.com/PoliticaArgentina/geoAr</a></p>
 <p>A BibTeX entry for LaTeX users is</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>  <span class="sc">@</span>Manual{,</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    title <span class="ot">=</span> {geoAr<span class="sc">:</span> Argentina<span class="st">'s Spatial Data Toolbox},</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="st">    author = {Juan Pablo {Ruiz Nicolini}},</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="st">    year = {2023},</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="st">    note = {R package version 0.0.1.4.2},</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="st">    url = {https://github.com/PoliticaArgentina/geoAr},</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="st">  }</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>  <span class="sc">@</span>Manual{,</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    title <span class="ot">=</span> {geoAr<span class="sc">:</span> Argentina<span class="st">'s Spatial Data Toolbox},</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="st">    author = {Juan Pablo {Ruiz Nicolini}},</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="st">    year = {2023},</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="st">    note = {R package version 0.0.1.4.2},</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="st">    url = {https://github.com/PoliticaArgentina/geoAr},</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="st">  }</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="geoar-es-parte-del-universo-de-paquetes-polar">
@@ -261,6 +278,7 @@
 <ul class="list-unstyled">
 <li>
 <a href="https://tuqmano.ar" class="external-link">Juan Pablo Ruiz Nicolini</a> <br><small class="roles"> Author, maintainer, copyright holder </small> <a href="https://orcid.org/0000-0002-3138-6343" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li>Patricio Del Boca <br><small class="roles"> Author </small>  </li>
 </ul>
 </div>
 
@@ -268,6 +286,8 @@
 <h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
 <li><a href="https://CRAN.R-project.org/package=geoAr" class="external-link"><img src="https://www.r-pkg.org/badges/version/geoAr" alt="CRAN status"></a></li>
+<li><a href="https://CRAN.R-project.org/package=geoAr" class="external-link"><img src="https://www.r-pkg.org/badges/last-release/geoAr" alt="CRAN last release"></a></li>
+<li><a href="https://CRAN.R-project.org/package=geoAr" class="external-link"><img src="https://cranlogs.r-pkg.org/badges/grand-total/geoAr" alt="CRAN downloads"></a></li>
 <li><a href="https://github.com/PoliticaArgentina/geoAr/actions" class="external-link"><img src="https://github.com/PoliticaArgentina/geoAr/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
 </ul>
 </div>
@@ -278,7 +298,7 @@
 
       <footer><div class="copyright">
   <p></p>
-<p>Developed by <a href="https://tuqmano.ar" class="external-link">Juan Pablo Ruiz Nicolini</a>.</p>
+<p>Developed by <a href="https://tuqmano.ar" class="external-link">Juan Pablo Ruiz Nicolini</a>, Patricio Del Boca.</p>
 </div>
 
 <div class="pkgdown">

@@ -46,7 +46,13 @@
     <loc>https://politicaargentina.github.io/geoAr/reference/get_bahra.html</loc>
   </url>
   <url>
+    <loc>https://politicaargentina.github.io/geoAr/reference/get_calles.html</loc>
+  </url>
+  <url>
     <loc>https://politicaargentina.github.io/geoAr/reference/get_censo.html</loc>
+  </url>
+  <url>
+    <loc>https://politicaargentina.github.io/geoAr/reference/get_departamentos.html</loc>
   </url>
   <url>
     <loc>https://politicaargentina.github.io/geoAr/reference/get_eph.html</loc>
@@ -58,10 +64,25 @@
     <loc>https://politicaargentina.github.io/geoAr/reference/get_grid.html</loc>
   </url>
   <url>
+    <loc>https://politicaargentina.github.io/geoAr/reference/get_localidades.html</loc>
+  </url>
+  <url>
+    <loc>https://politicaargentina.github.io/geoAr/reference/get_municipios.html</loc>
+  </url>
+  <url>
+    <loc>https://politicaargentina.github.io/geoAr/reference/get_provincias.html</loc>
+  </url>
+  <url>
+    <loc>https://politicaargentina.github.io/geoAr/reference/get_ubicacion.html</loc>
+  </url>
+  <url>
     <loc>https://politicaargentina.github.io/geoAr/reference/grillas_geofacet.html</loc>
   </url>
   <url>
     <loc>https://politicaargentina.github.io/geoAr/reference/index.html</loc>
+  </url>
+  <url>
+    <loc>https://politicaargentina.github.io/geoAr/reference/normalizar_direccion.html</loc>
   </url>
   <url>
     <loc>https://politicaargentina.github.io/geoAr/reference/pipe.html</loc>
