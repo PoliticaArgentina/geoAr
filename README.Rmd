@@ -17,7 +17,9 @@ knitr::opts_chunk$set(
 
 <!-- badges: start -->
 
-[![CRAN status](https://www.r-pkg.org/badges/version/geoAr)](https://CRAN.R-project.org/package=geoAr) [![CRAN last release](https://www.r-pkg.org/badges/last-release/geoAr)](https://CRAN.R-project.org/package=geoAr)[![CRAN downloads](https://cranlogs.r-pkg.org/badges/grand-total/geoAr)](https://CRAN.R-project.org/package=geoAr)[![R build status](https://github.com/PoliticaArgentina/geoAr/workflows/R-CMD-check/badge.svg)](https://github.com/PoliticaArgentina/geoAr/actions)
+`r badger::badge_cran_release(pkg = "geoAr", color = "blue")`
+`r badger::badge_cran_download(pkg = "geoAr", color = "blue", type = "last-month")``r badger::badge_cran_download(pkg = "geoAr", color = "blue", type = "last-week")``r badger::badge_cran_download(pkg = "geoAr", color = "blue", type = "last-month")``r badger::badge_cran_download(pkg = "geoAr", color = "blue", type = "grand-total")`
+`r badger::badge_runiverse(pkg = "geoAr", user = "politicaargentina")``r badger::badge_devel("politicaargentina/geoAr", "green")`
 
 <!-- badges: end -->
 
@@ -100,6 +102,11 @@ show_arg_codes() # Preview avialable data
 
 -   Libro de códigos (país, provincia, departamento) y función para re-codificar grillas según diccionario (ISO, INDEC, INDRA).
 
+### `georef-ar` API
+
+- Interfaz en R para usar la [API del Servicio de Normalización de Datos Geográficos](https://georef-ar-api.readthedocs.io/es/latest/), que permite normalizar y codificar los nombres de unidades territoriales de la Argentina (provincias, departamentos, municipios y localidades) y de sus calles, así como ubicar coordenadas dentro de ellas. La versión original de estas funciones fueron desarrolladas en el paquete `georefar` desarrollado por [Patricio del Boca](https://github.com/pdelboca/georefar).
+
+
 ## Paquetes similares para otros países (*Similar packages*)
 
 -   `{geoUy}` - <https://github.com/RichDeto/geouy>
@@ -108,20 +115,22 @@ show_arg_codes() # Preview avialable data
 
 ## Citation
 
-To cite package 'geoAr' in publications use:
+To cite package ‘geoAr’ in publications use:
 
-Juan Pablo Ruiz Nicolini (2023). geoAr: Argentina's Spatial Data Toolbox. R package version 0.0.1.4. <https://github.com/PoliticaArgentina/geoAr>
+  _Juan Pablo Ruiz Nicolini and Patricio Del Boca (2023). geoAr: Argentina's Spatial Data Toolbox. R package version 0.0.1.4.2.1. <https://github.com/PoliticaArgentina/geoAr>_
 
 A BibTeX entry for LaTeX users is
 
-      @Manual{,
-        title = {geoAr: Argentina's Spatial Data Toolbox},
-        author = {Juan Pablo {Ruiz Nicolini}},
-        year = {2023},
-        note = {R package version 0.0.1.4.2},
-        url = {https://github.com/PoliticaArgentina/geoAr},
-      }
-
+```
+  @Manual{,
+    title = {geoAr: Argentina's Spatial Data Toolbox},
+    author = {Juan Pablo {Ruiz Nicolini} and Patricio {Del Boca}},
+    year = {2023},
+    note = {R package version 0.0.1.4.2.1},
+    url = {https://github.com/PoliticaArgentina/geoAr},
+  }
+```  
+  
 ## `{geoAr}` es parte del [universo de paquetes **polAr**](https://github.com/PoliticaArgentina/polArverse)
 
 ```{r, echo=FALSE}

@@ -207,6 +207,12 @@
 <li><p>Libro de códigos (país, provincia, departamento) y función para re-codificar grillas según diccionario (ISO, INDEC, INDRA).</p></li>
 </ul>
 </div>
+<div class="section level3">
+<h3 id="georef-ar-api">
+<code>georef-ar</code> API<a class="anchor" aria-label="anchor" href="#georef-ar-api"></a>
+</h3>
+<ul><li>Interfaz en R para usar la <a href="https://georef-ar-api.readthedocs.io/es/latest/" class="external-link">API del Servicio de Normalización de Datos Geográficos</a>, que permite normalizar y codificar los nombres de unidades territoriales de la Argentina (provincias, departamentos, municipios y localidades) y de sus calles, así como ubicar coordenadas dentro de ellas. La versión original de estas funciones fueron desarrolladas en el paquete <code>georefar</code> desarrollado por <a href="https://github.com/pdelboca/georefar" class="external-link">Patricio del Boca</a>.</li></ul>
+</div>
 </div>
 <div class="section level2">
 <h2 id="paquetes-similares-para-otros-países-similar-packages">Paquetes similares para otros países (<em>Similar packages</em>)<a class="anchor" aria-label="anchor" href="#paquetes-similares-para-otros-pa%C3%ADses-similar-packages"></a>
@@ -227,13 +233,13 @@
 <h2 id="citation">Citation<a class="anchor" aria-label="anchor" href="#citation"></a>
 </h2>
 <p>To cite package ‘geoAr’ in publications use:</p>
-<p>Juan Pablo Ruiz Nicolini (2023). geoAr: Argentina’s Spatial Data Toolbox. R package version 0.0.1.4. <a href="https://github.com/PoliticaArgentina/geoAr" class="external-link uri">https://github.com/PoliticaArgentina/geoAr</a></p>
+<p><em>Juan Pablo Ruiz Nicolini and Patricio Del Boca (2023). geoAr: Argentina’s Spatial Data Toolbox. R package version 0.0.1.4.2.1. <a href="https://github.com/PoliticaArgentina/geoAr" class="external-link uri">https://github.com/PoliticaArgentina/geoAr</a></em></p>
 <p>A BibTeX entry for LaTeX users is</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>  <span class="sc">@</span>Manual{,</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    title <span class="ot">=</span> {geoAr<span class="sc">:</span> Argentina<span class="st">'s Spatial Data Toolbox},</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="st">    author = {Juan Pablo {Ruiz Nicolini}},</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="st">    author = {Juan Pablo {Ruiz Nicolini} and Patricio {Del Boca}},</span></span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="st">    year = {2023},</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="st">    note = {R package version 0.0.1.4.2},</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="st">    note = {R package version 0.0.1.4.2.1},</span></span>
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="st">    url = {https://github.com/PoliticaArgentina/geoAr},</span></span>
 <span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="st">  }</span></span></code></pre></div>
 </div>
@@ -285,10 +291,13 @@
 <div class="dev-status">
 <h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://CRAN.R-project.org/package=geoAr" class="external-link"><img src="https://www.r-pkg.org/badges/version/geoAr" alt="CRAN status"></a></li>
-<li><a href="https://CRAN.R-project.org/package=geoAr" class="external-link"><img src="https://www.r-pkg.org/badges/last-release/geoAr" alt="CRAN last release"></a></li>
-<li><a href="https://CRAN.R-project.org/package=geoAr" class="external-link"><img src="https://cranlogs.r-pkg.org/badges/grand-total/geoAr" alt="CRAN downloads"></a></li>
-<li><a href="https://github.com/PoliticaArgentina/geoAr/actions" class="external-link"><img src="https://github.com/PoliticaArgentina/geoAr/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
+<li><a href="https://cran.r-project.org/package=geoAr" class="external-link"><img src="https://www.r-pkg.org/badges/version/geoAr?color=blue"></a></li>
+<li><a href="https://cran.r-project.org/package=geoAr" class="external-link"><img src="http://cranlogs.r-pkg.org/badges/last-month/geoAr?color=blue"></a></li>
+<li><a href="https://cran.r-project.org/package=geoAr" class="external-link"><img src="http://cranlogs.r-pkg.org/badges/last-week/geoAr?color=blue"></a></li>
+<li><a href="https://cran.r-project.org/package=geoAr" class="external-link"><img src="http://cranlogs.r-pkg.org/badges/last-month/geoAr?color=blue"></a></li>
+<li><a href="https://cran.r-project.org/package=geoAr" class="external-link"><img src="http://cranlogs.r-pkg.org/badges/grand-total/geoAr?color=blue"></a></li>
+<li><a href="https://politicaargentina.r-universe.dev/ui#package:geoAr" class="external-link"><img src="https://politicaargentina.r-universe.dev/badges/geoAr" alt="r-universe status badge"></a></li>
+<li><a href="https://github.com/politicaargentina/geoAr" class="external-link"><img src="https://img.shields.io/badge/devel%20version-0.0.1.4.2.1-green.svg"></a></li>
 </ul>
 </div>
 
