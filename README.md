@@ -6,7 +6,10 @@
 
 [![CRAN
 status](https://www.r-pkg.org/badges/version/geoAr)](https://CRAN.R-project.org/package=geoAr)
-[![R build
+[![CRAN last
+release](https://www.r-pkg.org/badges/last-release/geoAr)](https://CRAN.R-project.org/package=geoAr)[![CRAN
+downloads](https://cranlogs.r-pkg.org/badges/grand-total/geoAr)](https://CRAN.R-project.org/package=geoAr)[![R
+build
 status](https://github.com/PoliticaArgentina/geoAr/workflows/R-CMD-check/badge.svg)](https://github.com/PoliticaArgentina/geoAr/actions)
 
 <!-- badges: end -->
@@ -16,9 +19,19 @@ datos espaciales de Argentina desde `R`.
 
 ------------------------------------------------------------------------
 
-### INSTALACIÓN
+## INSTALACIÓN (*Install*)
+
+### Desde `CRAN` (versión estable)
+
+``` r
+# Install geoAr in R:
+
+install.packages('geoAr')
+```
 
 ### Versión en desarrollo (*Development version*)
+
+#### Desde *GitHub*
 
 ``` r
 # install.packages('devtools') si no tiene instalado devtools
@@ -26,17 +39,22 @@ datos espaciales de Argentina desde `R`.
 devtools::install_github("politicaargentina/geoAr")
 ```
 
-### Desde `CRAN` o `r-universe` (version en desarrollo)
+#### `r-universe`
+
+Se puede agregar el repositorio de
+`[r-universe`\](<https://politicaargentina.r-universe.dev/builds>) como
+parámetro a la función base `install.packages`:
 
 ``` r
 # Install geoAr in R:
-install.packages('geoAr', repos = c('https://politicaargentina.r-universe.dev', 'https://cloud.r-project.org'))
+install.packages('geoAr', repos = c('https://politicaargentina.r-universe.dev')
 ```
 
-### Ejemplo de uso básico (*Basic Usage*)
+## Ejemplo de uso básico (*Basic Usage*)
 
 ``` r
 library(geoAr)
+#> Warning: package 'geoAr' was built under R version 4.1.3
 
 
 show_arg_codes() # Preview avialable data 
@@ -88,27 +106,27 @@ show_arg_codes() # Preview avialable data
 
 ### GEOMETRÍAS
 
-**Poligonos**
+**Polígonos**
 
 -   ARGENTINA (niveles PROVINCIA, DEPARTAMENTO y RADIO CENSAL)
 
 -   24 provincias (niveles DEPARTAMENTO y RADIO CENSAL)
 
--   Reconstrucción de los poligonos utilizados para los censos desde
+-   Reconstrucción de los polígonos utilizados para los censos desde
     1869 hasta 2010. Recuperado del proyecto *Base cartográfica de
     departamentos para los censos nacionales de la República Argentina
     desde 1869 a 2010* de [Gonzalo Rodriguez y Pablo De
     Grande](https://ri.conicet.gov.ar/handle/11336/149867).
 
 -   Geometrías (entidades, envolventes y radios) correspondientes a la
-    Encuesta Permanenete de Hogares (EPH) de INDEC.
+    Encuesta Permanente de Hogares (EPH) de INDEC.
 
-**PUNTOS**
+**Puntos (coordenadas)**
 
 -   Base de Asentamientos Humanos de la República Argentina (BAHRA)
     <http://www.bahra.gob.ar/>
 
-### GRILLAS
+### Grillas `geofacet`
 
 -   Grillas para usar con
     [geofacet](https://politicaargentina.github.io/geoAr/articles/geoAr_geofacet.html)
@@ -116,7 +134,7 @@ show_arg_codes() # Preview avialable data
     {eph}
 
 -   Libro de códigos (país, provincia, departamento) y función para
-    recodificar grillas según diccionario (ISO, INDEC, INDRA).
+    re-codificar grillas según diccionario (ISO, INDEC, INDRA).
 
 ## Paquetes similares para otros países (*Similar packages*)
 

@@ -1,3 +1,8 @@
+# geoAr 0.0.1.4.2.1
+
+Added [georefar](https://github.com/pdelboca/georefar) (R wrapper for georef-ar API) `get_*` family funnctions 
+
+
 # geoAr 0.0.1.4.2
 
 First CRAN version

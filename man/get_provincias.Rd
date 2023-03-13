@@ -37,6 +37,6 @@ Obtener Provincias
 }
 \examples{
 \dontrun{
-get_provincias(nombre = "CÃ³rdoba")
+get_provincias(nombre = "Córdoba")
 }
 }
