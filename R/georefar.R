@@ -1,12 +1,11 @@
-#' @importFrom attempt stop_if_not
-#' @importFrom curl has_internet
+
 check_internet <- function(){
-  stop_if_not(.x = has_internet(), msg = "No se detecto acceso a internet. Por favor checkea tu conexion.")
+  attempt::stop_if_not(.x = curl::has_internet(),
+                       msg = "No se detecto acceso a internet. Por favor chequea tu conexion.")
 }
 
-#' @importFrom httr status_code
 check_status <- function(res){
-  stop_if_not(.x = status_code(res),
+  attempt::stop_if_not(.x = httr::status_code(res),
               .p = ~ .x == 200,
               msg = "La API retorno un error.")
 }
@@ -26,10 +25,6 @@ base_url <- "http://apis.datos.gob.ar/georef/api/"
 #' @param max integer Cantidad máxima de resultados a devolver.
 #' @param exacto boolean Cuando está presente, se activa el modo de búsqueda por texto exacto. Sólo tiene efecto cuando se usan campos de búsqueda por texto (por ejemplo, nombre).
 #'
-#' @importFrom attempt stop_if_all
-#' @importFrom purrr compact
-#' @importFrom jsonlite fromJSON
-#' @importFrom httr GET content
 #' @export
 #' @rdname get_calles
 #'
@@ -44,12 +39,13 @@ get_calles <- function(id = NULL, nombre = NULL, tipo = NULL, provincia = NULL, 
 
   check_internet()
   base_url_get_calles <- paste0(base_url, "calles")
-  res <- GET(base_url_get_calles, query = compact(args))
+  res <- httr::GET(base_url_get_calles,
+                   query = purrr::compact(args))
 
   check_status(res)
 
-  fromJSON(content(res, "text"))$calles  %>%
-    dplyr::as_tibble()
+  jsonlite::fromJSON(httr::content(res, "text"))$calles  %>%
+    dplyr::as_tibble() %>% suppressMessages()
 }
 
 #' Obtener Departamentos
@@ -62,10 +58,6 @@ get_calles <- function(id = NULL, nombre = NULL, tipo = NULL, provincia = NULL, 
 #' @param campos text Campos a incluir en la respuesta separados por comas, sin espacios. Algunos campos siempre serán incluidos, incluso si no se agregaron en la lista. Para incluir campos de sub-entidades, separar los nombres con un punto, por ejemplo: provincia.id.
 #' @param max integer Cantidad máxima de resultados a devolver.
 #' @param exacto boolean Cuando está presente, se activa el modo de búsqueda por texto exacto. Sólo tiene efecto cuando se usan campos de búsqueda por texto (por ejemplo, nombre).
-#'
-#' @importFrom purrr compact
-#' @importFrom jsonlite fromJSON
-#' @importFrom httr GET content
 #' @export
 #' @rdname get_departamentos
 #'
@@ -81,12 +73,13 @@ get_departamentos <- function(id = NULL, nombre = NULL, provincia = NULL, orden 
   check_internet()
 
   base_url_get_departamentos <- paste0(base_url, "departamentos")
-  res <- GET(base_url_get_departamentos, query = compact(args))
+  res <- httr::GET(base_url_get_departamentos,
+                   query = purrr::compact(args))
 
   check_status(res)
 
-  fromJSON(content(res, "text"))$departamentos  %>%
-    dplyr::as_tibble()
+  jsonlite::fromJSON(httr::content(res, "text"))$departamentos  %>%
+    dplyr::as_tibble() %>% suppressMessages()
 }
 #' Normalizacion de direcciones
 #'
@@ -99,10 +92,6 @@ get_departamentos <- function(id = NULL, nombre = NULL, provincia = NULL, orden 
 #' @param max integer Cantidad máxima de resultados a devolver.
 #' @param exacto boolean Cuando está presente, se activa el modo de búsqueda por texto exacto. Sólo tiene efecto cuando se usan campos de búsqueda por texto (por ejemplo, nombre).
 #'
-#' @importFrom attempt stop_if_all
-#' @importFrom purrr compact
-#' @importFrom jsonlite fromJSON
-#' @importFrom httr GET content
 #' @export
 #' @rdname normalizar_direccion
 #'
@@ -117,12 +106,13 @@ normalizar_direccion <- function(direccion, tipo = NULL, provincia = NULL, depar
 
   check_internet()
   base_url_get_direcciones <- paste0(base_url, "direcciones")
-  res <- GET(base_url_get_direcciones, query = compact(args))
+  res <- httr::GET(base_url_get_direcciones,
+             query = purrr::compact(args))
 
   check_status(res)
 
-  fromJSON(content(res, "text"))$direcciones %>%
-    dplyr::as_tibble()
+  jsonlite::fromJSON(httr::content(res, "text"))$direcciones %>%
+    dplyr::as_tibble() %>% suppressMessages()
 }
 
 #' Obtener Localidades
@@ -137,10 +127,6 @@ normalizar_direccion <- function(direccion, tipo = NULL, provincia = NULL, depar
 #' @param campos text Campos a incluir en la respuesta separados por comas, sin espacios. Algunos campos siempre serán incluidos, incluso si no se agregaron en la lista. Para incluir campos de sub-entidades, separar los nombres con un punto, por ejemplo: provincia.id.
 #' @param max integer Cantidad máxima de resultados a devolver.
 #' @param exacto boolean Cuando está presente, se activa el modo de búsqueda por texto exacto. Sólo tiene efecto cuando se usan campos de búsqueda por texto (por ejemplo, nombre).
-#'
-#' @importFrom purrr compact
-#' @importFrom jsonlite fromJSON
-#' @importFrom httr GET content
 #' @export
 #' @rdname get_localidades
 #'
@@ -156,12 +142,13 @@ get_localidades <- function(id = NULL, nombre = NULL, provincia = NULL, departam
   check_internet()
 
   base_url_get_localidades <- paste0(base_url, "localidades")
-  res <- GET(base_url_get_localidades, query = compact(args))
+  res <- httr::GET(base_url_get_localidades,
+             query = purrr::compact(args))
 
   check_status(res)
 
-  fromJSON(content(res, "text"))$localidades  %>%
-    dplyr::as_tibble()
+  jsonlite::fromJSON(httr::content(res, "text"))$localidades  %>%
+    dplyr::as_tibble() %>% suppressMessages()
 }
 #' Obtener Municipios
 #'
@@ -174,10 +161,6 @@ get_localidades <- function(id = NULL, nombre = NULL, provincia = NULL, departam
 #' @param campos text Campos a incluir en la respuesta separados por comas, sin espacios. Algunos campos siempre serán incluidos, incluso si no se agregaron en la lista. Para incluir campos de sub-entidades, separar los nombres con un punto, por ejemplo: provincia.id.
 #' @param max integer Cantidad máxima de resultados a devolver.
 #' @param exacto boolean Cuando está presente, se activa el modo de búsqueda por texto exacto. Sólo tiene efecto cuando se usan campos de búsqueda por texto (por ejemplo, nombre).
-#'
-#' @importFrom purrr compact
-#' @importFrom jsonlite fromJSON
-#' @importFrom httr GET content
 #' @export
 #' @rdname get_municipios
 #'
@@ -193,12 +176,13 @@ get_municipios <- function(id = NULL, nombre = NULL, provincia = NULL, departame
   check_internet()
 
   base_url_get_municipios <- paste0(base_url, "municipios")
-  res <- GET(base_url_get_municipios, query = compact(args))
+  res <- httr::GET(base_url_get_municipios,
+                   query = purrr::compact(args))
 
   check_status(res)
 
-  fromJSON(content(res, "text"))$municipios  %>%
-    dplyr::as_tibble()
+  jsonlite::fromJSON(httr::content(res, "text"))$municipios  %>%
+    dplyr::as_tibble() %>% suppressMessages()
 }
 #' Obtener Provincias
 #'
@@ -209,11 +193,6 @@ get_municipios <- function(id = NULL, nombre = NULL, provincia = NULL, departame
 #' @param campos text Campos a incluir en la respuesta separados por comas, sin espacios. Algunos campos siempre serán incluidos, incluso si no se agregaron en la lista. Para incluir campos de sub-entidades, separar los nombres con un punto, por ejemplo: provincia.id.
 #' @param max integer Cantidad máxima de resultados a devolver.
 #' @param exacto boolean Cuando está presente, se activa el modo de búsqueda por texto exacto. Sólo tiene efecto cuando se usan campos de búsqueda por texto (por ejemplo, nombre).
-#'
-#' @importFrom attempt stop_if_all
-#' @importFrom purrr compact
-#' @importFrom jsonlite fromJSON
-#' @importFrom httr GET content
 #' @export
 #' @rdname get_provincias
 #'
@@ -229,12 +208,13 @@ get_provincias <- function(id = NULL, nombre = NULL, orden = NULL, aplanar = TRU
 
   check_internet()
   base_url_get_provincias <- paste0(base_url, "provincias")
-  res <- GET(base_url_get_provincias, query = compact(args))
+  res <- httr::GET(base_url_get_provincias,
+                   query = purrr::compact(args))
 
   check_status(res)
 
-  fromJSON(content(res, "text"))$provincias  %>%
-    dplyr::as_tibble()
+  jsonlite::fromJSON(httr::content(res, "text"))$provincias  %>%
+    dplyr::as_tibble() %>% suppressMessages()
 }
 #' Obtener Ubicacion
 #'
@@ -243,9 +223,6 @@ get_provincias <- function(id = NULL, nombre = NULL, orden = NULL, aplanar = TRU
 #' @param aplanar boolean Cuando está presente, muestra el resultado JSON con una estructura plana.
 #' @param campos text Campos a incluir en la respuesta separados por comas, sin espacios. Algunos campos siempre serán incluidos, incluso si no se agregaron en la lista. Para incluir campos de sub-entidades, separar los nombres con un punto, por ejemplo: provincia.id.
 #'
-#' @importFrom purrr compact
-#' @importFrom jsonlite fromJSON
-#' @importFrom httr GET content
 #' @export
 #' @rdname get_ubicacion
 #'
@@ -261,10 +238,11 @@ get_ubicacion <- function(lat, lon, aplanar = TRUE, campos = NULL){
   check_internet()
 
   base_url_get_ubicacion <- paste0(base_url, "ubicacion")
-  res <- GET(base_url_get_ubicacion, query = compact(args))
+  res <- httr::GET(base_url_get_ubicacion,
+                   query = purrr::compact(args))
 
   check_status(res)
 
-  fromJSON(content(res, "text"))$ubicacion  %>%
-    dplyr::as_tibble()
+  jsonlite::fromJSON(httr::content(res, "text"))$ubicacion  %>%
+    dplyr::as_tibble() %>% suppressMessages()
 }
