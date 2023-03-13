@@ -33,7 +33,9 @@ Imports:
     magrittr,
     curl,
     glue,
-    leaflet
+    leaflet, 
+    jsonlite, 
+    purrr
 URL: https://github.com/PoliticaArgentina/geoAr
 BugReports: https://github.com/PoliticaArgentina/geoAr/issues
 VignetteBuilder: knitr
