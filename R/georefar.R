@@ -7,10 +7,12 @@ check_internet <- function(){
 check_status <- function(res){
   attempt::stop_if_not(.x = httr::status_code(res),
               .p = ~ .x == 200,
-              msg = "La API retorno un error.")
+              msg = httr::message_for_status(res, "get data from API"))
 }
 
 base_url <- "http://apis.datos.gob.ar/georef/api/"
+
+
 
 
 #' Obtener Calles
