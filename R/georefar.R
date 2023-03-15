@@ -47,7 +47,7 @@ get_calles <- function(id = NULL, nombre = NULL, tipo = NULL, provincia = NULL, 
   check_status(res)
 
   jsonlite::fromJSON(httr::content(res, "text"))$calles  %>%
-    dplyr::as_tibble() %>% suppressMessages()
+    purrr::modify_if(is.null, list) %>%     dplyr::as_tibble() %>% suppressMessages()
 }
 
 #' Obtener Departamentos
@@ -81,7 +81,7 @@ get_departamentos <- function(id = NULL, nombre = NULL, provincia = NULL, orden 
   check_status(res)
 
   jsonlite::fromJSON(httr::content(res, "text"))$departamentos  %>%
-    dplyr::as_tibble() %>% suppressMessages()
+    purrr::modify_if(is.null, list) %>%     dplyr::as_tibble() %>% suppressMessages()
 }
 #' Normalizacion de direcciones
 #'
@@ -114,7 +114,7 @@ normalizar_direccion <- function(direccion, tipo = NULL, provincia = NULL, depar
   check_status(res)
 
   jsonlite::fromJSON(httr::content(res, "text"))$direcciones %>%
-    dplyr::as_tibble() %>% suppressMessages()
+    purrr::modify_if(is.null, list) %>%     dplyr::as_tibble() %>% suppressMessages()
 }
 
 #' Obtener Localidades
@@ -150,7 +150,7 @@ get_localidades <- function(id = NULL, nombre = NULL, provincia = NULL, departam
   check_status(res)
 
   jsonlite::fromJSON(httr::content(res, "text"))$localidades  %>%
-    dplyr::as_tibble() %>% suppressMessages()
+    purrr::modify_if(is.null, list) %>%     dplyr::as_tibble() %>% suppressMessages()
 }
 #' Obtener Municipios
 #'
@@ -184,7 +184,7 @@ get_municipios <- function(id = NULL, nombre = NULL, provincia = NULL, departame
   check_status(res)
 
   jsonlite::fromJSON(httr::content(res, "text"))$municipios  %>%
-    dplyr::as_tibble() %>% suppressMessages()
+    purrr::modify_if(is.null, list) %>%     dplyr::as_tibble() %>% suppressMessages()
 }
 #' Obtener Provincias
 #'
@@ -216,7 +216,7 @@ get_provincias <- function(id = NULL, nombre = NULL, orden = NULL, aplanar = TRU
   check_status(res)
 
   jsonlite::fromJSON(httr::content(res, "text"))$provincias  %>%
-    dplyr::as_tibble() %>% suppressMessages()
+    purrr::modify_if(is.null, list) %>%     dplyr::as_tibble() %>% suppressMessages()
 }
 #' Obtener Ubicacion
 #'
@@ -245,6 +245,7 @@ get_ubicacion <- function(lat, lon, aplanar = TRUE, campos = NULL){
 
   check_status(res)
 
-  jsonlite::fromJSON(httr::content(res, "text"))$ubicacion  %>%
+  jsonlite::fromJSON(httr::content(res, "text"))$ubicacion %>%
+    purrr::modify_if(is.null, list) %>%
     dplyr::as_tibble() %>% suppressMessages()
 }
