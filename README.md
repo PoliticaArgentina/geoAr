@@ -100,24 +100,32 @@ show_arg_codes() # Preview avialable data
 
 ## Información Disponible (*Available Data*)
 
-### GEOMETRÍAS
+### Geometrías
 
-**Polígonos**
+#### **Polígonos**
+
+**Las funciones básicas para obtener polígonos de Argentina corresponden
+a la última información censal disponible (CENSO 2010)**
 
 -   ARGENTINA (niveles PROVINCIA, DEPARTAMENTO y RADIO CENSAL)
 
 -   24 provincias (niveles DEPARTAMENTO y RADIO CENSAL)
 
--   Reconstrucción de los polígonos utilizados para los censos desde
-    1869 hasta 2010. Recuperado del proyecto *Base cartográfica de
-    departamentos para los censos nacionales de la República Argentina
-    desde 1869 a 2010* de [Gonzalo Rodriguez y Pablo De
+**CENSOS históricos**
+
+-   Se facilita el acceso a la reconstrucción de los polígonos
+    utilizados para los censos desde 1869 hasta 2010. Recuperado del
+    proyecto *Base cartográfica de departamentos para los censos
+    nacionales de la República Argentina desde 1869 a 2010* de [Gonzalo
+    Rodriguez y Pablo De
     Grande](https://ri.conicet.gov.ar/handle/11336/149867).
 
--   Geometrías (entidades, envolventes y radios) correspondientes a la
-    Encuesta Permanente de Hogares (EPH) de INDEC.
+**Encuesta Permanente de Hogares (EPH)**
 
-**Puntos (coordenadas)**
+-   Geometrías (entidades, envolventes y radios censales)
+    correspondientes a la EPH del INDEC.
+
+#### **Puntos (coordenadas)**
 
 -   Base de Asentamientos Humanos de la República Argentina (BAHRA)
     <http://www.bahra.gob.ar/>
