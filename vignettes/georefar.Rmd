@@ -90,7 +90,7 @@ Supongamos ahora que tenemos las coordenadas de lo que nos dicen es la ubicació
 ```{r}
 enriquecer_coordenadas <- tibble::tribble(
   ~latitud, ~longitud,
-  -26.8141832,-65.2017416
+  -26.8129225,-65.1998249
 )
 
 leaflet::leaflet() %>% 
