@@ -8,7 +8,7 @@
 [![](http://cranlogs.r-pkg.org/badges/last-month/geoAr?color=blue)](https://cran.r-project.org/package=geoAr)[![](http://cranlogs.r-pkg.org/badges/last-week/geoAr?color=blue)](https://cran.r-project.org/package=geoAr)[![](http://cranlogs.r-pkg.org/badges/last-month/geoAr?color=blue)](https://cran.r-project.org/package=geoAr)[![](http://cranlogs.r-pkg.org/badges/grand-total/geoAr?color=blue)](https://cran.r-project.org/package=geoAr)
 [![r-universe status
 badge](https://politicaargentina.r-universe.dev/badges/geoAr)](https://politicaargentina.r-universe.dev/ui#package:geoAr)[![](https://img.shields.io/badge/devel%20version-0.0.1.4.2.1-green.svg)](https://github.com/politicaargentina/geoAr)
-
+[![R-CMD-check](https://github.com/PoliticaArgentina/geoAr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/PoliticaArgentina/geoAr/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 `{geoAr}` brinda herramientas que facilitan el acceso y el trabajo con
