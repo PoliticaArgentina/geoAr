@@ -23,7 +23,8 @@ Suggests:
     knitr,
     rmarkdown, 
     geofacet, 
-    ggplot2
+    ggplot2, 
+    tibble
 Depends: 
     R (>= 2.10)
 Imports: 

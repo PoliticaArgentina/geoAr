@@ -1,4 +1,4 @@
-#' Equivalencias de codigos de identificacion geografica
+#' Equivalencias de códigos de identificación geográfica (INDEC 2010)
 #'
 #' @name full_geo_metadata
 #' @docType data

@@ -1,3 +1,12 @@
+#' Listado de geometrías para censos históricos disponibles para descargar
+#'
+#' @name censos
+#' @docType data
+#' @author Juan Pablo Ruiz Nicolini
+#' @keywords data
+
+
+
 library(tidyverse)
 
 
@@ -32,4 +41,5 @@ censos <- rvest::html_nodes(pg, "a") %>%
 
 
 
-usethis::use_data(censos, overwrite = TRUE)
+usethis::use_data(censos, overwrite = TRUE, internal = TRUE)
+

@@ -1,4 +1,4 @@
-#' Equivalencias de codigos de identificacion geografica
+#' Equivalencias de códigos de identificación geográfica
 #'
 #' @name grillas_geofacet
 #' @docType data
@@ -18,7 +18,7 @@
 
 
 ### NACIONAL ####
-
+library(tidyverse)
 
 argentina <-  data.frame(
   col = c(1, 3, 5, 1, 2,
@@ -48,7 +48,7 @@ argentina <-  data.frame(
 
 ########### PROVINCIAS ######
 
-codigos <- show_arg_codes(nivel = "departamentos",viewer = F) %>%
+codigos <- geoAr::show_arg_codes(nivel = "departamentos",viewer = F) %>%
   dplyr::select(id, code = coddepto, nombre = nomdepto_censo)
 
 
