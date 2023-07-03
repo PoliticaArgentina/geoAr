@@ -316,7 +316,7 @@ get_ubicacion <- function(lat, lon, aplanar = TRUE, campos = NULL){
 get_localidades_censales <- function(id = NULL, nombre = NULL, provincia = NULL, departamento = NULL, municipio = NULL, orden = NULL, aplanar = TRUE, campos = NULL, max = NULL, exacto = NULL){
   args <- list(id = id, nombre = nombre, provincia = provincia, departamento = departamento, municipio = municipio, orden = orden, aplanar = aplanar, campos = campos, max = max, exacto = exacto)
 
-  endpoint <- "localidades_censales"
+  endpoint <- "localidades-censales"
 
   check_internet()
 
