@@ -36,10 +36,15 @@ normalizar_direccion(
 Un Data Frame con el listado normalizado de de direcciones
 }
 \description{
-Normalizacion de direcciones
+Permite normalizar una dirección utilizando el listado de vías de circulación.
+Realiza la consulta GET al endpoint /direcciones de georef-ar-api.
+Si existe GEOREFAR_TOKEN en el Renviron lo usará para hacer la consulta.
 }
 \examples{
 \dontrun{
 normalizar_direccion()
 }
+}
+\references{
+\href{https://datosgobar.github.io/georef-ar-api/open-api/#/Recursos/get_direcciones}{georef-ar-api/direcciones}
 }

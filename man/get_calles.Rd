@@ -39,10 +39,15 @@ get_calles(
 Un Data Frame con el listado de Calles
 }
 \description{
-Obtener Calles
+Permite realizar búsquedas sobre el listado de vías de circulación.
+Realiza la consulta GET al endpoint /calles de georef-ar-api.
+Si existe GEOREFAR_TOKEN en el Renviron lo usará para hacer la consulta.
 }
 \examples{
 \dontrun{
 get_calles()
 }
+}
+\references{
+\href{https://datosgobar.github.io/georef-ar-api/open-api/#/Recursos/get_calles}{georef-ar-api/calles}
 }

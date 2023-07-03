@@ -12,11 +12,47 @@ check_status <- function(res){
 
 base_url <- "http://apis.datos.gob.ar/georef/api/"
 
+get_endpoint <- function(endpoint, args) {
 
+  if (! assertthat::noNA(args)) {
+    stop(c('Los parametros siguientes tienen NAs', names(args[is.na(args)])))
+  }
+
+  # Obtener el token de la variable de entorno
+  token <- Sys.getenv("GEOREFAR_TOKEN")
+
+  url <- paste0(base_url, endpoint)
+
+  # Comprobar si el token está presente
+  if (is.null(token) | token == "") {
+    response <- httr::GET(url, query = args)
+  } else {
+    response <- httr::GET(url,
+                          httr::add_headers(Authorization = paste("Bearer", token)),
+                          query =  args)
+  }
+
+  parsed <- suppressMessages(jsonlite::fromJSON(httr::content(response, "text")))
+
+  check_status(response)
+
+  data <- parsed[[endpoint]] %>%
+    purrr::modify_if(is.null, list)
+
+  if (length(data) == 0) {
+    stop("La consulta devolvió una lista vacía", call. = F)
+  }
+
+  data %>%
+    dplyr::as_tibble(.name_repair = function(x) {gsub(pattern = "\\$|\\.", replacement = "_", x = x)})
+}
 
 
 #' Obtener Calles
 #'
+#' Permite realizar búsquedas sobre el listado de vías de circulación.
+#' Realiza la consulta GET al endpoint /calles de georef-ar-api.
+#' Si existe GEOREFAR_TOKEN en el Renviron lo usará para hacer la consulta.
 #' @param id text Filtrar por ID.
 #' @param nombre text Filtrar por Nombre.
 #' @param tipo text Tipo de calle. (Valores disponibles: calle, avenida, pasaje.)
@@ -30,6 +66,7 @@ base_url <- "http://apis.datos.gob.ar/georef/api/"
 #' @export
 #' @rdname get_calles
 #'
+#' @references [georef-ar-api/calles](https://datosgobar.github.io/georef-ar-api/open-api/#/Recursos/get_calles)
 #' @return Un Data Frame con el listado de Calles
 #' @examples
 #' \dontrun{
@@ -39,19 +76,19 @@ base_url <- "http://apis.datos.gob.ar/georef/api/"
 get_calles <- function(id = NULL, nombre = NULL, tipo = NULL, provincia = NULL, departamento = NULL, aplanar = TRUE, campos = NULL, max = NULL, exacto = NULL){
   args <- list(id = id, nombre = nombre, tipo = tipo, provincia = provincia, departamento = departamento, aplanar = aplanar, campos = campos, max = max, exacto = exacto)
 
+  endpoint <- "calles"
+
   check_internet()
-  base_url_get_calles <- paste0(base_url, "calles")
-  res <- httr::GET(base_url_get_calles,
-                   query = purrr::compact(args))
 
-  check_status(res)
+  get_endpoint(endpoint = endpoint, args = args)
 
-  jsonlite::fromJSON(httr::content(res, "text"))$calles  %>%
-    purrr::modify_if(is.null, list) %>%     dplyr::as_tibble() %>% suppressMessages()
 }
 
 #' Obtener Departamentos
 #'
+#' Permite realizar búsquedas sobre el listado de departamentos.
+#' Realiza la consulta GET al endpoint /departamentos de georef-ar-api.
+#' Si existe GEOREFAR_TOKEN en el Renviron lo usará para hacer la consulta.
 #' @param id text Filtrar por ID.
 #' @param nombre text Filtrar por Nombre.
 #' @param provincia text Filtrar por nombre o ID de Provincia.
@@ -60,9 +97,11 @@ get_calles <- function(id = NULL, nombre = NULL, tipo = NULL, provincia = NULL, 
 #' @param campos text Campos a incluir en la respuesta separados por comas, sin espacios. Algunos campos siempre serán incluidos, incluso si no se agregaron en la lista. Para incluir campos de sub-entidades, separar los nombres con un punto, por ejemplo: provincia.id.
 #' @param max integer Cantidad máxima de resultados a devolver.
 #' @param exacto boolean Cuando está presente, se activa el modo de búsqueda por texto exacto. Sólo tiene efecto cuando se usan campos de búsqueda por texto (por ejemplo, nombre).
+#'
 #' @export
 #' @rdname get_departamentos
 #'
+#' @references [georef-ar-api/departamentos](https://datosgobar.github.io/georef-ar-api/open-api/#/Recursos/get_departamentos)
 #' @return Un Data Frame con el listado de Departamentos
 #' @examples
 #' \dontrun{
@@ -72,19 +111,19 @@ get_calles <- function(id = NULL, nombre = NULL, tipo = NULL, provincia = NULL, 
 get_departamentos <- function(id = NULL, nombre = NULL, provincia = NULL, orden = NULL, aplanar = TRUE, campos = NULL, max = NULL, exacto = NULL){
   args <- list(id = id, nombre = nombre, provincia = provincia, orden = orden, aplanar = aplanar, campos = campos, max = max, exacto = exacto)
 
+  endpoint <- "departamentos"
+
   check_internet()
 
-  base_url_get_departamentos <- paste0(base_url, "departamentos")
-  res <- httr::GET(base_url_get_departamentos,
-                   query = purrr::compact(args))
+  get_endpoint(endpoint = endpoint, args = args)
 
-  check_status(res)
-
-  jsonlite::fromJSON(httr::content(res, "text"))$departamentos  %>%
-    purrr::modify_if(is.null, list) %>%     dplyr::as_tibble() %>% suppressMessages()
 }
+
 #' Normalizacion de direcciones
 #'
+#' Permite normalizar una dirección utilizando el listado de vías de circulación.
+#' Realiza la consulta GET al endpoint /direcciones de georef-ar-api.
+#' Si existe GEOREFAR_TOKEN en el Renviron lo usará para hacer la consulta.
 #' @param direccion text Requerido. Direccion a normalizar, debe contener altura separada por espacio. (Ej: Colon 127)
 #' @param tipo text Tipo de calle. (Valores disponibles: calle, avenida, pasaje.)
 #' @param provincia text Filtrar por nombre o ID de provincia.
@@ -97,6 +136,7 @@ get_departamentos <- function(id = NULL, nombre = NULL, provincia = NULL, orden 
 #' @export
 #' @rdname normalizar_direccion
 #'
+#' @references [georef-ar-api/direcciones](https://datosgobar.github.io/georef-ar-api/open-api/#/Recursos/get_direcciones)
 #' @return Un Data Frame con el listado normalizado de de direcciones
 #' @examples
 #' \dontrun{
@@ -106,19 +146,18 @@ get_departamentos <- function(id = NULL, nombre = NULL, provincia = NULL, orden 
 normalizar_direccion <- function(direccion, tipo = NULL, provincia = NULL, departamento = NULL, aplanar = TRUE, campos = NULL, max = NULL, exacto = NULL){
   args <- list(direccion = direccion, tipo = tipo, provincia = provincia, departamento = departamento, aplanar = aplanar, campos = campos, max = max, exacto = exacto)
 
+  endpoint <- "direccion"
+
   check_internet()
-  base_url_get_direcciones <- paste0(base_url, "direcciones")
-  res <- httr::GET(base_url_get_direcciones,
-             query = purrr::compact(args))
 
-  check_status(res)
-
-  jsonlite::fromJSON(httr::content(res, "text"))$direcciones %>%
-    purrr::modify_if(is.null, list) %>%     dplyr::as_tibble() %>% suppressMessages()
+  get_endpoint(endpoint = endpoint, args = args)
 }
 
 #' Obtener Localidades
 #'
+#' Permite realizar búsquedas sobre el listado de localidades.
+#' Realiza la consulta GET al endpoint /localidades de georef-ar-api.
+#' Si existe GEOREFAR_TOKEN en el Renviron lo usará para hacer la consulta.
 #' @param id text Filtrar por ID.
 #' @param nombre text Filtrar por Nombre.
 #' @param provincia text Filtrar por nombre o ID de Provincia.
@@ -129,10 +168,12 @@ normalizar_direccion <- function(direccion, tipo = NULL, provincia = NULL, depar
 #' @param campos text Campos a incluir en la respuesta separados por comas, sin espacios. Algunos campos siempre serán incluidos, incluso si no se agregaron en la lista. Para incluir campos de sub-entidades, separar los nombres con un punto, por ejemplo: provincia.id.
 #' @param max integer Cantidad máxima de resultados a devolver.
 #' @param exacto boolean Cuando está presente, se activa el modo de búsqueda por texto exacto. Sólo tiene efecto cuando se usan campos de búsqueda por texto (por ejemplo, nombre).
+#'
 #' @export
 #' @rdname get_localidades
 #'
-#' @return Un Data Frame con el listado de Departamentos
+#' @references [georef-ar-api/localidades](https://datosgobar.github.io/georef-ar-api/open-api/#/Recursos/get_localidades)
+#' @return Un Data Frame con el listado de Localidades
 #' @examples
 #' \dontrun{
 #' get_localidades()
@@ -141,19 +182,18 @@ normalizar_direccion <- function(direccion, tipo = NULL, provincia = NULL, depar
 get_localidades <- function(id = NULL, nombre = NULL, provincia = NULL, departamento = NULL, municipio = NULL, orden = NULL, aplanar = TRUE, campos = NULL, max = NULL, exacto = NULL){
   args <- list(id = id, nombre = nombre, provincia = provincia, departamento = departamento, municipio = municipio, orden = orden, aplanar = aplanar, campos = campos, max = max, exacto = exacto)
 
+  endpoint <- "localidades"
+
   check_internet()
 
-  base_url_get_localidades <- paste0(base_url, "localidades")
-  res <- httr::GET(base_url_get_localidades,
-             query = purrr::compact(args))
-
-  check_status(res)
-
-  jsonlite::fromJSON(httr::content(res, "text"))$localidades  %>%
-    purrr::modify_if(is.null, list) %>%     dplyr::as_tibble() %>% suppressMessages()
+  get_endpoint(endpoint = endpoint, args = args)
 }
+
 #' Obtener Municipios
 #'
+#' Permite realizar búsquedas sobre el listado de municipios.
+#' Realiza la consulta GET al endpoint /municipios de georef-ar-api.
+#' Si existe GEOREFAR_TOKEN en el Renviron lo usará para hacer la consulta.
 #' @param id text Filtrar por ID.
 #' @param nombre text Filtrar por Nombre.
 #' @param provincia text Filtrar por nombre o ID de Provincia.
@@ -163,10 +203,12 @@ get_localidades <- function(id = NULL, nombre = NULL, provincia = NULL, departam
 #' @param campos text Campos a incluir en la respuesta separados por comas, sin espacios. Algunos campos siempre serán incluidos, incluso si no se agregaron en la lista. Para incluir campos de sub-entidades, separar los nombres con un punto, por ejemplo: provincia.id.
 #' @param max integer Cantidad máxima de resultados a devolver.
 #' @param exacto boolean Cuando está presente, se activa el modo de búsqueda por texto exacto. Sólo tiene efecto cuando se usan campos de búsqueda por texto (por ejemplo, nombre).
+#'
 #' @export
 #' @rdname get_municipios
 #'
-#' @return Un Data Frame con el listado de Departamentos
+#' @references [georef-ar-api/municipios](https://datosgobar.github.io/georef-ar-api/open-api/#/Recursos/get_municipios)
+#' @return Un Data Frame con el listado de Municipios
 #' @examples
 #' \dontrun{
 #' get_municipios()
@@ -175,19 +217,18 @@ get_localidades <- function(id = NULL, nombre = NULL, provincia = NULL, departam
 get_municipios <- function(id = NULL, nombre = NULL, provincia = NULL, departamento = NULL, orden = NULL, aplanar = TRUE, campos = NULL, max = NULL, exacto = NULL){
   args <- list(id = id, nombre = nombre, provincia = provincia, departamento = departamento, orden = orden, aplanar = aplanar, campos = campos, max = max, exacto = exacto)
 
+  endpoint <- "municipios"
+
   check_internet()
 
-  base_url_get_municipios <- paste0(base_url, "municipios")
-  res <- httr::GET(base_url_get_municipios,
-                   query = purrr::compact(args))
-
-  check_status(res)
-
-  jsonlite::fromJSON(httr::content(res, "text"))$municipios  %>%
-    purrr::modify_if(is.null, list) %>%     dplyr::as_tibble() %>% suppressMessages()
+  get_endpoint(endpoint = endpoint, args = args)
 }
+
 #' Obtener Provincias
 #'
+#' Permite realizar búsquedas sobre el listado de provincias.
+#' Realiza la consulta GET al endpoint /provincias de georef-ar-api.
+#' Si existe GEOREFAR_TOKEN en el Renviron lo usará para hacer la consulta.
 #' @param id text Filtrar por ID.
 #' @param nombre text Filtrar por Nombre.
 #' @param orden text Campo por el cual ordenar los resultados. (Por ID o nombre)
@@ -195,9 +236,11 @@ get_municipios <- function(id = NULL, nombre = NULL, provincia = NULL, departame
 #' @param campos text Campos a incluir en la respuesta separados por comas, sin espacios. Algunos campos siempre serán incluidos, incluso si no se agregaron en la lista. Para incluir campos de sub-entidades, separar los nombres con un punto, por ejemplo: provincia.id.
 #' @param max integer Cantidad máxima de resultados a devolver.
 #' @param exacto boolean Cuando está presente, se activa el modo de búsqueda por texto exacto. Sólo tiene efecto cuando se usan campos de búsqueda por texto (por ejemplo, nombre).
+#'
 #' @export
 #' @rdname get_provincias
 #'
+#' @references [georef-ar-api/provincias](https://datosgobar.github.io/georef-ar-api/open-api/#/Recursos/get_provincias)
 #' @return Un Data Frame con el listado de Provincias
 #' @examples
 #' \dontrun{
@@ -206,20 +249,19 @@ get_municipios <- function(id = NULL, nombre = NULL, provincia = NULL, departame
 
 get_provincias <- function(id = NULL, nombre = NULL, orden = NULL, aplanar = TRUE, campos = NULL, max = NULL, exacto = NULL){
   args <- list(id = id, nombre = nombre, orden = orden, aplanar = aplanar, campos = campos, max = max, exacto = exacto)
-  #stop_if_all(args, is.null, "You need to specify at least one argument")
+
+  endpoint <- "provincias"
 
   check_internet()
-  base_url_get_provincias <- paste0(base_url, "provincias")
-  res <- httr::GET(base_url_get_provincias,
-                   query = purrr::compact(args))
 
-  check_status(res)
-
-  jsonlite::fromJSON(httr::content(res, "text"))$provincias  %>%
-    purrr::modify_if(is.null, list) %>%     dplyr::as_tibble() %>% suppressMessages()
+  get_endpoint(endpoint = endpoint, args = args)
 }
+
 #' Obtener Ubicacion
 #'
+#' Permite realizar una georreferenciación inversa para un punto, informando cuales unidades territoriales lo contienen.
+#' Realiza la consulta GET al endpoint /ubicacion de georef-ar-api.
+#' Si existe GEOREFAR_TOKEN en el Renviron lo usará para hacer la consulta.
 #' @param lat numeric Latitud del punto, en forma de número real con grados decimales.
 #' @param lon numeric Longitud del punto, en forma de número real con grados decimales.
 #' @param aplanar boolean Cuando está presente, muestra el resultado JSON con una estructura plana.
@@ -228,7 +270,8 @@ get_provincias <- function(id = NULL, nombre = NULL, orden = NULL, aplanar = TRU
 #' @export
 #' @rdname get_ubicacion
 #'
-#' @return Un Data Frame con el listado de Departamentos
+#' @references [georef-ar-api/ubicacion](https://datosgobar.github.io/georef-ar-api/open-api/#/Recursos/get_ubicacion)
+#' @return Un Data Frame con las unidades territoriales que contienen el punto.
 #' @examples
 #' \dontrun{
 #' get_ubicacion()
@@ -237,15 +280,82 @@ get_provincias <- function(id = NULL, nombre = NULL, orden = NULL, aplanar = TRU
 get_ubicacion <- function(lat, lon, aplanar = TRUE, campos = NULL){
   args <- list(lat = lat, lon = lon, aplanar = aplanar, campos = campos)
 
+  endpoint <- "ubicacion"
+
   check_internet()
 
-  base_url_get_ubicacion <- paste0(base_url, "ubicacion")
-  res <- httr::GET(base_url_get_ubicacion,
-                   query = purrr::compact(args))
+  get_endpoint(endpoint = endpoint, args = args)
+}
 
-  check_status(res)
+#' Obtener Localidades Censales
+#'
+#' Permite realizar búsquedas sobre el listado de localidades censales.
+#' Realiza la consulta GET al endpoint /localidades-censales de georef-ar-api.
+#' Si existe GEOREFAR_TOKEN en el Renviron lo usará para hacer la consulta.
+#' @param id text Filtrar por ID.
+#' @param nombre text Filtrar por Nombre.
+#' @param provincia text Filtrar por nombre o ID de Provincia.
+#' @param departamento text Filtrar por nombre o ID de Departamento.
+#' @param municipio text Filtrar por nombre o ID de Municipio.
+#' @param orden text Campo por el cual ordenar los resultados (por ID o nombre)
+#' @param aplanar boolean Cuando está presente, muestra el resultado JSON con una estructura plana.
+#' @param campos text Campos a incluir en la respuesta separados por comas, sin espacios. Algunos campos siempre serán incluidos, incluso si no se agregaron en la lista. Para incluir campos de sub-entidades, separar los nombres con un punto, por ejemplo: provincia.id.
+#' @param max integer Cantidad máxima de resultados a devolver.
+#' @param exacto boolean Cuando está presente, se activa el modo de búsqueda por texto exacto. Sólo tiene efecto cuando se usan campos de búsqueda por texto (por ejemplo, nombre).
+#'
+#' @export
+#' @rdname get_localidades_censales
+#'
+#' @references [georef-ar-api/localidades-censales](https://datosgobar.github.io/georef-ar-api/open-api/#/Recursos/get_localidades_censales)
+#' @return Un Data Frame con el listado de Localidades Censales.
+#' @examples
+#' \dontrun{
+#' get_localidades_censales()
+#' }
 
-  jsonlite::fromJSON(httr::content(res, "text"))$ubicacion %>%
-    purrr::modify_if(is.null, list) %>%
-    dplyr::as_tibble() %>% suppressMessages()
+get_localidades_censales <- function(id = NULL, nombre = NULL, provincia = NULL, departamento = NULL, municipio = NULL, orden = NULL, aplanar = TRUE, campos = NULL, max = NULL, exacto = NULL){
+  args <- list(id = id, nombre = nombre, provincia = provincia, departamento = departamento, municipio = municipio, orden = orden, aplanar = aplanar, campos = campos, max = max, exacto = exacto)
+
+  endpoint <- "localidades_censales"
+
+  check_internet()
+
+  get_endpoint(endpoint = endpoint, args = args)
+}
+
+#' Obtener Asentamientos de BAHRA
+#'
+#' Permite realizar búsquedas sobre el listado de asentamientos BAHRA.
+#' Realiza la consulta GET al endpoint /asentamientos de georef-ar-api.
+#' Si existe GEOREFAR_TOKEN en el Renviron lo usará para hacer la consulta.
+#' @param id text Filtrar por ID.
+#' @param nombre text Filtrar por Nombre.
+#' @param provincia text Filtrar por nombre o ID de Provincia.
+#' @param departamento text Filtrar por nombre o ID de Departamento.
+#' @param municipio text Filtrar por nombre o ID de Municipio.
+#' @param orden text Campo por el cual ordenar los resultados (por ID o nombre)
+#' @param localidad_censal text Filtrar por nombre o ID de localidad censal. Se pueden especificar varios IDs separados por comas
+#' @param aplanar boolean Cuando está presente, muestra el resultado JSON con una estructura plana.
+#' @param campos text Campos a incluir en la respuesta separados por comas, sin espacios. Algunos campos siempre serán incluidos, incluso si no se agregaron en la lista. Para incluir campos de sub-entidades, separar los nombres con un punto, por ejemplo: provincia.id.
+#' @param max integer Cantidad máxima de resultados a devolver.
+#' @param exacto boolean Cuando está presente, se activa el modo de búsqueda por texto exacto. Sólo tiene efecto cuando se usan campos de búsqueda por texto (por ejemplo, nombre).
+#'
+#' @export
+#' @rdname get_asentamientos
+#'
+#' @references [georef-ar-api/asentamientos](https://datosgobar.github.io/georef-ar-api/open-api/#/Recursos/get_asentamientos)
+#' @return Un Data Frame con el listado de Asentamientos BAHRA.
+#' @examples
+#' \dontrun{
+#' get_asentamientos()
+#' }
+
+get_asentamientos <- function(id = NULL, nombre = NULL, provincia = NULL, departamento = NULL, municipio = NULL, localidad_censal = NULL, orden = NULL, aplanar = TRUE, campos = NULL, max = NULL, exacto = NULL){
+  args <- list(id = id, nombre = nombre, provincia = provincia, departamento = departamento, municipio = municipio, localidad_censal = localidad_censal, orden = orden, aplanar = aplanar, campos = campos, max = max, exacto = exacto)
+
+  endpoint <- "asentamientos"
+
+  check_internet()
+
+  get_endpoint(endpoint = endpoint, args = args)
 }

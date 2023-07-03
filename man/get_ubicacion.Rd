@@ -16,13 +16,18 @@ get_ubicacion(lat, lon, aplanar = TRUE, campos = NULL)
 \item{campos}{text Campos a incluir en la respuesta separados por comas, sin espacios. Algunos campos siempre serán incluidos, incluso si no se agregaron en la lista. Para incluir campos de sub-entidades, separar los nombres con un punto, por ejemplo: provincia.id.}
 }
 \value{
-Un Data Frame con el listado de Departamentos
+Un Data Frame con las unidades territoriales que contienen el punto.
 }
 \description{
-Obtener Ubicacion
+Permite realizar una georreferenciación inversa para un punto, informando cuales unidades territoriales lo contienen.
+Realiza la consulta GET al endpoint /ubicacion de georef-ar-api.
+Si existe GEOREFAR_TOKEN en el Renviron lo usará para hacer la consulta.
 }
 \examples{
 \dontrun{
 get_ubicacion()
 }
+}
+\references{
+\href{https://datosgobar.github.io/georef-ar-api/open-api/#/Recursos/get_ubicacion}{georef-ar-api/ubicacion}
 }

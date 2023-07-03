@@ -36,13 +36,18 @@ get_municipios(
 \item{exacto}{boolean Cuando está presente, se activa el modo de búsqueda por texto exacto. Sólo tiene efecto cuando se usan campos de búsqueda por texto (por ejemplo, nombre).}
 }
 \value{
-Un Data Frame con el listado de Departamentos
+Un Data Frame con el listado de Municipios
 }
 \description{
-Obtener Municipios
+Permite realizar búsquedas sobre el listado de municipios.
+Realiza la consulta GET al endpoint /municipios de georef-ar-api.
+Si existe GEOREFAR_TOKEN en el Renviron lo usará para hacer la consulta.
 }
 \examples{
 \dontrun{
 get_municipios()
 }
+}
+\references{
+\href{https://datosgobar.github.io/georef-ar-api/open-api/#/Recursos/get_municipios}{georef-ar-api/municipios}
 }
