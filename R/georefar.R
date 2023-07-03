@@ -146,7 +146,7 @@ get_departamentos <- function(id = NULL, nombre = NULL, provincia = NULL, orden 
 normalizar_direccion <- function(direccion, tipo = NULL, provincia = NULL, departamento = NULL, aplanar = TRUE, campos = NULL, max = NULL, exacto = NULL){
   args <- list(direccion = direccion, tipo = tipo, provincia = provincia, departamento = departamento, aplanar = aplanar, campos = campos, max = max, exacto = exacto)
 
-  endpoint <- "direccion"
+  endpoint <- "direcciones"
 
   check_internet()
 
