@@ -36,7 +36,7 @@ get_endpoint <- function(endpoint, args) {
 
   check_status(response)
 
-  data <- parsed[[endpoint]] %>%
+  data <- parsed[[gsub(pattern = "-",replacement = "_", x = endpoint)]] %>%
     purrr::modify_if(is.null, list)
 
   if (length(data) == 0) {
