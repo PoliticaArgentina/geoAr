@@ -23,7 +23,7 @@ get_endpoint <- function(endpoint, args) {
 
   url <- paste0(base_url, endpoint)
 
-  # Comprobar si el token está presente
+  # Comprobar si el token esta presente
   if (is.null(token) | token == "") {
     response <- httr::GET(url, query = args)
   } else {
@@ -40,7 +40,7 @@ get_endpoint <- function(endpoint, args) {
     purrr::modify_if(is.null, list)
 
   if (length(data) == 0) {
-    stop("La consulta devolvió una lista vacía", call. = F)
+    stop("La consulta devolvio una lista vacia", call. = F)
   }
 
   data %>%
