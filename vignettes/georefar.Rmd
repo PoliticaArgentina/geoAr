@@ -12,6 +12,7 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
+
 ```
 
 
@@ -28,9 +29,9 @@ Dice la [documentación oficial](https://georef-ar-api.readthedocs.io/es/latest/
 ¿Cómo normalizar? Tomemos como ejemplo el siguiente listado de nombres de provincias _crudo_: 
 
 ```{r setup , warning=F, message=FALSE}
-
 library(geoAr) # Argentina's Spatial Data Toolbox, CRAN v0.1.4.2.1
 library(dplyr) # A Grammar of Data Manipulation, CRAN v1.1.0
+
 ```
 
 
@@ -52,7 +53,7 @@ normalizar_provincia <- tibble::tribble(
 Veamos que sucede cuando pedimos a la API nos devuelva los datos de uno de los distritos de ese listado (CABA, el sexto elemento): 
 
 ```{r}
-  geoAr::get_provincias(nombre = normalizar_provincia$provincia[6])
+  geoAr::get_provincias(nombre = normalizar_provincia$provincia[6], max = 1)
 ```
 La función `get_provincia` devuelve el nombre del distrito, el `id` y las coordenadas de latitud y longitud del centroide. 
 
@@ -63,7 +64,7 @@ Podemos generar una función como la que sigue para luego iterar la consulta par
 
 normalizar <- function(base){
   
-  tmp <- get_provincias(nombre = base)
+  tmp <- get_provincias(nombre = base, max = 1)
   
   tmp$nombre 
 }
@@ -109,3 +110,29 @@ geoAr::get_ubicacion(lat = enriquecer_coordenadas$latitud,
 
 ```
 
+
+### GENERAR EL TOKEN
+
+Los usuarios de organismos de la Administración Pública Nacional de Argentina pueden pedir un token para incrementar su cuota de uso de la API de Georef (ver <https://datosgobar.github.io/georef-ar-api/jwt-token/>).
+
+Una vez que recibimos el secret y el key de la API de Georef, debemos generar el token y guardarlo en el Renviron. Las funciones de `geoAr` que consultan a la API de Georef van a buscar si existe el token en nuestro Renviron y van usarlo para realizar las consultas a la API.
+
+Para generar el token a partir del secret y el key se puede usar el paquete `jose`
+
+```
+key <- "codigokey"
+secreto <- "codigosecreto"
+
+token <- jose::jwt_encode_hmac(claim = jose::jwt_claim(iss = key),
+                               secret = secreto)
+                               
+print(token)
+
+```
+
+El token generado debe ser guardado en el .Renviron con el siguiente formato:
+
+```
+GEOREFAR_TOKEN = "Xkxka1011skzlkz20201"
+
+```

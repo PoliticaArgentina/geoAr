@@ -33,10 +33,15 @@ get_provincias(
 Un Data Frame con el listado de Provincias
 }
 \description{
-Obtener Provincias
+Permite realizar búsquedas sobre el listado de provincias.
+Realiza la consulta GET al endpoint /provincias de georef-ar-api.
+Si existe GEOREFAR_TOKEN en el Renviron lo usará para hacer la consulta.
 }
 \examples{
 \dontrun{
 get_provincias(nombre = "Córdoba")
 }
+}
+\references{
+\href{https://datosgobar.github.io/georef-ar-api/open-api/#/Recursos/get_provincias}{georef-ar-api/provincias}
 }

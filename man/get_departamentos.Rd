@@ -36,10 +36,15 @@ get_departamentos(
 Un Data Frame con el listado de Departamentos
 }
 \description{
-Obtener Departamentos
+Permite realizar búsquedas sobre el listado de departamentos.
+Realiza la consulta GET al endpoint /departamentos de georef-ar-api.
+Si existe GEOREFAR_TOKEN en el Renviron lo usará para hacer la consulta.
 }
 \examples{
 \dontrun{
 get_departamentos()
 }
+}
+\references{
+\href{https://datosgobar.github.io/georef-ar-api/open-api/#/Recursos/get_departamentos}{georef-ar-api/departamentos}
 }
