@@ -1,6 +1,6 @@
 Package: geoAr
 Title: Argentina's Spatial Data Toolbox
-Version: 0.0.1.4.2.1
+Version: 0.0.1.4.3
 Authors@R: 
    c( person(given = "Juan Pablo",
            family = "Ruiz Nicolini",
@@ -10,7 +10,11 @@ Authors@R:
       person(given = "Patricio",
            family = "Del Boca",
            role = c("aut"),
-           email = "patriciodelboca@gmail.com"))
+           email = "patriciodelboca@gmail.com"),
+      person(given = "Juan Gabriel",
+           family = "Juara",
+           role = c("aut"),
+           email = "jg.juara@gmail.com"))
 Description: Collection of tools that facilitates data access and workflow for spatial analysis of Argentina. Includes historical information from censuses, administrative limits at different levels of aggregation, location of human settlements, among others. Since it is expected that the majority of users will be Spanish-speaking, the documentation of the package prioritizes this language, although an effort is made to also offer annotations in English. 
 License: MIT + file LICENSE
 Encoding: UTF-8

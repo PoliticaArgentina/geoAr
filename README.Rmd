@@ -123,18 +123,20 @@ show_arg_codes() # Preview avialable data
 
 To cite package ‘geoAr’ in publications use:
 
-  _Juan Pablo Ruiz Nicolini and Patricio Del Boca (2023). geoAr: Argentina's Spatial Data Toolbox. R package version 0.0.1.4.2.1. <https://github.com/PoliticaArgentina/geoAr>_
+  _Juan Pablo Ruiz Nicolini, Patricio Del Boca and Juan Gabriel Juara (2023). geoAr: Argentina's Spatial Data Toolbox. R package version 0.0.1.4.3. https://github.com/PoliticaArgentina/geoAr_
 
 A BibTeX entry for LaTeX users is
 
 ```
+
+
   @Manual{,
     title = {geoAr: Argentina's Spatial Data Toolbox},
-    author = {Juan Pablo {Ruiz Nicolini} and Patricio {Del Boca}},
+    author = {Juan Pablo {Ruiz Nicolini} and Patricio {Del Boca} and Juan Gabriel Juara},
     year = {2023},
-    note = {R package version 0.0.1.4.2.1},
+    note = {R package version 0.0.1.4.3},
     url = {https://github.com/PoliticaArgentina/geoAr},
-  }
+  
 ```  
   
 ## `{geoAr}` es parte del [universo de paquetes **polAr**](https://github.com/PoliticaArgentina/polArverse)

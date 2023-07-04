@@ -7,7 +7,7 @@
 [![](https://www.r-pkg.org/badges/version/geoAr?color=blue)](https://cran.r-project.org/package=geoAr)
 [![](http://cranlogs.r-pkg.org/badges/last-month/geoAr?color=blue)](https://cran.r-project.org/package=geoAr)[![](http://cranlogs.r-pkg.org/badges/last-week/geoAr?color=blue)](https://cran.r-project.org/package=geoAr)[![](http://cranlogs.r-pkg.org/badges/last-month/geoAr?color=blue)](https://cran.r-project.org/package=geoAr)[![](http://cranlogs.r-pkg.org/badges/grand-total/geoAr?color=blue)](https://cran.r-project.org/package=geoAr)
 [![r-universe status
-badge](https://politicaargentina.r-universe.dev/badges/geoAr)](https://politicaargentina.r-universe.dev/ui#package:geoAr)[![](https://img.shields.io/badge/devel%20version-0.0.1.4.2.1-green.svg)](https://github.com/politicaargentina/geoAr)
+badge](https://politicaargentina.r-universe.dev/badges/geoAr)](https://politicaargentina.r-universe.dev/ui#package:geoAr)[![](https://img.shields.io/badge/devel%20version-0.0.1.4.3-green.svg)](https://github.com/politicaargentina/geoAr)
 [![R-CMD-check](https://github.com/PoliticaArgentina/geoAr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/PoliticaArgentina/geoAr/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
@@ -21,6 +21,7 @@ datos espaciales de Argentina desde `R`.
 ### Desde `CRAN` (versión estable)
 
 ``` r
+
 # Install geoAr in R:
 
 install.packages('geoAr')
@@ -43,6 +44,7 @@ Se puede agregar el repositorio de
 parámetro a la función base `install.packages`:
 
 ``` r
+
 # Install geoAr in R:
 install.packages('geoAr', repos = c('https://politicaargentina.r-universe.dev')
 ```
@@ -50,6 +52,7 @@ install.packages('geoAr', repos = c('https://politicaargentina.r-universe.dev')
 ## Ejemplo de uso básico (*Basic Usage*)
 
 ``` r
+
 library(geoAr)
 
 
@@ -67,7 +70,7 @@ show_arg_codes() # Preview avialable data
 #>  8 CHUBUT       "07"    "26"          AR-U        Chubut                        
 #>  9 ENTRE RIOS   "08"    "30"          AR-E        Entre Ríos                    
 #> 10 FORMOSA      "09"    "34"          AR-P        Formosa                       
-#> # ... with 16 more rows
+#> # i 16 more rows
 
 
 (tucuman <- get_geo(geo = "TUCUMAN")) # geo id parameter from show_arg_codes() function
@@ -107,73 +110,74 @@ show_arg_codes() # Preview avialable data
 **Las funciones básicas para obtener polígonos de Argentina corresponden
 a la última información censal disponible (CENSO 2010)**
 
--   ARGENTINA (niveles PROVINCIA, DEPARTAMENTO y RADIO CENSAL)
+- ARGENTINA (niveles PROVINCIA, DEPARTAMENTO y RADIO CENSAL)
 
--   24 provincias (niveles DEPARTAMENTO y RADIO CENSAL)
+- 24 provincias (niveles DEPARTAMENTO y RADIO CENSAL)
 
 **CENSOS históricos**
 
--   Se facilita el acceso a la reconstrucción de los polígonos
-    utilizados para los censos desde 1869 hasta 2010. Recuperado del
-    proyecto *Base cartográfica de departamentos para los censos
-    nacionales de la República Argentina desde 1869 a 2010* de [Gonzalo
-    Rodriguez y Pablo De
-    Grande](https://ri.conicet.gov.ar/handle/11336/149867).
+- Se facilita el acceso a la reconstrucción de los polígonos utilizados
+  para los censos desde 1869 hasta 2010. Recuperado del proyecto *Base
+  cartográfica de departamentos para los censos nacionales de la
+  República Argentina desde 1869 a 2010* de [Gonzalo Rodriguez y Pablo
+  De Grande](https://ri.conicet.gov.ar/handle/11336/149867).
 
 **Encuesta Permanente de Hogares (EPH)**
 
--   Geometrías (entidades, envolventes y radios censales)
-    correspondientes a la EPH del INDEC.
+- Geometrías (entidades, envolventes y radios censales) correspondientes
+  a la EPH del INDEC.
 
 #### **Puntos (coordenadas)**
 
--   Base de Asentamientos Humanos de la República Argentina (BAHRA)
-    <http://www.bahra.gob.ar/>
+- Base de Asentamientos Humanos de la República Argentina (BAHRA)
+  <http://www.bahra.gob.ar/>
 
 ### Grillas `geofacet`
 
--   Grillas para usar con
-    [geofacet](https://politicaargentina.github.io/geoAr/articles/geoAr_geofacet.html)
-    para ARGENTINA, 24 provincias y AGLOMERADOS URBANOS (para usar con
-    {eph}
+- Grillas para usar con
+  [geofacet](https://politicaargentina.github.io/geoAr/articles/geoAr_geofacet.html)
+  para ARGENTINA, 24 provincias y AGLOMERADOS URBANOS (para usar con
+  {eph}
 
--   Libro de códigos (país, provincia, departamento) y función para
-    re-codificar grillas según diccionario (ISO, INDEC, INDRA).
+- Libro de códigos (país, provincia, departamento) y función para
+  re-codificar grillas según diccionario (ISO, INDEC, INDRA).
 
 ### `georef-ar` API
 
--   Interfaz en R para usar la [API del Servicio de Normalización de
-    Datos Geográficos](https://georef-ar-api.readthedocs.io/es/latest/),
-    que permite normalizar y codificar los nombres de unidades
-    territoriales de la Argentina (provincias, departamentos, municipios
-    y localidades) y de sus calles, así como ubicar coordenadas dentro
-    de ellas. La versión original de estas funciones fueron
-    desarrolladas en el paquete `georefar` desarrollado por [Patricio
-    del Boca](https://github.com/pdelboca/georefar).
+- Interfaz en R para usar la [API del Servicio de Normalización de Datos
+  Geográficos](https://georef-ar-api.readthedocs.io/es/latest/), que
+  permite normalizar y codificar los nombres de unidades territoriales
+  de la Argentina (provincias, departamentos, municipios y localidades)
+  y de sus calles, así como ubicar coordenadas dentro de ellas. La
+  versión original de estas funciones fueron desarrolladas en el paquete
+  `georefar` desarrollado por [Patricio del
+  Boca](https://github.com/pdelboca/georefar).
 
 ## Paquetes similares para otros países (*Similar packages*)
 
--   `{geoUy}` - <https://github.com/RichDeto/geouy>
--   `{geoBr}` - <https://ipeagit.github.io/geobr/>
--   `{chilemapas}` - <https://pacha.dev/chilemapas/>
+- `{geoUy}` - <https://github.com/RichDeto/geouy>
+- `{geoBr}` - <https://ipeagit.github.io/geobr/>
+- `{chilemapas}` - <https://pacha.dev/chilemapas/>
 
 ## Citation
 
 To cite package ‘geoAr’ in publications use:
 
-*Juan Pablo Ruiz Nicolini and Patricio Del Boca (2023). geoAr:
-Argentina’s Spatial Data Toolbox. R package version 0.0.1.4.2.1.
-<https://github.com/PoliticaArgentina/geoAr>*
+\_Juan Pablo Ruiz Nicolini, Patricio Del Boca and Juan Gabriel Juara
+(2023). geoAr: Argentina’s Spatial Data Toolbox. R package version
+0.0.1.4.3. <https://github.com/PoliticaArgentina/geoAr_>
 
 A BibTeX entry for LaTeX users is
 
+
+
       @Manual{,
         title = {geoAr: Argentina's Spatial Data Toolbox},
-        author = {Juan Pablo {Ruiz Nicolini} and Patricio {Del Boca}},
+        author = {Juan Pablo {Ruiz Nicolini} and Patricio {Del Boca} and Juan Gabriel Juara},
         year = {2023},
-        note = {R package version 0.0.1.4.2.1},
+        note = {R package version 0.0.1.4.3},
         url = {https://github.com/PoliticaArgentina/geoAr},
-      }
+      
 
 ## `{geoAr}` es parte del [universo de paquetes **polAr**](https://github.com/PoliticaArgentina/polArverse)
 
