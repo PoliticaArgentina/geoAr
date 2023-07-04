@@ -26,8 +26,6 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
-    
-
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -40,12 +38,18 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">geoAr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.0.1.4.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1.4.3</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
+<li>
+  <a href="../index.html">
+    <span class="fas fa-home fa-lg"></span>
+     
+  </a>
+</li>
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
@@ -73,7 +77,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/PoliticaArgentina/geoAr/" class="external-link">
+  <a href="https://github.com/PoliticaArgentina/geoAr/">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -88,112 +92,156 @@
 
       
 
-      </header><script src="georefar_files/htmlwidgets-1.6.1/htmlwidgets.js"></script><link href="georefar_files/leaflet-1.3.1/leaflet.css" rel="stylesheet">
+      </header><script src="georefar_files/header-attrs-2.14/header-attrs.js"></script><script src="georefar_files/htmlwidgets-1.6.2/htmlwidgets.js"></script><script src="georefar_files/jquery-1.12.4/jquery.min.js"></script><link href="georefar_files/leaflet-1.3.1/leaflet.css" rel="stylesheet">
 <script src="georefar_files/leaflet-1.3.1/leaflet.js"></script><link href="georefar_files/leafletfix-1.0.0/leafletfix.css" rel="stylesheet">
 <script src="georefar_files/proj4-2.6.2/proj4.min.js"></script><script src="georefar_files/Proj4Leaflet-1.0.1/proj4leaflet.js"></script><link href="georefar_files/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet">
-<script src="georefar_files/leaflet-binding-2.1.2/leaflet.js"></script><div class="row">
+<script src="georefar_files/leaflet-binding-2.0.4.1/leaflet.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>geoAr &amp; georeaf-ar</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/PoliticaArgentina/geoAr/blob/HEAD/vignettes/georefar.Rmd" class="external-link"><code>vignettes/georefar.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/PoliticaArgentina/geoAr/blob/master/vignettes/georefar.Rmd"><code>vignettes/georefar.Rmd</code></a></small>
       <div class="hidden name"><code>georefar.Rmd</code></div>
 
     </div>
 
     
     
-<p>Dice la <a href="https://georef-ar-api.readthedocs.io/es/latest/" class="external-link">documentación oficial</a> de la <strong>API del Servicio de Normalización de Datos Geográficos de la Argentina</strong> (<code>georef-ar</code>):</p>
+<p>Dice la <a href="https://georef-ar-api.readthedocs.io/es/latest/">documentación
+oficial</a> de la <strong>API del Servicio de Normalización de Datos
+Geográficos de la Argentina</strong> (<code>georef-ar</code>):</p>
 <blockquote>
-<p>Permite normalizar y codificar los nombres de unidades territoriales de la Argentina (provincias, departamentos, municipios y localidades) y de sus calles, así como ubicar coordenadas dentro de ellas.</p>
+<p>Permite normalizar y codificar los nombres de unidades territoriales
+de la Argentina (provincias, departamentos, municipios y localidades) y
+de sus calles, así como ubicar coordenadas dentro de ellas.</p>
 </blockquote>
 <blockquote>
-<p>En la <a href="https://datosgobar.github.io/paquete-apertura-datos/guia-interoperables/" class="external-link">Guía para la identificación y uso de entidades interoperables</a> se explica cómo funcionan las <a href="https://datosgobar.github.io/paquete-apertura-datos/guia-interoperables/#divisiones-o-unidades-territoriales-internas" class="external-link">unidades territoriales internas de la Argentina</a> y la relación entre ellas.</p>
+<p>En la <a href="https://datosgobar.github.io/paquete-apertura-datos/guia-interoperables/">Guía
+para la identificación y uso de entidades interoperables</a> se explica
+cómo funcionan las <a href="https://datosgobar.github.io/paquete-apertura-datos/guia-interoperables/#divisiones-o-unidades-territoriales-internas">unidades
+territoriales internas de la Argentina</a> y la relación entre
+ellas.</p>
 </blockquote>
-<div class="section level2">
-<h2 id="ejemplos-mínimos-de-uso">Ejemplos mínimos de uso<a class="anchor" aria-label="anchor" href="#ejemplos-m%C3%ADnimos-de-uso"></a>
-</h2>
-<div class="section level4">
-<h4 id="normalizar-con-r">NORMALIZAR (con <code>R</code>)<a class="anchor" aria-label="anchor" href="#normalizar-con-r"></a>
-</h4>
-<p>¿Cómo normalizar? Tomemos como ejemplo el siguiente listado de nombres de provincias <em>crudo</em>:</p>
+<div id="ejemplos-mínimos-de-uso" class="section level2">
+<h2 class="hasAnchor">
+<a href="#ejemplos-m%C3%ADnimos-de-uso" class="anchor"></a>Ejemplos mínimos de uso</h2>
+<div id="normalizar-con-r" class="section level4">
+<h4 class="hasAnchor">
+<a href="#normalizar-con-r" class="anchor"></a>NORMALIZAR (con <code>R</code>)</h4>
+<p>¿Cómo normalizar? Tomemos como ejemplo el siguiente listado de
+nombres de provincias <em>crudo</em>:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/PoliticaArgentina/geoAr" class="external-link">geoAr</a></span><span class="op">)</span> <span class="co"># Argentina's Spatial Data Toolbox, CRAN v0.1.4.2.1</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span> <span class="co"># A Grammar of Data Manipulation, CRAN v1.1.0</span></span></code></pre></div>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/PoliticaArgentina/geoAr">geoAr</a></span><span class="op">)</span> <span class="co"># Argentina's Spatial Data Toolbox, CRAN v0.1.4.2.1</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span> <span class="co"># A Grammar of Data Manipulation, CRAN v1.1.0</span></code></pre></div>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
-<span><span class="va">normalizar_provincia</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html" class="external-link">tribble</a></span><span class="op">(</span></span>
-<span>  <span class="op">~</span><span class="va">provincia</span>,</span>
-<span>  <span class="st">"S. CRUZ"</span>,</span>
-<span>  <span class="st">"Santiago"</span>,</span>
-<span>  <span class="st">"TUCUMAN"</span>,</span>
-<span>  <span class="st">"Sgo. del Estero"</span>, </span>
-<span>  <span class="st">"mendoza"</span>, </span>
-<span>  <span class="st">"CABA"</span></span>
-<span><span class="op">)</span></span></code></pre></div>
-<p>Veamos que sucede cuando pedimos a la API nos devuelva los datos de uno de los distritos de ese listado (CABA, el sexto elemento):</p>
+<code class="sourceCode R">
+<span class="va">normalizar_provincia</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html">tribble</a></span><span class="op">(</span>
+  <span class="op">~</span><span class="va">provincia</span>,
+  <span class="st">"S. CRUZ"</span>,
+  <span class="st">"Santiago"</span>,
+  <span class="st">"TUCUMAN"</span>,
+  <span class="st">"Sgo. del Estero"</span>, 
+  <span class="st">"mendoza"</span>, 
+  <span class="st">"CABA"</span>
+<span class="op">)</span></code></pre></div>
+<p>Veamos que sucede cuando pedimos a la API nos devuelva los datos de
+uno de los distritos de ese listado (CABA, el sexto elemento):</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span>  <span class="fu">geoAr</span><span class="fu">::</span><span class="fu"><a href="../reference/get_provincias.html">get_provincias</a></span><span class="op">(</span>nombre <span class="op">=</span> <span class="va">normalizar_provincia</span><span class="op">$</span><span class="va">provincia</span><span class="op">[</span><span class="fl">6</span><span class="op">]</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1 x 4</span></span></span>
-<span><span class="co">#&gt;   centroide_lat centroide_lon id    nombre                         </span></span>
-<span><span class="co">#&gt;           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                          </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>         -<span style="color: #BB0000;">34.6</span>         -<span style="color: #BB0000;">58.4</span> 02    Ciudad Autónoma de Buenos Aires</span>s</span></code></pre></div>
-<p>La función <code>get_provincia</code> devuelve el nombre del distrito, el <code>id</code> y las coordenadas de latitud y longitud del centroide.</p>
-<p>Podemos generar una función como la que sigue para luego iterar la consulta para todo el listado:</p>
+<code class="sourceCode R">  <span class="fu">geoAr</span><span class="fu">::</span><span class="fu"><a href="../reference/get_provincias.html">get_provincias</a></span><span class="op">(</span>nombre <span class="op">=</span> <span class="va">normalizar_provincia</span><span class="op">$</span><span class="va">provincia</span><span class="op">[</span><span class="fl">6</span><span class="op">]</span>, max <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
+<span class="co">#&gt; # A tibble: 1 x 4</span>
+<span class="co">#&gt;   centroide_lat centroide_lon id    nombre                         </span>
+<span class="co">#&gt;           &lt;dbl&gt;         &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;                          </span>
+<span class="co">#&gt; 1         -34.6         -58.4 02    Ciudad Autónoma de Buenos Aires</span></code></pre></div>
+<p>La función <code>get_provincia</code> devuelve el nombre del
+distrito, el <code>id</code> y las coordenadas de latitud y longitud del
+centroide.</p>
+<p>Podemos generar una función como la que sigue para luego iterar la
+consulta para todo el listado:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
-<span><span class="va">normalizar</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">base</span><span class="op">)</span><span class="op">{</span></span>
-<span>  </span>
-<span>  <span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_provincias.html">get_provincias</a></span><span class="op">(</span>nombre <span class="op">=</span> <span class="va">base</span><span class="op">)</span></span>
-<span>  </span>
-<span>  <span class="va">tmp</span><span class="op">$</span><span class="va">nombre</span> </span>
-<span><span class="op">}</span></span></code></pre></div>
-<p>Tomamos el <code>data.frame</code> original y generamos una nueva columna (<code>mutate</code>) dentro de la cual iteramos. Con ayuda de <code>map_chr</code> del paquete <code>purrr</code> pasamos la función antes creada al vector de nombres de provincias de nuestra base <code>normalizar_provincia</code>.</p>
+<code class="sourceCode R">
+<span class="va">normalizar</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">base</span><span class="op">)</span><span class="op">{</span>
+  
+  <span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_provincias.html">get_provincias</a></span><span class="op">(</span>nombre <span class="op">=</span> <span class="va">base</span>, max <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
+  
+  <span class="va">tmp</span><span class="op">$</span><span class="va">nombre</span> 
+<span class="op">}</span></code></pre></div>
+<p>Tomamos el <code>data.frame</code> original y generamos una nueva
+columna (<code>mutate</code>) dentro de la cual iteramos. Con ayuda de
+<code>map_chr</code> del paquete <code>purrr</code> pasamos la función
+antes creada al vector de nombres de provincias de nuestra base
+<code>normalizar_provincia</code>.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
-<span><span class="op">(</span><span class="va">base_normalizada</span> <span class="op">&lt;-</span> <span class="va">normalizar_provincia</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>normalizada <span class="op">=</span> <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map_chr</a></span><span class="op">(</span>.x <span class="op">=</span> <span class="va">provincia</span>, </span>
-<span>                                      .f <span class="op">=</span> <span class="op">~</span> <span class="fu">normalizar</span><span class="op">(</span>base <span class="op">=</span> <span class="va">.x</span><span class="op">)</span></span>
-<span>                                      <span class="op">)</span></span>
-<span>         <span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 x 2</span></span></span>
-<span><span class="co">#&gt;   provincia       normalizada                    </span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                          </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> S. CRUZ         Santa Cruz                     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Santiago        Santiago del Estero            </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> TUCUMAN         Tucumán                        </span> </span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Sgo. del Estero Santiago del Estero            </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> mendoza         Mendoza                        </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> CABA            Ciudad Autónoma de Buenos Aires</span>s</span></code></pre></div>
+<code class="sourceCode R">
+<span class="op">(</span><span class="va">base_normalizada</span> <span class="op">&lt;-</span> <span class="va">normalizar_provincia</span> <span class="op">%&gt;%</span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>normalizada <span class="op">=</span> <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_chr</a></span><span class="op">(</span>.x <span class="op">=</span> <span class="va">provincia</span>, 
+                                      .f <span class="op">=</span> <span class="op">~</span> <span class="fu">normalizar</span><span class="op">(</span>base <span class="op">=</span> <span class="va">.x</span><span class="op">)</span>
+                                      <span class="op">)</span>
+         <span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; # A tibble: 6 x 2</span>
+<span class="co">#&gt;   provincia       normalizada                    </span>
+<span class="co">#&gt;   &lt;chr&gt;           &lt;chr&gt;                          </span>
+<span class="co">#&gt; 1 S. CRUZ         Santa Cruz                     </span>
+<span class="co">#&gt; 2 Santiago        Santiago del Estero            </span>
+<span class="co">#&gt; 3 TUCUMAN         Tucumán                        </span>
+<span class="co">#&gt; 4 Sgo. del Estero Santiago del Estero            </span>
+<span class="co">#&gt; 5 mendoza         Mendoza                        </span>
+<span class="co">#&gt; 6 CABA            Ciudad Autónoma de Buenos Aires</span></code></pre></div>
 </div>
-<div class="section level3">
-<h3 id="enriquecer-datos">ENRIQUECER DATOS<a class="anchor" aria-label="anchor" href="#enriquecer-datos"></a>
-</h3>
-<p>Supongamos ahora que tenemos las coordenadas de lo que nos dicen es la ubicación del estadio del mejor equipo de fútbol del mundo, pero solo tenemos esa información:</p>
+<div id="enriquecer-datos" class="section level3">
+<h3 class="hasAnchor">
+<a href="#enriquecer-datos" class="anchor"></a>ENRIQUECER DATOS</h3>
+<p>Supongamos ahora que tenemos las coordenadas de lo que nos dicen es
+la ubicación del estadio del mejor equipo de fútbol del mundo, pero solo
+tenemos esa información:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">enriquecer_coordenadas</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html" class="external-link">tribble</a></span><span class="op">(</span></span>
-<span>  <span class="op">~</span><span class="va">latitud</span>, <span class="op">~</span><span class="va">longitud</span>,</span>
-<span>  <span class="op">-</span><span class="fl">26.8129225</span>,<span class="op">-</span><span class="fl">65.1998249</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">leaflet</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/leaflet/man/leaflet.html" class="external-link">leaflet</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
-<span>  <span class="fu">leaflet</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/leaflet/man/map-layers.html" class="external-link">addCircles</a></span><span class="op">(</span>lng <span class="op">=</span> <span class="va">enriquecer_coordenadas</span><span class="op">$</span><span class="va">longitud</span>, </span>
-<span>                      lat <span class="op">=</span> <span class="va">enriquecer_coordenadas</span><span class="op">$</span><span class="va">latitud</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
-<span>  <span class="fu">geoAr</span><span class="fu">::</span><span class="fu"><a href="../reference/addArgTiles.html">addArgTiles</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<div class="leaflet html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-3c7da17e045c02d23439" style="width:700px;height:432.632880098888px;"></div>
-<script type="application/json" data-for="htmlwidget-3c7da17e045c02d23439">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addCircles","args":[-26.8129225,-65.1998249,10,null,null,{"interactive":true,"className":"","stroke":true,"color":"#03F","weight":5,"opacity":0.5,"fill":true,"fillColor":"#03F","fillOpacity":0.2},null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null,null]},{"method":"addTiles","args":["https://wms.ign.gob.ar/geoserver/gwc/service/tms/1.0.0/mapabase_gris@EPSG%3A3857@png/{z}/{x}/{-y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false}]}],"limits":{"lat":[-26.8129225,-26.8129225],"lng":[-65.1998249,-65.1998249]}},"evals":[],"jsHooks":[]}</script><p>Con <code>get_ubicacion</code> podemos agregarle información a nuestros datos de entrada:</p>
+<code class="sourceCode R"><span class="va">enriquecer_coordenadas</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html">tribble</a></span><span class="op">(</span>
+  <span class="op">~</span><span class="va">latitud</span>, <span class="op">~</span><span class="va">longitud</span>,
+  <span class="op">-</span><span class="fl">26.8129225</span>,<span class="op">-</span><span class="fl">65.1998249</span>
+<span class="op">)</span>
+
+<span class="fu">leaflet</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/leaflet/man/leaflet.html">leaflet</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">leaflet</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/leaflet/man/map-layers.html">addCircles</a></span><span class="op">(</span>lng <span class="op">=</span> <span class="va">enriquecer_coordenadas</span><span class="op">$</span><span class="va">longitud</span>, 
+                      lat <span class="op">=</span> <span class="va">enriquecer_coordenadas</span><span class="op">$</span><span class="va">latitud</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">geoAr</span><span class="fu">::</span><span class="fu"><a href="../reference/addArgTiles.html">addArgTiles</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<div class="leaflet html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-f85234eaed6d7c43c5fa" style="width:700px;height:432.632880098888px;"></div>
+<script type="application/json" data-for="htmlwidget-f85234eaed6d7c43c5fa">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addCircles","args":[-26.8129225,-65.1998249,10,null,null,{"interactive":true,"className":"","stroke":true,"color":"#03F","weight":5,"opacity":0.5,"fill":true,"fillColor":"#03F","fillOpacity":0.2},null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null,null]},{"method":"addTiles","args":["https://wms.ign.gob.ar/geoserver/gwc/service/tms/1.0.0/mapabase_gris@EPSG%3A3857@png/{z}/{x}/{-y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false}]}],"limits":{"lat":[-26.8129225,-26.8129225],"lng":[-65.1998249,-65.1998249]}},"evals":[],"jsHooks":[]}</script><p>Con <code>get_ubicacion</code> podemos agregarle información a
+nuestros datos de entrada:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
-<span><span class="fu">geoAr</span><span class="fu">::</span><span class="fu"><a href="../reference/get_ubicacion.html">get_ubicacion</a></span><span class="op">(</span>lat <span class="op">=</span> <span class="va">enriquecer_coordenadas</span><span class="op">$</span><span class="va">latitud</span>, </span>
-<span>                     lon <span class="op">=</span> <span class="va">enriquecer_coordenadas</span><span class="op">$</span><span class="va">longitud</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1 x 8</span></span></span>
-<span><span class="co">#&gt;   departamento_id departamento_nom~1   lat   lon munic~2 munic~3 provi~4 provi~5</span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> 90084           Capital            -<span style="color: #BB0000;">26.8</span> -<span style="color: #BB0000;">65.2</span> 900014  Munici~ 90      Tucumán</span>n</span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ... with abbreviated variable names 1: departamento_nombre, 2: municipio_id,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   3: municipio_nombre, 4: provincia_id, 5: provincia_nombre</span></span></span></code></pre></div>
+<code class="sourceCode R">
+<span class="fu">geoAr</span><span class="fu">::</span><span class="fu"><a href="../reference/get_ubicacion.html">get_ubicacion</a></span><span class="op">(</span>lat <span class="op">=</span> <span class="va">enriquecer_coordenadas</span><span class="op">$</span><span class="va">latitud</span>, 
+                     lon <span class="op">=</span> <span class="va">enriquecer_coordenadas</span><span class="op">$</span><span class="va">longitud</span><span class="op">)</span>
+<span class="co">#&gt; # A tibble: 1 x 8</span>
+<span class="co">#&gt;   departamento_id departamento_nombre   lat   lon municipio_id municipio_nombre </span>
+<span class="co">#&gt;   &lt;chr&gt;           &lt;chr&gt;               &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;        &lt;chr&gt;            </span>
+<span class="co">#&gt; 1 90084           Capital             -26.8 -65.2 900014       Municipalidad de~</span>
+<span class="co">#&gt; # i 2 more variables: provincia_id &lt;chr&gt;, provincia_nombre &lt;chr&gt;</span></code></pre></div>
+</div>
+<div id="generar-el-token" class="section level3">
+<h3 class="hasAnchor">
+<a href="#generar-el-token" class="anchor"></a>GENERAR EL TOKEN</h3>
+<p>Los usuarios de organismos de la Administración Pública Nacional de
+Argentina pueden pedir un token para incrementar su cuota de uso de la
+API de Georef (ver <a href="https://datosgobar.github.io/georef-ar-api/jwt-token/" class="uri">https://datosgobar.github.io/georef-ar-api/jwt-token/</a>).</p>
+<p>Una vez que recibimos el secret y el key de la API de Georef, debemos
+generar el token y guardarlo en el Renviron. Las funciones de
+<code>geoAr</code> que consultan a la API de Georef van a buscar si
+existe el token en nuestro Renviron y van usarlo para realizar las
+consultas a la API.</p>
+<p>Para generar el token a partir del secret y el key se puede usar el
+paquete <code>jose</code></p>
+<pre><code>key &lt;- "codigokey"
+secreto &lt;- "codigosecreto"
+
+token &lt;- jose::jwt_encode_hmac(claim = jose::jwt_claim(iss = key),
+                               secret = secreto)
+                               
+print(token)
+</code></pre>
+<p>El token generado debe ser guardado en el .Renviron con el siguiente
+formato:</p>
+<pre><code>GEOREFAR_TOKEN = "Xkxka1011skzlkz20201"
+</code></pre>
 </div>
 </div>
   </div>
@@ -209,13 +257,11 @@
 
 
       <footer><div class="copyright">
-  <p></p>
-<p>Developed by <a href="https://tuqmano.ar" class="external-link">Juan Pablo Ruiz Nicolini</a>, Patricio Del Boca.</p>
+  <p>Developed by <a href="https://tuqmano.ar">Juan Pablo Ruiz Nicolini</a>, Patricio Del Boca, Juan Gabriel Juara.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
@@ -223,8 +269,6 @@
 
   
 
-
-  
 
   </body>
 </html>

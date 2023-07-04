@@ -6,8 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Un archivo de datos que contiene identificadores geográficos para los departamentos de Argentina y sus provincias
-(A data file containing geographic identifiers for the departments of Argentina and their provinces) — geo_metadata • geoAr</title>
+<title>Obtener Localidades Censales — get_localidades_censales • geoAr</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -47,10 +46,10 @@
 
 
 
-<meta property="og:title" content="Un archivo de datos que contiene identificadores geográficos para los departamentos de Argentina y sus provincias
-(A data file containing geographic identifiers for the departments of Argentina and their provinces) — geo_metadata" />
-<meta property="og:description" content="Un archivo de datos que contiene identificadores geográficos para los departamentos de Argentina y sus provincias
-(A data file containing geographic identifiers for the departments of Argentina and their provinces)" />
+<meta property="og:title" content="Obtener Localidades Censales — get_localidades_censales" />
+<meta property="og:description" content="Permite realizar búsquedas sobre el listado de localidades censales.
+Realiza la consulta GET al endpoint /localidades-censales de georef-ar-api.
+Si existe GEOREFAR_TOKEN en el Renviron lo usará para hacer la consulta." />
 <meta property="og:image" content="https://politicaargentina.github.io/geoAr/logo.png" />
 
 
@@ -140,33 +139,87 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Un archivo de datos que contiene identificadores geográficos para los departamentos de Argentina y sus provincias
-(<em>A data file containing geographic identifiers for the departments of Argentina and their provinces</em>)</h1>
-    <small class="dont-index">Source: <a href='https://github.com/PoliticaArgentina/geoAr/blob/master/R/geo_metadata.R'><code>R/geo_metadata.R</code></a></small>
-    <div class="hidden name"><code>geo_metadata.Rd</code></div>
+    <h1>Obtener Localidades Censales</h1>
+    <small class="dont-index">Source: <a href='https://github.com/PoliticaArgentina/geoAr/blob/master/R/georefar.R'><code>R/georefar.R</code></a></small>
+    <div class="hidden name"><code>get_localidades_censales.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Un archivo de datos que contiene identificadores geográficos para los departamentos de Argentina y sus provincias
-(<em>A data file containing geographic identifiers for the departments of Argentina and their provinces</em>)</p>
+    <p>Permite realizar búsquedas sobre el listado de localidades censales.
+Realiza la consulta GET al endpoint /localidades-censales de georef-ar-api.
+Si existe GEOREFAR_TOKEN en el Renviron lo usará para hacer la consulta.</p>
     </div>
 
-    <pre class="usage"><span class='va'>geo_metadata</span></pre>
+    <pre class="usage"><span class='fu'>get_localidades_censales</span><span class='op'>(</span>
+  id <span class='op'>=</span> <span class='cn'>NULL</span>,
+  nombre <span class='op'>=</span> <span class='cn'>NULL</span>,
+  provincia <span class='op'>=</span> <span class='cn'>NULL</span>,
+  departamento <span class='op'>=</span> <span class='cn'>NULL</span>,
+  municipio <span class='op'>=</span> <span class='cn'>NULL</span>,
+  orden <span class='op'>=</span> <span class='cn'>NULL</span>,
+  aplanar <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  campos <span class='op'>=</span> <span class='cn'>NULL</span>,
+  max <span class='op'>=</span> <span class='cn'>NULL</span>,
+  exacto <span class='op'>=</span> <span class='cn'>NULL</span>
+<span class='op'>)</span></pre>
 
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>id</th>
+      <td><p>text Filtrar por ID.</p></td>
+    </tr>
+    <tr>
+      <th>nombre</th>
+      <td><p>text Filtrar por Nombre.</p></td>
+    </tr>
+    <tr>
+      <th>provincia</th>
+      <td><p>text Filtrar por nombre o ID de Provincia.</p></td>
+    </tr>
+    <tr>
+      <th>departamento</th>
+      <td><p>text Filtrar por nombre o ID de Departamento.</p></td>
+    </tr>
+    <tr>
+      <th>municipio</th>
+      <td><p>text Filtrar por nombre o ID de Municipio.</p></td>
+    </tr>
+    <tr>
+      <th>orden</th>
+      <td><p>text Campo por el cual ordenar los resultados (por ID o nombre)</p></td>
+    </tr>
+    <tr>
+      <th>aplanar</th>
+      <td><p>boolean Cuando está presente, muestra el resultado JSON con una estructura plana.</p></td>
+    </tr>
+    <tr>
+      <th>campos</th>
+      <td><p>text Campos a incluir en la respuesta separados por comas, sin espacios. Algunos campos siempre serán incluidos, incluso si no se agregaron en la lista. Para incluir campos de sub-entidades, separar los nombres con un punto, por ejemplo: provincia.id.</p></td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td><p>integer Cantidad máxima de resultados a devolver.</p></td>
+    </tr>
+    <tr>
+      <th>exacto</th>
+      <td><p>boolean Cuando está presente, se activa el modo de búsqueda por texto exacto. Sólo tiene efecto cuando se usan campos de búsqueda por texto (por ejemplo, nombre).</p></td>
+    </tr>
+    </table>
 
-    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Un tibble con 526 filas y 8 variables:</p><dl>
-<dt>codprov, coddepto</dt><dd><p>identificadores utilizados por <em>INDRA</em> para escrutinios provisorios de elecciones
-nacionales</p></dd>
-<dt><em>x_censo</em></dt><dd><p>identificadores de unidades geográficas del <em>INDEC</em></p></dd>
-<dt><em>x_iso</em></dt><dd><p>identificadores de <em>International Organization for Standardization</em></p></dd>
+    <p>Un Data Frame con el listado de Localidades Censales.</p>
+    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-...
+    <p><a href='https://datosgobar.github.io/georef-ar-api/open-api/#/Recursos/get_localidades_censales'>georef-ar-api/localidades-censales</a></p>
 
-</dl>
-
-
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='fu'>get_localidades_censales</span><span class='op'>(</span><span class='op'>)</span>
+<span class='op'>}</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
