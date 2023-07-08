@@ -40,7 +40,7 @@ get_endpoint <- function(endpoint, args) {
     purrr::modify_if(is.null, list)
 
   if (length(data) == 0) {
-    stop("La consulta devolvio una lista vacia", call. = F)
+    warning("La consulta devolvio una lista vacia", call. = F)
   }
 
   data %>%
