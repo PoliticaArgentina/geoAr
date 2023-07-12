@@ -1,3 +1,7 @@
+# geoAr 0.0.1.4.3.1
+
+- Changes `stop` for `warning` in `get_endpoint()` internal function for `georefar` family functions. 
+
 # geoAr 0.0.1.4.3
 
 Modify `georefar get_*` family functions:
