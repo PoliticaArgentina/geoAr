@@ -1,3 +1,8 @@
+# geoAr (development version) 0.0.1.5.0.0
+
+- Fix #21 : `PKGNAME` tag
+
+
 # geoAr 0.0.1.4.3.1
 
 - Changes `stop` for `warning` in `get_endpoint()` internal function for `georefar` family functions. 
