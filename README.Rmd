@@ -19,8 +19,7 @@ knitr::opts_chunk$set(
 
 `r badger::badge_cran_release(pkg = "geoAr", color = "blue")`
 `r badger::badge_cran_download(pkg = "geoAr", color = "blue", type = "last-month")``r badger::badge_cran_download(pkg = "geoAr", color = "blue", type = "last-week")``r badger::badge_cran_download(pkg = "geoAr", color = "blue", type = "last-month")``r badger::badge_cran_download(pkg = "geoAr", color = "blue", type = "grand-total")`
-`r badger::badge_runiverse(pkg = "geoAr", user = "politicaargentina")``r badger::badge_devel("politicaargentina/geoAr", "green")`
-[![R-CMD-check](https://github.com/PoliticaArgentina/geoAr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/PoliticaArgentina/geoAr/actions/workflows/R-CMD-check.yaml)
+`r badger::badge_runiverse(pkg = "geoAr", user = "politicaargentina")` [![R-CMD-check](https://github.com/PoliticaArgentina/geoAr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/PoliticaArgentina/geoAr/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 `{geoAr}` brinda herramientas que facilitan el acceso y el trabajo con datos espaciales de Argentina desde `R`.
@@ -123,18 +122,17 @@ show_arg_codes() # Preview avialable data
 
 To cite package ‘geoAr’ in publications use:
 
-  _Juan Pablo Ruiz Nicolini, Patricio Del Boca and Juan Gabriel Juara (2023). geoAr: Argentina's Spatial Data Toolbox. R package version 0.0.1.4.3. https://github.com/PoliticaArgentina/geoAr_
+  _Juan Pablo Ruiz Nicolini, Patricio Del Boca and Juan Gabriel Juara (2023). geoAr: Argentina's Spatial Data Toolbox. R package version 0.0.1.5 https://github.com/PoliticaArgentina/geoAr_
 
 A BibTeX entry for LaTeX users is
 
 ```
 
-
   @Manual{,
     title = {geoAr: Argentina's Spatial Data Toolbox},
     author = {Juan Pablo {Ruiz Nicolini} and Patricio {Del Boca} and Juan Gabriel Juara},
     year = {2023},
-    note = {R package version 0.0.1.4.3},
+    note = {R package version 0.0.1.5},
     url = {https://github.com/PoliticaArgentina/geoAr},
   
 ```  
