@@ -39,7 +39,7 @@ Si existe GEOREFAR_TOKEN en el Renviron lo usará para hacer la consulta.
 }
 \examples{
 \dontrun{
-get_provincias(nombre = "Córdoba")
+get_provincias(nombre = "Cordoba")
 }
 }
 \references{

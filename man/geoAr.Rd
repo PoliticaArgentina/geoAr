@@ -3,9 +3,28 @@
 \docType{package}
 \name{geoAr}
 \alias{geoAr}
+\alias{geoAr-package}
 \title{\code{geoAr} package}
 \description{
 Caja de Herramientas GEO de Argentina
 See the README on
 \href{https://github.com/PoliticaArgentina/geoAr#readme}{Github}
+}
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/PoliticaArgentina/geoAr}
+  \item Report bugs at \url{https://github.com/PoliticaArgentina/geoAr/issues}
+}
+
+}
+\author{
+\strong{Maintainer}: Juan Pablo Ruiz Nicolini \email{juanpabloruiznicolini@gmail.com} (\href{https://orcid.org/0000-0002-3138-6343}{ORCID}) [copyright holder]
+
+Authors:
+\itemize{
+  \item Patricio Del Boca \email{patriciodelboca@gmail.com}
+  \item Juan Gabriel Juara \email{jg.juara@gmail.com}
+}
+
 }

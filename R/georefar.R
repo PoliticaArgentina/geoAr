@@ -244,7 +244,7 @@ get_municipios <- function(id = NULL, nombre = NULL, provincia = NULL, departame
 #' @return Un Data Frame con el listado de Provincias
 #' @examples
 #' \dontrun{
-#' get_provincias(nombre = "Córdoba")
+#' get_provincias(nombre = "Cordoba")
 #' }
 
 get_provincias <- function(id = NULL, nombre = NULL, orden = NULL, aplanar = TRUE, campos = NULL, max = NULL, exacto = NULL){

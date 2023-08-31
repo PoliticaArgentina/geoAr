@@ -6,7 +6,7 @@
 #'
 #' @docType package
 #' @name geoAr
-NULL
+"_PACKAGE"
 
 ## quiets concerns of R CMD check re: the .'s that appear in pipelines
 
