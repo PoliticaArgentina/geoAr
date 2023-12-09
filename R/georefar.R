@@ -14,8 +14,12 @@ base_url <- "http://apis.datos.gob.ar/georef/api/"
 
 get_endpoint <- function(endpoint, args) {
 
+  purrr::discard(args, is.null)
+
   if (! assertthat::noNA(args)) {
-    stop(c('Los parametros siguientes tienen NAs', names(args[is.na(args)])))
+    stop(c('GET no admite NAs. Los parametros siguientes tienen NAs:', sapply(names(args[is.na(args)]),
+                                                                              function(x) paste0(" ", x),
+                                                                              USE.NAMES = F)))
   }
 
   # Obtener el token de la variable de entorno
@@ -48,6 +52,58 @@ get_endpoint <- function(endpoint, args) {
 }
 
 
+
+post_endpoint <- function(endpoint, args, drop_params) {
+
+
+  # Obtener el token de la variable de entorno
+  token <- Sys.getenv("GEOREFAR_TOKEN")
+
+  url <- paste0(base_url, endpoint)
+
+  args <- purrr::discard(args, is.null)
+
+  load <- as.data.frame(x = args) %>%
+    list() %>%
+    setNames(., endpoint)
+
+
+  body <- "{'calles':[{'nombre':'las heras'},{'nombre':'rivadavia'}]}"
+
+
+  # Comprobar si el token está presente
+  if (is.null(token) | token == "") {
+    response <- httr::POST(url, body = body,
+                           encode = "raw"
+    )
+
+  } else {
+    response <- httr::POST(url, body = body,
+                           encode = "raw",
+                           httr::content_type_json(),
+                           httr::add_headers(Authorization = paste("Bearer",
+                                                                   token))
+    )
+  }
+
+  parsed <- jsonlite::fromJSON(httr::content(response, "text"))
+
+  check_status(response)
+
+  data <- parsed[endpoint] %>%
+    as_tibble() %>%
+    jsonlite::flatten(recursive = T) %>%
+    dplyr::rename_with(.fn = function(x) {gsub(pattern = "\\$|\\.", replacement = "_", x = x)}) %>%
+    suppressMessages()
+
+  if (nrow(filter(data, if_all(.cols =  !matches("parametros"), .fns = is.na))) != 0) {
+    warning("La consulta una o mas respuestas vacias", call. = F)
+  }
+
+  data
+}
+
+
 #' Obtener Calles
 #'
 #' Permite realizar búsquedas sobre el listado de vías de circulación.
@@ -73,14 +129,26 @@ get_endpoint <- function(endpoint, args) {
 #' get_calles()
 #' }
 
-get_calles <- function(id = NULL, nombre = NULL, tipo = NULL, provincia = NULL, departamento = NULL, aplanar = TRUE, campos = NULL, max = NULL, exacto = NULL){
-  args <- list(id = id, nombre = nombre, tipo = tipo, provincia = provincia, departamento = departamento, aplanar = aplanar, campos = campos, max = max, exacto = exacto)
+get_calles <- function(nombre = NULL, id = NULL, tipo = NULL, provincia = NULL, departamento = NULL, municipio = NULL, localidad_censal = NULL, categoria = NULL, post = FALSE, max = NULL, inicio = NULL, aplanar = TRUE, campos = NULL, exacto = NULL, drop_params = FALSE){
+
+  assertthat::assert_that(is.logical(post), msg = "parametro 'post' debe ser logico")
+  assertthat::assert_that(is.logical(drop_params), msg = "parametro 'drop_params' debe ser logico")
+  assertthat::assert_that(max <= 5000 || is.null(max), msg = "parametro 'max' debe ser menor a 5000 o NULL")
+  assertthat::assert_that(max + inicio <= 10000 || is.null(max) || is.null(inicio), msg = "los parametros 'max' e 'inicio' deben sumar 10.000 o menos")
+
+
+  args <- list(nombre = nombre, id = id, tipo = tipo, provincia = provincia, departamento = departamento, municipio = municipio, localidad_censal = localidad_censal, categoria = categoria, inicio = inicio, aplanar = aplanar, campos = campos, exacto = exacto)
 
   endpoint <- "calles"
 
+
   check_internet()
 
-  get_endpoint(endpoint = endpoint, args = args)
+  if (post) {
+    post_endpoint(endpoint = endpoint, args = args, drop_params = drop_params)
+  } else {
+    get_endpoint(endpoint = endpoint, args = args)
+  }
 
 }
 
