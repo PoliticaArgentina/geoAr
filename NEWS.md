@@ -1,3 +1,8 @@
+# geoAr 1.0.0
+
+Ready for CRAN re submission
+
+
 # geoAr (development version) 0.0.1.5.0.0
 
 - Fix #21 : `PKGNAME` tag
