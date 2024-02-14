@@ -11,3 +11,5 @@
 ^Meta$
 ^CRAN-SUBMISSION$
 ^cran-comments\.md$
+figure$
+cache$

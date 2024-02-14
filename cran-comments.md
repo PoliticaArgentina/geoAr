@@ -1,10 +1,16 @@
-## Version 0.0.1.5
+## Version 1.0.0
 
 The package was archived and I did not see any notification. From what I see in the CRAN index (where it is stated that it was archived in December) I understand that this is due to a compilation error in the vignettes. 
 
 https://cran.r-project.org/web/packages/geoAr/index.html
 
-In version 0.0.1.5. this should be solved, as well as the PKGNAME tag issue. 
+In version 1.0.0 this should be solved, as well as the PKGNAME tag issue. 
+
+── R CMD check results ───────────────────────────────────────────────── geoAr 1.0.0 ────
+Duration: 41.1s
+
+0 errors ✔ | 0 warnings ✔ | 0 notes ✔
+
 
 
 ## Version: 0.0.1.4.2
