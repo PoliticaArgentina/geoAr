@@ -90,7 +90,7 @@ show_arg_codes() # Preview avialable data
 
 **CENSOS históricos**
 
--  Se facilita el acceso a la reconstrucción de los polígonos utilizados para los censos desde 1869 hasta 2010. Recuperado del proyecto _Base cartográfica de departamentos para los censos nacionales de la República Argentina desde 1869 a 2010_ de [Gonzalo Rodriguez y Pablo De Grande](https://ri.conicet.gov.ar/handle/11336/149867). 
+-  Se facilita el acceso a la reconstrucción de los polígonos utilizados para los censos desde 1869 hasta 2010. Recuperado del proyecto _Base cartográfica de departamentos para los censos nacionales de la República Argentina desde 1869 a 2010_ de [Gonzalo Rodriguez y Pablo De Grande](). 
 
 **Encuesta Permanente de Hogares (EPH)**
 
@@ -122,7 +122,7 @@ show_arg_codes() # Preview avialable data
 
 To cite package ‘geoAr’ in publications use:
 
-  _Juan Pablo Ruiz Nicolini, Patricio Del Boca and Juan Gabriel Juara (2023). geoAr: Argentina's Spatial Data Toolbox. R package version 0.0.1.5 https://github.com/PoliticaArgentina/geoAr_
+  _Juan Pablo Ruiz Nicolini, Patricio Del Boca and Juan Gabriel Juara (2023). geoAr: Argentina's Spatial Data Toolbox. R package version 0.0.1.5 https://github.com/PoliticaArgentina/geoAr _
 
 A BibTeX entry for LaTeX users is
 
