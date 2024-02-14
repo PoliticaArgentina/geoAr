@@ -6,10 +6,16 @@ https://cran.r-project.org/web/packages/geoAr/index.html
 
 In version 1.0.0 this should be solved, as well as the PKGNAME tag issue. 
 
+Passing both R CMD check and win_devel: 
+
+
 ── R CMD check results ───────────────────────────────────────────────── geoAr 1.0.0 ────
 Duration: 41.1s
 
 0 errors ✔ | 0 warnings ✔ | 0 notes ✔
+
+
+winbuilder: Package geoAr_1.0.0.tar.gz has been checked and built
 
 
 
