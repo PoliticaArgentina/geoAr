@@ -103,7 +103,15 @@
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/PoliticaArgentina/geoAr" class="external-link">geoAr</a></span><span class="op">)</span> <span class="co"># Argentina's Spatial Data Toolbox, [github::PoliticaArgentina/geoAr] v0.0.1.2</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/hafen/geofacet" class="external-link">geofacet</a></span><span class="op">)</span> <span class="co"># 'ggplot2' Faceting Utilities for Geographical Data, CRAN v0.2.0</span></span></code></pre></div>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/hafen/geofacet" class="external-link">geofacet</a></span><span class="op">)</span> <span class="co"># 'ggplot2' Faceting Utilities for Geographical Data, CRAN v0.2.0</span></span>
+<span><span class="co">#&gt; The legacy packages maptools, rgdal, and rgeos, underpinning the sp package,</span></span>
+<span><span class="co">#&gt; which was just loaded, will retire in October 2023.</span></span>
+<span><span class="co">#&gt; Please refer to R-spatial evolution reports for details, especially</span></span>
+<span><span class="co">#&gt; https://r-spatial.org/r/2023/05/15/evolution4.html.</span></span>
+<span><span class="co">#&gt; It may be desirable to make the sf package available;</span></span>
+<span><span class="co">#&gt; package maintainers should consider adding sf to Suggests:.</span></span>
+<span><span class="co">#&gt; The sp package is now running under evolution status 2</span></span>
+<span><span class="co">#&gt;      (status 2 uses the sf package in place of rgdal)</span></span></code></pre></div>
 <p><a href="https://github.com/PoliticaArgentina/geoAr" class="external-link">geoAr</a> está pensado para facilitar el acceso a datos y
 el trabajo con información geográfica de argentina. Una de las
 posibilidades es la descarga de capas ge geometrías con el objetivo de
@@ -122,7 +130,7 @@ visualizar capas geográficas.)</p>
 <span><span class="co">#&gt; Dimension:     XY</span></span>
 <span><span class="co">#&gt; Bounding box:  xmin: -66.18101 ymin: -28.01575 xmax: -64.48315 ymax: -26.06037</span></span>
 <span><span class="co">#&gt; Geodetic CRS:  WGS 84</span></span>
-<span><span class="co">#&gt; # A tibble: 17 x 9</span></span>
+<span><span class="co">#&gt; # A tibble: 17 × 9</span></span>
 <span><span class="co">#&gt;    codprov_censo coddepto_censo codprov coddepto nomdepto_censo  name_prov codprov_iso</span></span>
 <span><span class="co">#&gt;    &lt;chr&gt;         &lt;chr&gt;          &lt;chr&gt;   &lt;chr&gt;    &lt;chr&gt;           &lt;chr&gt;     &lt;chr&gt;      </span></span>
 <span><span class="co">#&gt;  1 90            007            23      013      BURRUYACU       TUCUMAN   AR-T       </span></span>
@@ -142,7 +150,7 @@ visualizar capas geográficas.)</p>
 <span><span class="co">#&gt; 15 90            105            23      016      TAFI VIEJO      TUCUMAN   AR-T       </span></span>
 <span><span class="co">#&gt; 16 90            112            23      014      TRANCAS         TUCUMAN   AR-T       </span></span>
 <span><span class="co">#&gt; 17 90            119            23      015      YERBA BUENA     TUCUMAN   AR-T       </span></span>
-<span><span class="co">#&gt; # i 2 more variables: name_iso &lt;chr&gt;, geometry &lt;MULTIPOLYGON [°]&gt;</span></span>
+<span><span class="co">#&gt; # ℹ 2 more variables: name_iso &lt;chr&gt;, geometry &lt;MULTIPOLYGON [°]&gt;</span></span>
 <span></span>
 <span></span>
 <span><span class="co"># MAPING</span></span>
@@ -150,10 +158,10 @@ visualizar capas geográficas.)</p>
 <span><span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">tucuman_names</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf_label</a></span><span class="op">(</span><span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>label <span class="op">=</span> <span class="va">nomdepto_censo</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning in st_point_on_surface.sfc(sf::st_zm(x)): st_point_on_surface may not give correct</span></span>
-<span><span class="co">#&gt; results for longitude/latitude data</span></span></code></pre></div>
+<span><span class="co">#&gt; Warning in st_point_on_surface.sfc(sf::st_zm(x)): st_point_on_surface may not give</span></span>
+<span><span class="co">#&gt; correct results for longitude/latitude data</span></span></code></pre></div>
 <div class="figure">
-<img src="figure/unnamed-chunk-2-1.png" alt=""><p class="caption">plot of chunk unnamed-chunk-2</p>
+<img src="figure/tucmap-1.png" alt=""><p class="caption">plot of chunk tucmap</p>
 </div>
 <p>No obstante, existen ocaciones en las que la visualización de
 información geográfica a través de mapas convencionales puede no ser la
@@ -172,14 +180,14 @@ caso esto está facilitado al generar un <em>facet</em> a partir de la
 variable PROVINCIA, generando un pequeño gráfico para cada distrito
 (<em>small multiple</em>).</p>
 <div class="figure">
-<img src="https://tuqmanor.netlify.app/post/Geofacetear_files/figure-html/unnamed-chunk-1-1.png" alt=""><p class="caption">plot of chunk unnamed-chunk-3</p>
+<img src="https://tuqmanor.netlify.app/post/Geofacetear_files/figure-html/unnamed-chunk-1-1.png" alt=""><p class="caption">plot of chunk tucfacet</p>
 </div>
 <p>En el segundo se utiliza geofacet para acomodar esta grilla <em>cómo
 si fuera un mapa</em> de Argentina. Facilitando de este modo una mirada
 que tenga en cuenta (y conocimiento) de la distribución geográfica de
 las provincias.</p>
 <div class="figure">
-<img src="https://tuqmanor.netlify.app/post/Geofacetear_files/figure-html/unnamed-chunk-2-1.png" alt=""><p class="caption">plot of chunk unnamed-chunk-4</p>
+<img src="https://tuqmanor.netlify.app/post/Geofacetear_files/figure-html/unnamed-chunk-2-1.png" alt=""><p class="caption">plot of chunk tucgeofacet</p>
 </div>
 <blockquote>
 <p>“El paquete geofacet amplía ggplot2 de una manera que facilita la
@@ -190,7 +198,7 @@ resultante de visualizaciones conforma una cuadrícula que imita la
 topología geográfica original”.</p>
 </blockquote>
 <p>(Traducción propia de la nota intorudctoria del autor, Ryan Haffen.
-Fuente: <a href="https://tuqmano.ar/posts/Geofacetear.html" class="external-link uri">https://tuqmano.ar/posts/Geofacetear.html</a>)</p>
+Fuente: <a href="https://tuqmano.ar/2019/01/21/geofacetear/" class="external-link uri">https://tuqmano.ar/2019/01/21/geofacetear/</a>)</p>
 <p>Los siguientes puntos resumen las ventajas potenciales para el uso de
 esta herramientas en comparación de otras técnicas para representar
 información a través de mapas u otras alterantivas (como cartogramas,
@@ -214,7 +222,7 @@ en el que presentamos <em>Geofaceting Argentina</em></p>
 <p><a href="https://github.com/TuQmano/geofacet_ARG/blob/master/.LatinR/Geofaceting_Argentina_RuizNicolini.pdf" class="external-link">Abstract</a>
 | 📊 <a href="https://www.researchgate.net/publication/327382101_Geofaceting_Argentina_LatinR_2018" class="external-link">Slides</a>
 | 📦 <a href="https://electorarg.github.io/geofaceteAR/" class="external-link">{geofaceteAR}</a> | ⌨️
-<a href="https://tuqmano.ar/posts/2020-05-22-empaquetar.html" class="external-link">blogpost</a>.</p>
+<a href="https://www.tuqmano.com/2020/05/22/empaquetar/" class="external-link">blogpost</a>.</p>
 </div>
 <div class="section level3">
 <h3 id="get_grid">get_grid()<a class="anchor" aria-label="anchor" href="#get_grid"></a>
@@ -232,7 +240,7 @@ grillas pre diseñadas para Argentina y cada una de las provincias.</p>
 <span><span class="co">#&gt; Dimension:     XY</span></span>
 <span><span class="co">#&gt; Bounding box:  xmin: -66.18101 ymin: -28.01575 xmax: -64.48315 ymax: -26.06037</span></span>
 <span><span class="co">#&gt; Geodetic CRS:  WGS 84</span></span>
-<span><span class="co">#&gt; # A tibble: 17 x 9</span></span>
+<span><span class="co">#&gt; # A tibble: 17 × 9</span></span>
 <span><span class="co">#&gt;    codprov_censo coddepto_censo codprov coddepto nomdepto_censo  name_prov codprov_iso</span></span>
 <span><span class="co">#&gt;    &lt;chr&gt;         &lt;chr&gt;          &lt;chr&gt;   &lt;chr&gt;    &lt;chr&gt;           &lt;chr&gt;     &lt;chr&gt;      </span></span>
 <span><span class="co">#&gt;  1 90            007            23      013      BURRUYACU       TUCUMAN   AR-T       </span></span>
@@ -252,7 +260,7 @@ grillas pre diseñadas para Argentina y cada una de las provincias.</p>
 <span><span class="co">#&gt; 15 90            105            23      016      TAFI VIEJO      TUCUMAN   AR-T       </span></span>
 <span><span class="co">#&gt; 16 90            112            23      014      TRANCAS         TUCUMAN   AR-T       </span></span>
 <span><span class="co">#&gt; 17 90            119            23      015      YERBA BUENA     TUCUMAN   AR-T       </span></span>
-<span><span class="co">#&gt; # i 2 more variables: name_iso &lt;chr&gt;, geometry &lt;MULTIPOLYGON [°]&gt;</span></span>
+<span><span class="co">#&gt; # ℹ 2 more variables: name_iso &lt;chr&gt;, geometry &lt;MULTIPOLYGON [°]&gt;</span></span>
 <span></span>
 <span></span>
 <span><span class="co"># GRIDS AS IF THEY WHERE MAPS FOR {geofacet}</span></span>
@@ -283,7 +291,7 @@ grillas pre diseñadas para Argentina y cada una de las provincias.</p>
 <span><span class="co">#&gt;   please consider submitting it to become a part of the geofacet package. You</span></span>
 <span><span class="co">#&gt;   can do this easily by calling: grid_submit(__grid_df_name__)</span></span></code></pre></div>
 <div class="figure">
-<img src="figure/unnamed-chunk-5-1.png" alt=""><p class="caption">plot of chunk unnamed-chunk-5</p>
+<img src="figure/tucgrid-1.png" alt=""><p class="caption">plot of chunk tucgrid</p>
 </div>
 </div>
   </div>
