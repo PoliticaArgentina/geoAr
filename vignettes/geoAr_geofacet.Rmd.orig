@@ -22,7 +22,7 @@ library(geofacet) # 'ggplot2' Faceting Utilities for Geographical Data, CRAN v0.
 `{geoAr}` está pensado para facilitar el acceso a datos y el trabajo con información geográfica de argentina. Una de las posibilidades es la descarga de capas ge geometrías con el objetivo de visualizar información. Una alternativa típica es utilizar `{sf}` para trabajar con datos de este tipo y combinarlo con `{ggplot2}` (y su función `geom_sf()` para visualizar capas geográficas.)
 
 
-```{r}
+```{r tucmap}
 
 tucuman <- get_geo(geo = "TUCUMAN")
 
@@ -38,23 +38,23 @@ ggplot2::ggplot(data = tucuman_names) +
 
 ```
 
-No obstante, existen ocaciones en las que la visualización de información geográfica a través de mapas convencionales puede no ser la mejor opción. `{geofacet}` es un paquete que busca sacar provecho de la potencia de `{ggplot2}` y utilizar el _facetado_ de un modo que cada caja de una grilla represente una entidad y que la suma de estas guarden relación con su distribución espacial.  
+No obstante, existen ocaciones en las que la visualización de información geográfica a través de mapas convencionales puede no ser la mejor opción. `{geofacet}` es un paquete que busca sacar provecho de la potencia de `{ggplot2}` y utilizar el _facetado_ de un modo que cada caja de una grilla represente una entidad y que la suma de estas guarden relación con su distribución espacial.
 
 
-### Ejemplo 
+### Ejemplo
 
-En los gráficos que siguen se representa un indicador tipico de la Ciencia Política (el _Número Efectivo de Partidos_) para una serie de tiempo para todas las provincias de Argentina. En el primer caso esto está facilitado al generar un _facet_ a partir de la variable PROVINCIA, generando un pequeño gráfico para cada distrito (_small multiple_).   
+En los gráficos que siguen se representa un indicador tipico de la Ciencia Política (el _Número Efectivo de Partidos_) para una serie de tiempo para todas las provincias de Argentina. En el primer caso esto está facilitado al generar un _facet_ a partir de la variable PROVINCIA, generando un pequeño gráfico para cada distrito (_small multiple_).
 
-```{r echo =FALSE}
+```{r tucfacet, echo =FALSE}
 
 knitr::include_graphics("https://tuqmanor.netlify.app/post/Geofacetear_files/figure-html/unnamed-chunk-1-1.png")
 ```
 
 
-En el segundo se utiliza geofacet para acomodar esta grilla _cómo si fuera un mapa_ de Argentina. Facilitando de este modo una mirada que tenga en cuenta (y conocimiento) de la distribución geográfica de las provincias. 
+En el segundo se utiliza geofacet para acomodar esta grilla _cómo si fuera un mapa_ de Argentina. Facilitando de este modo una mirada que tenga en cuenta (y conocimiento) de la distribución geográfica de las provincias.
 
 
-```{r echo =FALSE}
+```{r tucgeofacet, echo =FALSE}
 
 knitr::include_graphics("https://tuqmanor.netlify.app/post/Geofacetear_files/figure-html/unnamed-chunk-2-1.png")
 ```
@@ -82,9 +82,9 @@ Una particularidad del paquete `{geofacet}` es que propicia el desarrollo de gri
 
 ### get_grid()
 
-Así como `get_geo()` permite descargar un set de datos que incluyen una variable `geometry` con información geográfica para la generación de mapas, `get_grid()` permite descargar grillas pre diseñadas para Argentina y cada una de las provincias. 
+Así como `get_geo()` permite descargar un set de datos que incluyen una variable `geometry` con información geográfica para la generación de mapas, `get_grid()` permite descargar grillas pre diseñadas para Argentina y cada una de las provincias.
 
-```{r}
+```{r tucgrid}
 
 (tucuman_names <- tucuman %>%
   add_geo_codes()) # Augment data with metadata as districts names or alternative id codes
