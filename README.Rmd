@@ -19,7 +19,8 @@ knitr::opts_chunk$set(
 
 `r badger::badge_cran_release(pkg = "geoAr", color = "blue")`
 `r badger::badge_cran_download(pkg = "geoAr", color = "blue", type = "last-month")``r badger::badge_cran_download(pkg = "geoAr", color = "blue", type = "last-week")``r badger::badge_cran_download(pkg = "geoAr", color = "blue", type = "last-month")``r badger::badge_cran_download(pkg = "geoAr", color = "blue", type = "grand-total")`
-`r badger::badge_runiverse(pkg = "geoAr", user = "politicaargentina")` [![R-CMD-check](https://github.com/PoliticaArgentina/geoAr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/PoliticaArgentina/geoAr/actions/workflows/R-CMD-check.yaml)
+`r badger::badge_runiverse(pkg = "geoAr", user = "politicaargentina")`
+`r badger::badge_github_actions()`
 <!-- badges: end -->
 
 `{geoAr}` brinda herramientas que facilitan el acceso y el trabajo con datos espaciales de Argentina desde `R`.
@@ -90,7 +91,7 @@ show_arg_codes() # Preview avialable data
 
 **CENSOS históricos**
 
--  Se facilita el acceso a la reconstrucción de los polígonos utilizados para los censos desde 1869 hasta 2010. Recuperado del proyecto _Base cartográfica de departamentos para los censos nacionales de la República Argentina desde 1869 a 2010_ de [Gonzalo Rodriguez y Pablo De Grande](). 
+-  Se facilita el acceso a la reconstrucción de los polígonos utilizados para los censos desde 1869 hasta 2010. Recuperado del proyecto _Base cartográfica de departamentos para los censos nacionales de la República Argentina desde 1869 a 2010_ de [Gonzalo Rodriguez y Pablo De Grande](https://ri.conicet.gov.ar/handle/11336/149867). 
 
 **Encuesta Permanente de Hogares (EPH)**
 
