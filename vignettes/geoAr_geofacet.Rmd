@@ -90,7 +90,7 @@ En el segundo se utiliza geofacet para acomodar esta grilla _cómo si fuera un m
 
 >“El paquete geofacet amplía ggplot2 de una manera que facilita la creación de visualizaciones geográficamente facetadas en R. Para usar geofacet se toman datos que representan diferentes entidades geográficas y se aplica un método de visualización para cada entidad. El conjunto resultante de visualizaciones conforma una cuadrícula que imita la topología geográfica original”.
 
-(Traducción propia de la nota intorudctoria del autor, Ryan Haffen. Fuente: https://tuqmano.ar/2019/01/21/geofacetear/)
+(Traducción propia de la nota intorudctoria del autor, Ryan Haffen. Fuente: https://tuqmano.ar/posts/Geofacetear.html)
 
 Los siguientes puntos resumen las ventajas potenciales para el uso de esta herramientas en comparación de otras técnicas para representar información a través de mapas u otras alterantivas (como cartogramas, tilemaps, etc.):
 
@@ -104,7 +104,7 @@ Los siguientes puntos resumen las ventajas potenciales para el uso de esta herra
 
 Una particularidad del paquete `{geofacet}` es que propicia el desarrollo de grillas por parte de usuaries. Tanto para uso _ad hoc_ como para contribuir con un [repositorio de grillas que alimenta el paquete](https://hafen.github.io/geofacet/articles/geofacet.html#list-available-grids). Esta iniciativa nos impulsó a desarrollar grillas para Argentina y todas sus provincias, que terminaron conformando  `{geofacetAR}`, antecedente de este proyecto que tuvo sus primeros pasos en el marco del _1° LatinR_ en el que presentamos *Geofaceting Argentina*
 
-[Abstract](https://github.com/TuQmano/geofacet_ARG/blob/master/.LatinR/Geofaceting_Argentina_RuizNicolini.pdf) | 📊 [Slides](https://www.researchgate.net/publication/327382101_Geofaceting_Argentina_LatinR_2018) | 📦 [{geofaceteAR}](https://electorarg.github.io/geofaceteAR/) | ⌨️ [blogpost](https://www.tuqmano.com/2020/05/22/empaquetar/).
+[Abstract](https://github.com/TuQmano/geofacet_ARG/blob/master/.LatinR/Geofaceting_Argentina_RuizNicolini.pdf) | 📊 [Slides](https://www.researchgate.net/publication/327382101_Geofaceting_Argentina_LatinR_2018) | 📦 [{geofaceteAR}](https://electorarg.github.io/geofaceteAR/) | ⌨️ [blogpost](https://tuqmano.ar/posts/2020-05-22-empaquetar.html/).
 
 
 
