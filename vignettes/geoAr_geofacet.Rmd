@@ -70,7 +70,7 @@ ggplot2::ggplot(data = tucuman_names) +
 #> correct results for longitude/latitude data
 ```
 
-![plot of chunk tucmap](figure/tucmap-1.png)
+![](figure/tucmap-1.png)
 
 No obstante, existen ocaciones en las que la visualización de información geográfica a través de mapas convencionales puede no ser la mejor opción. `{geofacet}` es un paquete que busca sacar provecho de la potencia de `{ggplot2}` y utilizar el _facetado_ de un modo que cada caja de una grilla represente una entidad y que la suma de estas guarden relación con su distribución espacial.
 
@@ -79,13 +79,13 @@ No obstante, existen ocaciones en las que la visualización de información geog
 
 En los gráficos que siguen se representa un indicador tipico de la Ciencia Política (el _Número Efectivo de Partidos_) para una serie de tiempo para todas las provincias de Argentina. En el primer caso esto está facilitado al generar un _facet_ a partir de la variable PROVINCIA, generando un pequeño gráfico para cada distrito (_small multiple_).
 
-![plot of chunk tucfacet](https://tuqmanor.netlify.app/post/Geofacetear_files/figure-html/unnamed-chunk-1-1.png)
+![](https://tuqmanor.netlify.app/post/Geofacetear_files/figure-html/unnamed-chunk-1-1.png)
 
 
 En el segundo se utiliza geofacet para acomodar esta grilla _cómo si fuera un mapa_ de Argentina. Facilitando de este modo una mirada que tenga en cuenta (y conocimiento) de la distribución geográfica de las provincias.
 
 
-![plot of chunk tucgeofacet](https://tuqmanor.netlify.app/post/Geofacetear_files/figure-html/unnamed-chunk-2-1.png)
+![](https://tuqmanor.netlify.app/post/Geofacetear_files/figure-html/unnamed-chunk-2-1.png)
 
 
 >“El paquete geofacet amplía ggplot2 de una manera que facilita la creación de visualizaciones geográficamente facetadas en R. Para usar geofacet se toman datos que representan diferentes entidades geográficas y se aplica un método de visualización para cada entidad. El conjunto resultante de visualizaciones conforma una cuadrícula que imita la topología geográfica original”.
@@ -174,5 +174,5 @@ geofacet::grid_preview(grid_tucuman, label = "name")
 #>   can do this easily by calling: grid_submit(__grid_df_name__)
 ```
 
-![plot of chunk tucgrid](figure/tucgrid-1.png)
+![](figure/tucgrid-1.png)
 
