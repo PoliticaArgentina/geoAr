@@ -115,32 +115,28 @@ rápida interactiva.</p>
 <code class="sourceCode R"><span></span>
 <span><span class="va">argentina</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_geo.html">get_geo</a></span><span class="op">(</span>geo <span class="op">=</span> <span class="st">"ARGENTINA"</span>, level <span class="op">=</span> <span class="st">"provincia"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/leaflet/man/leaflet.html" class="external-link">leaflet</a></span><span class="op">(</span><span class="va">argentina</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/pkg/leaflet/man/map-layers.html" class="external-link">addPolygons</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rstudio.github.io/leaflet/reference/leaflet.html" class="external-link">leaflet</a></span><span class="op">(</span><span class="va">argentina</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rstudio.github.io/leaflet/reference/map-layers.html" class="external-link">addPolygons</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; PhantomJS not found. You can install it with webshot::install_phantomjs(). If it is installed, please make sure the phantomjs executable can be found via the PATH variable.</span></span></code></pre></div>
-<div class="figure">
-<img src="figure/map-1.png" alt=""><p class="caption">plot of chunk map</p>
-</div>
+<p><img src="figure/map-1.png"></p>
 <p><code>leaflet</code> permite con una simple liena agregarle una capa
 base de una veriedad de proveedores distintos que permiten mayor
 contexto geográfico a la capa que se está representando. En el ejemplo
 siguiente se utiliza una capa de <em>Open Street Map</em>.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/leaflet/man/leaflet.html" class="external-link">leaflet</a></span><span class="op">(</span><span class="va">argentina</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/pkg/leaflet/man/map-layers.html" class="external-link">addPolygons</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/pkg/leaflet/man/addProviderTiles.html" class="external-link">addProviderTiles</a></span><span class="op">(</span>provider <span class="op">=</span> <span class="va">providers</span><span class="op">$</span><span class="va">OpenStreetMap</span><span class="op">)</span></span></code></pre></div>
-<p><img src="figure/mapOpenStreet-1.png" alt="plot of chunk mapOpenStreet"><code>{goAr}</code> también incluye
-una función relativa a este punto. La misma se basa en la función
-anterior para permitir el agregado de una capa base desarrollada por el
-<a href="https://www.ign.gob.ar/NuestrasActividades/InformacionGeoespacial/ServiciosOGC/Leaflet" class="external-link">Instituto
+<code class="sourceCode R"><span><span class="fu"><a href="https://rstudio.github.io/leaflet/reference/leaflet.html" class="external-link">leaflet</a></span><span class="op">(</span><span class="va">argentina</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rstudio.github.io/leaflet/reference/map-layers.html" class="external-link">addPolygons</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rstudio.github.io/leaflet/reference/addProviderTiles.html" class="external-link">addProviderTiles</a></span><span class="op">(</span>provider <span class="op">=</span> <span class="va">providers</span><span class="op">$</span><span class="va">OpenStreetMap</span><span class="op">)</span></span></code></pre></div>
+<p><img src="figure/mapOpenStreet-1.png"><code>{goAr}</code> también
+incluye una función relativa a este punto. La misma se basa en la
+función anterior para permitir el agregado de una capa base desarrollada
+por el <a href="https://www.ign.gob.ar/NuestrasActividades/InformacionGeoespacial/ServiciosOGC/Leaflet" class="external-link">Instituto
 Geográfico Nacional</a>.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/leaflet/man/leaflet.html" class="external-link">leaflet</a></span><span class="op">(</span><span class="va">argentina</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/pkg/leaflet/man/map-layers.html" class="external-link">addPolygons</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rstudio.github.io/leaflet/reference/leaflet.html" class="external-link">leaflet</a></span><span class="op">(</span><span class="va">argentina</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rstudio.github.io/leaflet/reference/map-layers.html" class="external-link">addPolygons</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">geoAr</span><span class="fu">::</span><span class="fu"><a href="../reference/addArgTiles.html">addArgTiles</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<div class="figure">
-<img src="figure/mapIGN-1.png" alt=""><p class="caption">plot of chunk mapIGN</p>
-</div>
+<p><img src="figure/mapIGN-1.png"></p>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

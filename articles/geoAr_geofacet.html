@@ -160,9 +160,7 @@ visualizar capas geográficas.)</p>
 <span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf_label</a></span><span class="op">(</span><span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>label <span class="op">=</span> <span class="va">nomdepto_censo</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning in st_point_on_surface.sfc(sf::st_zm(x)): st_point_on_surface may not give</span></span>
 <span><span class="co">#&gt; correct results for longitude/latitude data</span></span></code></pre></div>
-<div class="figure">
-<img src="figure/tucmap-1.png" alt=""><p class="caption">plot of chunk tucmap</p>
-</div>
+<p><img src="figure/tucmap-1.png"></p>
 <p>No obstante, existen ocaciones en las que la visualización de
 información geográfica a través de mapas convencionales puede no ser la
 mejor opción. <a href="https://github.com/hafen/geofacet" class="external-link">geofacet</a> es un paquete que busca sacar
@@ -179,16 +177,12 @@ serie de tiempo para todas las provincias de Argentina. En el primer
 caso esto está facilitado al generar un <em>facet</em> a partir de la
 variable PROVINCIA, generando un pequeño gráfico para cada distrito
 (<em>small multiple</em>).</p>
-<div class="figure">
-<img src="https://tuqmanor.netlify.app/post/Geofacetear_files/figure-html/unnamed-chunk-1-1.png" alt=""><p class="caption">plot of chunk tucfacet</p>
-</div>
+<p><img src="https://tuqmanor.netlify.app/post/Geofacetear_files/figure-html/unnamed-chunk-1-1.png"></p>
 <p>En el segundo se utiliza geofacet para acomodar esta grilla <em>cómo
 si fuera un mapa</em> de Argentina. Facilitando de este modo una mirada
 que tenga en cuenta (y conocimiento) de la distribución geográfica de
 las provincias.</p>
-<div class="figure">
-<img src="https://tuqmanor.netlify.app/post/Geofacetear_files/figure-html/unnamed-chunk-2-1.png" alt=""><p class="caption">plot of chunk tucgeofacet</p>
-</div>
+<p><img src="https://tuqmanor.netlify.app/post/Geofacetear_files/figure-html/unnamed-chunk-2-1.png"></p>
 <blockquote>
 <p>“El paquete geofacet amplía ggplot2 de una manera que facilita la
 creación de visualizaciones geográficamente facetadas en R. Para usar
@@ -198,7 +192,7 @@ resultante de visualizaciones conforma una cuadrícula que imita la
 topología geográfica original”.</p>
 </blockquote>
 <p>(Traducción propia de la nota intorudctoria del autor, Ryan Haffen.
-Fuente: <a href="https://tuqmano.ar/2019/01/21/geofacetear/" class="external-link uri">https://tuqmano.ar/2019/01/21/geofacetear/</a>)</p>
+Fuente: <a href="https://tuqmano.ar/posts/Geofacetear.html" class="external-link uri">https://tuqmano.ar/posts/Geofacetear.html</a>)</p>
 <p>Los siguientes puntos resumen las ventajas potenciales para el uso de
 esta herramientas en comparación de otras técnicas para representar
 información a través de mapas u otras alterantivas (como cartogramas,
@@ -222,7 +216,7 @@ en el que presentamos <em>Geofaceting Argentina</em></p>
 <p><a href="https://github.com/TuQmano/geofacet_ARG/blob/master/.LatinR/Geofaceting_Argentina_RuizNicolini.pdf" class="external-link">Abstract</a>
 | 📊 <a href="https://www.researchgate.net/publication/327382101_Geofaceting_Argentina_LatinR_2018" class="external-link">Slides</a>
 | 📦 <a href="https://electorarg.github.io/geofaceteAR/" class="external-link">{geofaceteAR}</a> | ⌨️
-<a href="https://www.tuqmano.com/2020/05/22/empaquetar/" class="external-link">blogpost</a>.</p>
+<a href="https://tuqmano.ar/posts/2020-05-22-empaquetar.html/" class="external-link">blogpost</a>.</p>
 </div>
 <div class="section level3">
 <h3 id="get_grid">get_grid()<a class="anchor" aria-label="anchor" href="#get_grid"></a>
@@ -290,9 +284,7 @@ grillas pre diseñadas para Argentina y cada una de las provincias.</p>
 <span><span class="co">#&gt; Note: You provided a user-specified grid. If this is a generally-useful grid,</span></span>
 <span><span class="co">#&gt;   please consider submitting it to become a part of the geofacet package. You</span></span>
 <span><span class="co">#&gt;   can do this easily by calling: grid_submit(__grid_df_name__)</span></span></code></pre></div>
-<div class="figure">
-<img src="figure/tucgrid-1.png" alt=""><p class="caption">plot of chunk tucgrid</p>
-</div>
+<p><img src="figure/tucgrid-1.png"></p>
 </div>
   </div>
 
