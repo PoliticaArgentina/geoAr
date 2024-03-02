@@ -1,3 +1,7 @@
+## Version 1.0.0 (Third submission attempt)
+
+Checked and fixed all possible invalid URLs in vignettes and in README. All working properly for me. 
+
 
 ## Version 1.0.0 (Second submission attempt)
 
