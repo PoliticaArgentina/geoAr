@@ -6,8 +6,6 @@
 
 [![](https://www.r-pkg.org/badges/version/geoAr?color=blue)](https://cran.r-project.org/package=geoAr)
 [![](http://cranlogs.r-pkg.org/badges/last-month/geoAr?color=blue)](https://cran.r-project.org/package=geoAr)[![](http://cranlogs.r-pkg.org/badges/last-week/geoAr?color=blue)](https://cran.r-project.org/package=geoAr)[![](http://cranlogs.r-pkg.org/badges/last-month/geoAr?color=blue)](https://cran.r-project.org/package=geoAr)[![](http://cranlogs.r-pkg.org/badges/grand-total/geoAr?color=blue)](https://cran.r-project.org/package=geoAr)
-[![r-universe status
-badge](https://politicaargentina.r-universe.dev/badges/geoAr)](https://politicaargentina.r-universe.dev/ui#package:geoAr)
 [![R build
 status](https://github.com/PoliticaArgentina/geoAr/workflows/R-CMD-check/badge.svg)](https://github.com/PoliticaArgentina/geoAr/actions)
 <!-- badges: end -->

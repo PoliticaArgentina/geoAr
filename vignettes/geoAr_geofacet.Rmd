@@ -104,7 +104,7 @@ Los siguientes puntos resumen las ventajas potenciales para el uso de esta herra
 
 Una particularidad del paquete `{geofacet}` es que propicia el desarrollo de grillas por parte de usuaries. Tanto para uso _ad hoc_ como para contribuir con un [repositorio de grillas que alimenta el paquete](https://hafen.github.io/geofacet/articles/geofacet.html#list-available-grids). Esta iniciativa nos impulsó a desarrollar grillas para Argentina y todas sus provincias, que terminaron conformando  `{geofacetAR}`, antecedente de este proyecto que tuvo sus primeros pasos en el marco del _1° LatinR_ en el que presentamos *Geofaceting Argentina*
 
-[Abstract](https://github.com/TuQmano/geofacet_ARG/blob/master/.LatinR/Geofaceting_Argentina_RuizNicolini.pdf) | 📊 [Slides](https://www.researchgate.net/publication/327382101_Geofaceting_Argentina_LatinR_2018) | 📦 [{geofaceteAR}](https://electorarg.github.io/geofaceteAR/) | ⌨️ [blogpost](https://tuqmano.ar/posts/2020-05-22-empaquetar.html/).
+[Abstract](https://github.com/TuQmano/geofacet_ARG/blob/master/.LatinR/Geofaceting_Argentina_RuizNicolini.pdf) | 📊 [Slides](https://www.researchgate.net/publication/327382101_Geofaceting_Argentina_LatinR_2018) | 📦 [{geofaceteAR}](https://electorarg.github.io/geofaceteAR/) | ⌨️ [blogpost](https://tuqmano.ar/posts/2020-05-22-empaquetar.html).
 
 
 
