@@ -22,11 +22,11 @@ Dice la [documentación oficial](https://georef-ar-api.readthedocs.io/es/latest/
 
 > En la [Guía para la identificación y uso de entidades interoperables](https://datosgobar.github.io/paquete-apertura-datos/guia-interoperables/) se explica cómo funcionan las [unidades territoriales internas de la Argentina](https://datosgobar.github.io/paquete-apertura-datos/guia-interoperables/#divisiones-o-unidades-territoriales-internas) y la relación entre ellas.
 
-## Ejemplos mínimos de uso 
+## Ejemplos mínimos de uso
 
 #### NORMALIZAR (con `R`)
 
-¿Cómo normalizar? Tomemos como ejemplo el siguiente listado de nombres de provincias _crudo_: 
+¿Cómo normalizar? Tomemos como ejemplo el siguiente listado de nombres de provincias _crudo_:
 
 ```{r setup , warning=F, message=FALSE}
 library(geoAr) # Argentina's Spatial Data Toolbox, CRAN v0.1.4.2.1
@@ -42,20 +42,20 @@ normalizar_provincia <- tibble::tribble(
   "S. CRUZ",
   "Santiago",
   "TUCUMAN",
-  "Sgo. del Estero", 
-  "mendoza", 
+  "Sgo. del Estero",
+  "mendoza",
   "CABA"
 )
 
 ```
 
 
-Veamos que sucede cuando pedimos a la API nos devuelva los datos de uno de los distritos de ese listado (CABA, el sexto elemento): 
+Veamos que sucede cuando pedimos a la API nos devuelva los datos de uno de los distritos de ese listado (CABA, el sexto elemento):
 
 ```{r}
   geoAr::get_provincias(nombre = normalizar_provincia$provincia[6], max = 1)
 ```
-La función `get_provincia` devuelve el nombre del distrito, el `id` y las coordenadas de latitud y longitud del centroide. 
+La función `get_provincia` devuelve el nombre del distrito, el `id` y las coordenadas de latitud y longitud del centroide.
 
 Podemos generar una función como la que sigue para luego iterar la consulta para todo el listado:
 
@@ -63,21 +63,21 @@ Podemos generar una función como la que sigue para luego iterar la consulta par
 ```{r}
 
 normalizar <- function(base){
-  
+
   tmp <- get_provincias(nombre = base, max = 1)
-  
-  tmp$nombre 
+
+  tmp$nombre
 }
 
 ```
 
 
-Tomamos el `data.frame` original y generamos una nueva columna (`mutate`) dentro de la cual iteramos. Con ayuda de `map_chr` del paquete `purrr` pasamos la función antes creada al vector de nombres de provincias de nuestra base `normalizar_provincia`. 
+Tomamos el `data.frame` original y generamos una nueva columna (`mutate`) dentro de la cual iteramos. Con ayuda de `map_chr` del paquete `purrr` pasamos la función antes creada al vector de nombres de provincias de nuestra base `normalizar_provincia`.
 
 ```{r}
 
-(base_normalizada <- normalizar_provincia %>% 
-  dplyr::mutate(normalizada = purrr::map_chr(.x = provincia, 
+(base_normalizada <- normalizar_provincia %>%
+  dplyr::mutate(normalizada = purrr::map_chr(.x = provincia,
                                       .f = ~ normalizar(base = .x)
                                       )
          ))
@@ -88,15 +88,15 @@ Tomamos el `data.frame` original y generamos una nueva columna (`mutate`) dentro
 
 Supongamos ahora que tenemos las coordenadas de lo que nos dicen es la ubicación del estadio del mejor equipo de fútbol del mundo, pero solo tenemos esa información:
 
-```{r}
+```{r georefTUC}
 enriquecer_coordenadas <- tibble::tribble(
   ~latitud, ~longitud,
   -26.8129225,-65.1998249
 )
 
-leaflet::leaflet() %>% 
-  leaflet::addCircles(lng = enriquecer_coordenadas$longitud, 
-                      lat = enriquecer_coordenadas$latitud) %>% 
+leaflet::leaflet() %>%
+  leaflet::addCircles(lng = enriquecer_coordenadas$longitud,
+                      lat = enriquecer_coordenadas$latitud) %>%
   geoAr::addArgTiles()
 
 ```
@@ -105,7 +105,7 @@ Con `get_ubicacion` podemos agregarle información a nuestros datos de entrada:
 
 ```{r}
 
-geoAr::get_ubicacion(lat = enriquecer_coordenadas$latitud, 
+geoAr::get_ubicacion(lat = enriquecer_coordenadas$latitud,
                      lon = enriquecer_coordenadas$longitud)
 
 ```
@@ -125,7 +125,7 @@ secreto <- "codigosecreto"
 
 token <- jose::jwt_encode_hmac(claim = jose::jwt_claim(iss = key),
                                secret = secreto)
-                               
+
 print(token)
 
 ```

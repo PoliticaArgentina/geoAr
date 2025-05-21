@@ -23,31 +23,31 @@ library(leaflet) # Create Interactive Web Maps with the JavaScript 'Leaflet' Lib
 ```
 
 
-`{geoAr}` facilita la descarga de polígonos para distintos niveles de agregación o división política de Argentina. Por ejemplo se puede descargar un mapa de todo el país al nivel de radios censales, departamentos o provincial. En el siguiente ejemplo se descargar un mapa nacional al nivel provincial y se utiliza sintaxis de `leaflet` para `R` para generar una visualización rápida interactiva. 
+`{geoAr}` facilita la descarga de polígonos para distintos niveles de agregación o división política de Argentina. Por ejemplo se puede descargar un mapa de todo el país al nivel de radios censales, departamentos o provincial. En el siguiente ejemplo se descargar un mapa nacional al nivel provincial y se utiliza sintaxis de `leaflet` para `R` para generar una visualización rápida interactiva.
 
-```{r}
+```{r map}
 
 argentina <- get_geo(geo = "ARGENTINA", level = "provincia")
 
-leaflet(argentina) %>% 
+leaflet(argentina) %>%
   addPolygons()
 
 ```
 
-`leaflet` permite con una simple liena agregarle una capa base de una veriedad de proveedores distintos que permiten mayor contexto geográfico a la capa que se está representando. En el ejemplo siguiente se utiliza una capa de _Open Street Map_. 
+`leaflet` permite con una simple liena agregarle una capa base de una veriedad de proveedores distintos que permiten mayor contexto geográfico a la capa que se está representando. En el ejemplo siguiente se utiliza una capa de _Open Street Map_.
 
-```{r}
-leaflet(argentina) %>% 
-  addPolygons() %>% 
-  addProviderTiles(provider = providers$OpenStreetMap) 
+```{r mapOpenStreet}
+leaflet(argentina) %>%
+  addPolygons() %>%
+  addProviderTiles(provider = providers$OpenStreetMap)
 
 
 ```
-`{goAr}` también incluye una función relativa a este punto. La misma se basa en la función anterior para permitir el agregado de una capa base desarrollada por el [Instituto Geográfico Nacional](https://www.ign.gob.ar/NuestrasActividades/InformacionGeoespacial/ServiciosOGC/Leaflet). 
+`{goAr}` también incluye una función relativa a este punto. La misma se basa en la función anterior para permitir el agregado de una capa base desarrollada por el [Instituto Geográfico Nacional](https://www.ign.gob.ar/NuestrasActividades/InformacionGeoespacial/ServiciosOGC/Leaflet).
 
-```{r}
-leaflet(argentina) %>% 
-  addPolygons() %>% 
+```{r mapIGN}
+leaflet(argentina) %>%
+  addPolygons() %>%
   geoAr::addArgTiles()
 
 

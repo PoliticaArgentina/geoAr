@@ -19,30 +19,28 @@ knitr::opts_chunk$set(
 
 `r badger::badge_cran_release(pkg = "geoAr", color = "blue")`
 `r badger::badge_cran_download(pkg = "geoAr", color = "blue", type = "last-month")``r badger::badge_cran_download(pkg = "geoAr", color = "blue", type = "last-week")``r badger::badge_cran_download(pkg = "geoAr", color = "blue", type = "last-month")``r badger::badge_cran_download(pkg = "geoAr", color = "blue", type = "grand-total")`
-`r badger::badge_runiverse(pkg = "geoAr", user = "politicaargentina")` [![R-CMD-check](https://github.com/PoliticaArgentina/geoAr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/PoliticaArgentina/geoAr/actions/workflows/R-CMD-check.yaml)
+`r badger::badge_github_actions()`
+
 <!-- badges: end -->
 
 `{geoAr}` brinda herramientas que facilitan el acceso y el trabajo con datos espaciales de Argentina desde `R`.
 
 ------------------------------------------------------------------------
 
-## INSTALACIÓN (_Install_)
+## INSTALACIÓN (*Install*)
 
+### Desde `CRAN` (versión estable)
 
-### Desde  `CRAN` (versión estable)
-
-```r
+``` r
 
 # Install geoAr in R:
 
 install.packages('geoAr')
-
 ```
-
 
 ### Versión en desarrollo (*Development version*)
 
-#### Desde _GitHub_
+#### Desde *GitHub*
 
 ``` r
 # install.packages('devtools') si no tiene instalado devtools
@@ -50,17 +48,15 @@ install.packages('geoAr')
 devtools::install_github("politicaargentina/geoAr")
 ```
 
-#### `r-universe` 
+#### `r-universe`
 
 Se puede agregar el repositorio de [`r-universe`](https://politicaargentina.r-universe.dev/builds) como parámetro a la función base `install.packages`:
 
-```r
+``` r
 
 # Install geoAr in R:
 install.packages('geoAr', repos = c('https://politicaargentina.r-universe.dev')
-
 ```
-
 
 ## Ejemplo de uso básico (*Basic Usage*)
 
@@ -90,27 +86,25 @@ show_arg_codes() # Preview avialable data
 
 **CENSOS históricos**
 
--  Se facilita el acceso a la reconstrucción de los polígonos utilizados para los censos desde 1869 hasta 2010. Recuperado del proyecto _Base cartográfica de departamentos para los censos nacionales de la República Argentina desde 1869 a 2010_ de [Gonzalo Rodriguez y Pablo De Grande](https://ri.conicet.gov.ar/handle/11336/149867). 
+-   Se facilita el acceso a la reconstrucción de los polígonos utilizados para los censos desde 1869 hasta 2010. Recuperado del proyecto *Base cartográfica de departamentos para los censos nacionales de la República Argentina desde 1869 a 2010* de [Gonzalo Rodriguez y Pablo De Grande](https://ri.conicet.gov.ar/handle/11336/149867).
 
 **Encuesta Permanente de Hogares (EPH)**
 
-- Geometrías (entidades, envolventes y radios censales) correspondientes a la EPH del INDEC.
+-   Geometrías (entidades, envolventes y radios censales) correspondientes a la EPH del INDEC.
 
 #### **Puntos (coordenadas)**
 
-- Base de Asentamientos Humanos de la República Argentina (BAHRA) http://www.bahra.gob.ar/ 
-
+-   Base de Asentamientos Humanos de la República Argentina (BAHRA) <http://www.bahra.gob.ar/>
 
 ### Grillas `geofacet`
 
--   Grillas para usar con [geofacet](<https://politicaargentina.github.io/geoAr/articles/geoAr_geofacet.html>) para ARGENTINA, 24 provincias y AGLOMERADOS URBANOS (para usar con {eph}
+-   Grillas para usar con [geofacet](https://politicaargentina.github.io/geoAr/articles/geoAr_geofacet.html) para ARGENTINA, 24 provincias y AGLOMERADOS URBANOS (para usar con {eph}
 
 -   Libro de códigos (país, provincia, departamento) y función para re-codificar grillas según diccionario (ISO, INDEC, INDRA).
 
 ### `georef-ar` API
 
-- Interfaz en R para usar la [API del Servicio de Normalización de Datos Geográficos](https://georef-ar-api.readthedocs.io/es/latest/), que permite normalizar y codificar los nombres de unidades territoriales de la Argentina (provincias, departamentos, municipios y localidades) y de sus calles, así como ubicar coordenadas dentro de ellas. La versión original de estas funciones fueron desarrolladas en el paquete `georefar` desarrollado por [Patricio del Boca](https://github.com/pdelboca/georefar).
-
+-   Interfaz en R para usar la [API del Servicio de Normalización de Datos Geográficos](https://georef-ar-api.readthedocs.io/es/latest/), que permite normalizar y codificar los nombres de unidades territoriales de la Argentina (provincias, departamentos, municipios y localidades) y de sus calles, así como ubicar coordenadas dentro de ellas. La versión original de estas funciones fueron desarrolladas en el paquete `georefar` desarrollado por [Patricio del Boca](https://github.com/pdelboca/georefar).
 
 ## Paquetes similares para otros países (*Similar packages*)
 
@@ -120,23 +114,25 @@ show_arg_codes() # Preview avialable data
 
 ## Citation
 
-To cite package ‘geoAr’ in publications use:
+To cite package 'geoAr' in publications use:
 
-  _Juan Pablo Ruiz Nicolini, Patricio Del Boca and Juan Gabriel Juara (2023). geoAr: Argentina's Spatial Data Toolbox. R package version 0.0.1.5 https://github.com/PoliticaArgentina/geoAr_
+*Ruiz Nicolini J, Del Boca P, Juara J (2024). geoAr: Argentina's Spatial Data Toolbox. R package version 1.0.0, <https://github.com/PoliticaArgentina/geoAr>.*
 
 A BibTeX entry for LaTeX users is
 
-```
+```         
 
+  
   @Manual{,
     title = {geoAr: Argentina's Spatial Data Toolbox},
     author = {Juan Pablo {Ruiz Nicolini} and Patricio {Del Boca} and Juan Gabriel Juara},
-    year = {2023},
-    note = {R package version 0.0.1.5},
+    year = {2024},
+    note = {R package version 1.0.0},
     url = {https://github.com/PoliticaArgentina/geoAr},
+  }
   
-```  
-  
+```
+
 ## `{geoAr}` es parte del [universo de paquetes **polAr**](https://github.com/PoliticaArgentina/polArverse)
 
 ```{r, echo=FALSE}
