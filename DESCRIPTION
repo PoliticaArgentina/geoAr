@@ -1,6 +1,6 @@
 Package: geoAr
 Title: Argentina's Spatial Data Toolbox
-Version: 1.0.0
+Version: 1.1.0
 Authors@R: 
    c( person(given = "Juan Pablo",
            family = "Ruiz Nicolini",

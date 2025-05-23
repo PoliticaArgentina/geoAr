@@ -1,3 +1,19 @@
+# geoAr 1.1.0
+
+## New Features
+
+*   Added a suite of `post_*_bulk()` functions (`post_provincias_bulk()`, `post_departamentos_bulk()`, `post_municipios_bulk()`, `post_localidades_bulk()`, `post_localidades_censales_bulk()`, `post_asentamientos_bulk()`, `post_calles_bulk()`, `post_direcciones_bulk()`, `post_ubicacion_bulk()`) to allow for bulk queries to the corresponding `georef-ar-api` endpoints using the POST method. This enables sending multiple queries in a single API request.
+*   Each `post_*_bulk()` function includes enhanced input validation for the `queries_list` parameter, providing warnings for unrecognized parameter names within individual queries to guide correct usage.
+*   Added `get_geodata_dump()` function to download entire datasets (provincias, departamentos, etc.) in various formats (CSV, JSON, GeoJSON, NDJSON) directly from the API.
+*   The `get_calles()` function now exclusively handles GET requests; POST functionality for streets is managed by `post_calles_bulk()`.
+
+## Fixes & Improvements
+
+*   The base API URL used by `R/georefar.R` functions has been updated from HTTP to HTTPS (`https://apis.datos.gob.ar/georef/api/`) for secure communication.
+*   Refactored the internal `post_endpoint()` function to correctly construct JSON bodies for POST requests and parse API responses, especially for bulk operations.
+*   Added comprehensive unit tests for input validation of all new `post_*_bulk()` functions and basic validation for `get_geodata_dump()`.
+
+
 # geoAr 1.0.0
 
 Ready for CRAN re submission

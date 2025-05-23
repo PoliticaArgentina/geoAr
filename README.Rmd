@@ -105,6 +105,8 @@ show_arg_codes() # Preview avialable data
 ### `georef-ar` API
 
 -   Interfaz en R para usar la [API del Servicio de Normalización de Datos Geográficos](https://georef-ar-api.readthedocs.io/es/latest/), que permite normalizar y codificar los nombres de unidades territoriales de la Argentina (provincias, departamentos, municipios y localidades) y de sus calles, así como ubicar coordenadas dentro de ellas. La versión original de estas funciones fueron desarrolladas en el paquete `georefar` desarrollado por [Patricio del Boca](https://github.com/pdelboca/georefar).
+-   Incluye funciones para realizar consultas individuales (e.g., `get_provincias()`, `normalizar_direccion()`) y consultas masivas (bulk) para la mayoría de los endpoints (e.g., `post_provincias_bulk()`, `post_direcciones_bulk()`).
+-   Permite la descarga de datasets completos en diversos formatos (CSV, GeoJSON, etc.) mediante la función `get_geodata_dump()`.
 
 ## Paquetes similares para otros países (*Similar packages*)
 
@@ -116,7 +118,7 @@ show_arg_codes() # Preview avialable data
 
 To cite package 'geoAr' in publications use:
 
-*Ruiz Nicolini J, Del Boca P, Juara J (2024). geoAr: Argentina's Spatial Data Toolbox. R package version 1.0.0, <https://github.com/PoliticaArgentina/geoAr>.*
+*Ruiz Nicolini J, Del Boca P, Juara J (2024). geoAr: Argentina's Spatial Data Toolbox. R package version 1.1.0, <https://github.com/PoliticaArgentina/geoAr>.*
 
 A BibTeX entry for LaTeX users is
 
@@ -127,7 +129,7 @@ A BibTeX entry for LaTeX users is
     title = {geoAr: Argentina's Spatial Data Toolbox},
     author = {Juan Pablo {Ruiz Nicolini} and Patricio {Del Boca} and Juan Gabriel Juara},
     year = {2024},
-    note = {R package version 1.0.0},
+    note = {R package version 1.1.0},
     url = {https://github.com/PoliticaArgentina/geoAr},
   }
   
