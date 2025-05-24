@@ -156,9 +156,15 @@ post_endpoint <- function(endpoint, queries_list) {
 #' @param tipo text Tipo de calle. (Valores disponibles: calle, avenida, pasaje.)
 #' @param provincia text Filtrar por nombre o ID de provincia.
 #' @param departamento text Filtrar por nombre o ID de departamento.
+#' @param municipio text Filtrar por nombre o ID de municipio.
+#' @param localidad_censal text Filtrar por nombre o ID de localidad censal.
+#' @param categoria text Filtrar por categoría de calle.
+#' @param interseccion text Geometría GeoJSON utilizada para filtrar resultados por intersección espacial. Sólo se soportan polígonos y multipolígonos. Ejemplo: polygon((-58.431,-34.592),(-58.430,-34.590),(-58.428,-34.593),(-58.431,-34.592)).
+#' @param orden text Campo por el cual ordenar los resultados. (Por ID o nombre)
 #' @param aplanar boolean Cuando está presente, muestra el resultado JSON con una estructura plana.
 #' @param campos text Campos a incluir en la respuesta separados por comas, sin espacios. Algunos campos siempre serán incluidos, incluso si no se agregaron en la lista. Para incluir campos de sub-entidades, separar los nombres con un punto, por ejemplo: provincia.id.
-#' @param max integer Cantidad máxima de resultados a devolver.
+#' @param max integer Cantidad máxima de resultados a devolver. Debe ser menor o igual a 5000.
+#' @param inicio integer Cantidad de resultados a omitir desde el principio. La suma de 'max' e 'inicio' no debe superar 10000.
 #' @param exacto boolean Cuando está presente, se activa el modo de búsqueda por texto exacto. Sólo tiene efecto cuando se usan campos de búsqueda por texto (por ejemplo, nombre).
 #'
 #' @export
@@ -168,15 +174,15 @@ post_endpoint <- function(endpoint, queries_list) {
 #' @return Un Data Frame con el listado de Calles
 #' @examples
 #' \dontrun{
-#' get_calles()
+#' get_calles(nombre = "Corrientes", provincia = "CIUDAD AUTONOMA DE BUENOS AIRES", max = 10)
 #' }
 
-get_calles <- function(nombre = NULL, id = NULL, tipo = NULL, provincia = NULL, departamento = NULL, municipio = NULL, localidad_censal = NULL, categoria = NULL, max = NULL, inicio = NULL, aplanar = TRUE, campos = NULL, exacto = NULL){
+get_calles <- function(nombre = NULL, id = NULL, tipo = NULL, provincia = NULL, departamento = NULL, municipio = NULL, localidad_censal = NULL, categoria = NULL, interseccion = NULL, orden = NULL, max = NULL, inicio = NULL, aplanar = TRUE, campos = NULL, exacto = NULL){
 
   assertthat::assert_that(max <= 5000 || is.null(max), msg = "parametro 'max' debe ser menor a 5000 o NULL")
   assertthat::assert_that(max + inicio <= 10000 || is.null(max) || is.null(inicio), msg = "los parametros 'max' e 'inicio' deben sumar 10.000 o menos")
 
-  args <- list(nombre = nombre, id = id, tipo = tipo, provincia = provincia, departamento = departamento, municipio = municipio, localidad_censal = localidad_censal, categoria = categoria, inicio = inicio, aplanar = aplanar, campos = campos, exacto = exacto, max = max)
+  args <- list(nombre = nombre, id = id, tipo = tipo, provincia = provincia, departamento = departamento, municipio = municipio, localidad_censal = localidad_censal, categoria = categoria, interseccion = interseccion, orden = orden, inicio = inicio, aplanar = aplanar, campos = campos, exacto = exacto, max = max)
 
   endpoint <- "calles"
 
@@ -254,10 +260,12 @@ post_calles_bulk <- function(queries_list) {
 #' @param id text Filtrar por ID.
 #' @param nombre text Filtrar por Nombre.
 #' @param provincia text Filtrar por nombre o ID de Provincia.
+#' @param interseccion text Geometría GeoJSON utilizada para filtrar resultados por intersección espacial. Sólo se soportan polígonos y multipolígonos. Ejemplo: polygon((-58.431,-34.592),(-58.430,-34.590),(-58.428,-34.593),(-58.431,-34.592)).
 #' @param orden text Campo por el cual ordenar los resultados.  (Por ID o nombre)
 #' @param aplanar boolean Cuando está presente, muestra el resultado JSON con una estructura plana.
 #' @param campos text Campos a incluir en la respuesta separados por comas, sin espacios. Algunos campos siempre serán incluidos, incluso si no se agregaron en la lista. Para incluir campos de sub-entidades, separar los nombres con un punto, por ejemplo: provincia.id.
-#' @param max integer Cantidad máxima de resultados a devolver.
+#' @param max integer Cantidad máxima de resultados a devolver. La API limita a un máximo de 529 para este endpoint.
+#' @param inicio integer Cantidad de resultados a omitir desde el principio.
 #' @param exacto boolean Cuando está presente, se activa el modo de búsqueda por texto exacto. Sólo tiene efecto cuando se usan campos de búsqueda por texto (por ejemplo, nombre).
 #'
 #' @export
@@ -267,18 +275,17 @@ post_calles_bulk <- function(queries_list) {
 #' @return Un Data Frame con el listado de Departamentos
 #' @examples
 #' \dontrun{
-#' get_departamentos()
+#' get_departamentos(provincia = "06", max = 5)
 #' }
 
-get_departamentos <- function(id = NULL, nombre = NULL, provincia = NULL, orden = NULL, aplanar = TRUE, campos = NULL, max = NULL, exacto = NULL){
-  args <- list(id = id, nombre = nombre, provincia = provincia, orden = orden, aplanar = aplanar, campos = campos, max = max, exacto = exacto)
+get_departamentos <- function(id = NULL, nombre = NULL, provincia = NULL, interseccion = NULL, orden = NULL, aplanar = TRUE, campos = NULL, max = NULL, inicio = NULL, exacto = NULL){
+  args <- list(id = id, nombre = nombre, provincia = provincia, interseccion = interseccion, orden = orden, aplanar = aplanar, campos = campos, max = max, inicio = inicio, exacto = exacto)
 
   endpoint <- "departamentos"
 
   check_internet()
 
   get_endpoint(endpoint = endpoint, args = args)
-
 }
 
 #' Enviar Lote de Consultas de Departamentos (POST)
@@ -338,12 +345,15 @@ post_departamentos_bulk <- function(queries_list) {
 #' Realiza la consulta GET al endpoint /direcciones de georef-ar-api.
 #' Si existe GEOREFAR_TOKEN en el Renviron lo usará para hacer la consulta.
 #' @param direccion text Requerido. Direccion a normalizar, debe contener altura separada por espacio. (Ej: Colon 127)
-#' @param tipo text Tipo de calle. (Valores disponibles: calle, avenida, pasaje.)
 #' @param provincia text Filtrar por nombre o ID de provincia.
 #' @param departamento text Filtrar por nombre o ID de departamento.
+#' @param localidad_censal text Filtrar por nombre o ID de localidad censal.
+#' @param localidad text Filtrar por nombre o ID de localidad.
+#' @param orden text Campo por el cual ordenar los resultados. (Por ID o nombre)
 #' @param aplanar boolean Cuando está presente, muestra el resultado JSON con una estructura plana.
 #' @param campos text Campos a incluir en la respuesta separados por comas, sin espacios. Algunos campos siempre serán incluidos, incluso si no se agregaron en la lista. Para incluir campos de sub-entidades, separar los nombres con un punto, por ejemplo: provincia.id.
-#' @param max integer Cantidad máxima de resultados a devolver.
+#' @param max integer Cantidad máxima de resultados a devolver. La API limita a un máximo de 10 para este endpoint.
+#' @param inicio integer Cantidad de resultados a omitir desde el principio.
 #' @param exacto boolean Cuando está presente, se activa el modo de búsqueda por texto exacto. Sólo tiene efecto cuando se usan campos de búsqueda por texto (por ejemplo, nombre).
 #'
 #' @export
@@ -353,11 +363,12 @@ post_departamentos_bulk <- function(queries_list) {
 #' @return Un Data Frame con el listado normalizado de de direcciones
 #' @examples
 #' \dontrun{
-#' normalizar_direccion()
+#' normalizar_direccion(direccion = "Corrientes 1200, Rosario")
+#' normalizar_direccion(direccion = "SAN MARTIN 100", provincia = "02", max = 5)
 #' }
 
-normalizar_direccion <- function(direccion, tipo = NULL, provincia = NULL, departamento = NULL, aplanar = TRUE, campos = NULL, max = NULL, exacto = NULL){
-  args <- list(direccion = direccion, tipo = tipo, provincia = provincia, departamento = departamento, aplanar = aplanar, campos = campos, max = max, exacto = exacto)
+normalizar_direccion <- function(direccion, provincia = NULL, departamento = NULL, localidad_censal = NULL, localidad = NULL, orden = NULL, aplanar = TRUE, campos = NULL, max = NULL, inicio = NULL, exacto = NULL){
+  args <- list(direccion = direccion, provincia = provincia, departamento = departamento, localidad_censal = localidad_censal, localidad = localidad, orden = orden, aplanar = aplanar, campos = campos, max = max, inicio = inicio, exacto = exacto)
 
   endpoint <- "direcciones"
 
@@ -433,10 +444,12 @@ post_direcciones_bulk <- function(queries_list) {
 #' @param provincia text Filtrar por nombre o ID de Provincia.
 #' @param departamento text Filtrar por nombre o ID de Departamento.
 #' @param municipio text Filtrar por nombre o ID de Municipio.
+#' @param interseccion text Geometría GeoJSON utilizada para filtrar resultados por intersección espacial. Sólo se soportan polígonos y multipolígonos. Ejemplo: polygon((-58.431,-34.592),(-58.430,-34.590),(-58.428,-34.593),(-58.431,-34.592)).
 #' @param orden text Campo por el cual ordenar los resultados (por ID o nombre)
 #' @param aplanar boolean Cuando está presente, muestra el resultado JSON con una estructura plana.
 #' @param campos text Campos a incluir en la respuesta separados por comas, sin espacios. Algunos campos siempre serán incluidos, incluso si no se agregaron en la lista. Para incluir campos de sub-entidades, separar los nombres con un punto, por ejemplo: provincia.id.
-#' @param max integer Cantidad máxima de resultados a devolver.
+#' @param max integer Cantidad máxima de resultados a devolver. La API limita a un máximo de 2000 para este endpoint.
+#' @param inicio integer Cantidad de resultados a omitir desde el principio.
 #' @param exacto boolean Cuando está presente, se activa el modo de búsqueda por texto exacto. Sólo tiene efecto cuando se usan campos de búsqueda por texto (por ejemplo, nombre).
 #'
 #' @export
@@ -446,11 +459,11 @@ post_direcciones_bulk <- function(queries_list) {
 #' @return Un Data Frame con el listado de Localidades
 #' @examples
 #' \dontrun{
-#' get_localidades()
+#' get_localidades(nombre = "PALERMO", provincia = "CIUDAD AUTONOMA DE BUENOS AIRES")
 #' }
 
-get_localidades <- function(id = NULL, nombre = NULL, provincia = NULL, departamento = NULL, municipio = NULL, orden = NULL, aplanar = TRUE, campos = NULL, max = NULL, exacto = NULL){
-  args <- list(id = id, nombre = nombre, provincia = provincia, departamento = departamento, municipio = municipio, orden = orden, aplanar = aplanar, campos = campos, max = max, exacto = exacto)
+get_localidades <- function(id = NULL, nombre = NULL, provincia = NULL, departamento = NULL, municipio = NULL, interseccion = NULL, orden = NULL, aplanar = TRUE, campos = NULL, max = NULL, inicio = NULL, exacto = NULL){
+  args <- list(id = id, nombre = nombre, provincia = provincia, departamento = departamento, municipio = municipio, interseccion = interseccion, orden = orden, aplanar = aplanar, campos = campos, max = max, inicio = inicio, exacto = exacto)
 
   endpoint <- "localidades"
 
@@ -519,10 +532,12 @@ post_localidades_bulk <- function(queries_list) {
 #' @param nombre text Filtrar por Nombre.
 #' @param provincia text Filtrar por nombre o ID de Provincia.
 #' @param departamento text Filtrar por nombre o ID de Departamento.
+#' @param interseccion text Geometría GeoJSON utilizada para filtrar resultados por intersección espacial. Sólo se soportan polígonos y multipolígonos. Ejemplo: polygon((-58.431,-34.592),(-58.430,-34.590),(-58.428,-34.593),(-58.431,-34.592)).
 #' @param orden text Campo por el cual ordenar los resultados. (Por ID o nombre)
 #' @param aplanar boolean Cuando está presente, muestra el resultado JSON con una estructura plana.
 #' @param campos text Campos a incluir en la respuesta separados por comas, sin espacios. Algunos campos siempre serán incluidos, incluso si no se agregaron en la lista. Para incluir campos de sub-entidades, separar los nombres con un punto, por ejemplo: provincia.id.
-#' @param max integer Cantidad máxima de resultados a devolver.
+#' @param max integer Cantidad máxima de resultados a devolver. La API limita a un máximo de 2000 para este endpoint.
+#' @param inicio integer Cantidad de resultados a omitir desde el principio.
 #' @param exacto boolean Cuando está presente, se activa el modo de búsqueda por texto exacto. Sólo tiene efecto cuando se usan campos de búsqueda por texto (por ejemplo, nombre).
 #'
 #' @export
@@ -532,11 +547,11 @@ post_localidades_bulk <- function(queries_list) {
 #' @return Un Data Frame con el listado de Municipios
 #' @examples
 #' \dontrun{
-#' get_municipios()
+#' get_municipios(provincia = "cordoba", max = 10)
 #' }
 
-get_municipios <- function(id = NULL, nombre = NULL, provincia = NULL, departamento = NULL, orden = NULL, aplanar = TRUE, campos = NULL, max = NULL, exacto = NULL){
-  args <- list(id = id, nombre = nombre, provincia = provincia, departamento = departamento, orden = orden, aplanar = aplanar, campos = campos, max = max, exacto = exacto)
+get_municipios <- function(id = NULL, nombre = NULL, provincia = NULL, departamento = NULL, interseccion = NULL, orden = NULL, aplanar = TRUE, campos = NULL, max = NULL, inicio = NULL, exacto = NULL){
+  args <- list(id = id, nombre = nombre, provincia = provincia, departamento = departamento, interseccion = interseccion, orden = orden, aplanar = aplanar, campos = campos, max = max, inicio = inicio, exacto = exacto)
 
   endpoint <- "municipios"
 
@@ -603,10 +618,12 @@ post_municipios_bulk <- function(queries_list) {
 #' Si existe GEOREFAR_TOKEN en el Renviron lo usará para hacer la consulta.
 #' @param id text Filtrar por ID.
 #' @param nombre text Filtrar por Nombre.
+#' @param interseccion text Geometría GeoJSON utilizada para filtrar resultados por intersección espacial. Sólo se soportan polígonos y multipolígonos. Ejemplo: polygon((-58.431,-34.592),(-58.430,-34.590),(-58.428,-34.593),(-58.431,-34.592)).
 #' @param orden text Campo por el cual ordenar los resultados. (Por ID o nombre)
 #' @param aplanar boolean Cuando está presente, muestra el resultado JSON con una estructura plana.
 #' @param campos text Campos a incluir en la respuesta separados por comas, sin espacios. Algunos campos siempre serán incluidos, incluso si no se agregaron en la lista. Para incluir campos de sub-entidades, separar los nombres con un punto, por ejemplo: provincia.id.
-#' @param max integer Cantidad máxima de resultados a devolver.
+#' @param max integer Cantidad máxima de resultados a devolver. La API limita a un máximo de 24 para este endpoint.
+#' @param inicio integer Cantidad de resultados a omitir desde el principio.
 #' @param exacto boolean Cuando está presente, se activa el modo de búsqueda por texto exacto. Sólo tiene efecto cuando se usan campos de búsqueda por texto (por ejemplo, nombre).
 #'
 #' @export
@@ -619,8 +636,8 @@ post_municipios_bulk <- function(queries_list) {
 #' get_provincias(nombre = "Cordoba")
 #' }
 
-get_provincias <- function(id = NULL, nombre = NULL, orden = NULL, aplanar = TRUE, campos = NULL, max = NULL, exacto = NULL){
-  args <- list(id = id, nombre = nombre, orden = orden, aplanar = aplanar, campos = campos, max = max, exacto = exacto)
+get_provincias <- function(id = NULL, nombre = NULL, interseccion = NULL, orden = NULL, aplanar = TRUE, campos = NULL, max = NULL, inicio = NULL, exacto = NULL){
+  args <- list(id = id, nombre = nombre, interseccion = interseccion, orden = orden, aplanar = aplanar, campos = campos, max = max, inicio = inicio, exacto = exacto)
 
   endpoint <- "provincias"
 
@@ -780,10 +797,12 @@ post_ubicacion_bulk <- function(queries_list) {
 #' @param provincia text Filtrar por nombre o ID de Provincia.
 #' @param departamento text Filtrar por nombre o ID de Departamento.
 #' @param municipio text Filtrar por nombre o ID de Municipio.
+#' @param interseccion text Geometría GeoJSON utilizada para filtrar resultados por intersección espacial. Sólo se soportan polígonos y multipolígonos. Ejemplo: polygon((-58.431,-34.592),(-58.430,-34.590),(-58.428,-34.593),(-58.431,-34.592)).
 #' @param orden text Campo por el cual ordenar los resultados (por ID o nombre)
 #' @param aplanar boolean Cuando está presente, muestra el resultado JSON con una estructura plana.
 #' @param campos text Campos a incluir en la respuesta separados por comas, sin espacios. Algunos campos siempre serán incluidos, incluso si no se agregaron en la lista. Para incluir campos de sub-entidades, separar los nombres con un punto, por ejemplo: provincia.id.
-#' @param max integer Cantidad máxima de resultados a devolver.
+#' @param max integer Cantidad máxima de resultados a devolver. La API limita a un máximo de 5000 para este endpoint.
+#' @param inicio integer Cantidad de resultados a omitir desde el principio.
 #' @param exacto boolean Cuando está presente, se activa el modo de búsqueda por texto exacto. Sólo tiene efecto cuando se usan campos de búsqueda por texto (por ejemplo, nombre).
 #'
 #' @export
@@ -793,11 +812,11 @@ post_ubicacion_bulk <- function(queries_list) {
 #' @return Un Data Frame con el listado de Localidades Censales.
 #' @examples
 #' \dontrun{
-#' get_localidades_censales()
+#' get_localidades_censales(nombre = "VILLA GENERAL BELGRANO")
 #' }
 
-get_localidades_censales <- function(id = NULL, nombre = NULL, provincia = NULL, departamento = NULL, municipio = NULL, orden = NULL, aplanar = TRUE, campos = NULL, max = NULL, exacto = NULL){
-  args <- list(id = id, nombre = nombre, provincia = provincia, departamento = departamento, municipio = municipio, orden = orden, aplanar = aplanar, campos = campos, max = max, exacto = exacto)
+get_localidades_censales <- function(id = NULL, nombre = NULL, provincia = NULL, departamento = NULL, municipio = NULL, interseccion = NULL, orden = NULL, aplanar = TRUE, campos = NULL, max = NULL, inicio = NULL, exacto = NULL){
+  args <- list(id = id, nombre = nombre, provincia = provincia, departamento = departamento, municipio = municipio, interseccion = interseccion, orden = orden, aplanar = aplanar, campos = campos, max = max, inicio = inicio, exacto = exacto)
 
   endpoint <- "localidades-censales"
 
@@ -866,11 +885,13 @@ post_localidades_censales_bulk <- function(queries_list) {
 #' @param provincia text Filtrar por nombre o ID de Provincia.
 #' @param departamento text Filtrar por nombre o ID de Departamento.
 #' @param municipio text Filtrar por nombre o ID de Municipio.
-#' @param orden text Campo por el cual ordenar los resultados (por ID o nombre)
 #' @param localidad_censal text Filtrar por nombre o ID de localidad censal. Se pueden especificar varios IDs separados por comas
+#' @param interseccion text Geometría GeoJSON utilizada para filtrar resultados por intersección espacial. Sólo se soportan polígonos y multipolígonos. Ejemplo: polygon((-58.431,-34.592),(-58.430,-34.590),(-58.428,-34.593),(-58.431,-34.592)).
+#' @param orden text Campo por el cual ordenar los resultados (por ID o nombre)
 #' @param aplanar boolean Cuando está presente, muestra el resultado JSON con una estructura plana.
 #' @param campos text Campos a incluir en la respuesta separados por comas, sin espacios. Algunos campos siempre serán incluidos, incluso si no se agregaron en la lista. Para incluir campos de sub-entidades, separar los nombres con un punto, por ejemplo: provincia.id.
-#' @param max integer Cantidad máxima de resultados a devolver.
+#' @param max integer Cantidad máxima de resultados a devolver. La API limita a un máximo de 5000 para este endpoint.
+#' @param inicio integer Cantidad de resultados a omitir desde el principio.
 #' @param exacto boolean Cuando está presente, se activa el modo de búsqueda por texto exacto. Sólo tiene efecto cuando se usan campos de búsqueda por texto (por ejemplo, nombre).
 #'
 #' @export
@@ -880,11 +901,11 @@ post_localidades_censales_bulk <- function(queries_list) {
 #' @return Un Data Frame con el listado de Asentamientos BAHRA.
 #' @examples
 #' \dontrun{
-#' get_asentamientos()
+#' get_asentamientos(provincia = "22", departamento = "007")
 #' }
 
-get_asentamientos <- function(id = NULL, nombre = NULL, provincia = NULL, departamento = NULL, municipio = NULL, localidad_censal = NULL, orden = NULL, aplanar = TRUE, campos = NULL, max = NULL, exacto = NULL){
-  args <- list(id = id, nombre = nombre, provincia = provincia, departamento = departamento, municipio = municipio, localidad_censal = localidad_censal, orden = orden, aplanar = aplanar, campos = campos, max = max, exacto = exacto)
+get_asentamientos <- function(id = NULL, nombre = NULL, provincia = NULL, departamento = NULL, municipio = NULL, localidad_censal = NULL, interseccion = NULL, orden = NULL, aplanar = TRUE, campos = NULL, max = NULL, inicio = NULL, exacto = NULL){
+  args <- list(id = id, nombre = nombre, provincia = provincia, departamento = departamento, municipio = municipio, localidad_censal = localidad_censal, interseccion = interseccion, orden = orden, aplanar = aplanar, campos = campos, max = max, inicio = inicio, exacto = exacto)
 
   endpoint <- "asentamientos"
 
