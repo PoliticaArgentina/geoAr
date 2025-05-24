@@ -51,7 +51,6 @@ get_endpoint <- function(endpoint, args) {
 }
 
 
-
 post_endpoint <- function(endpoint, queries_list) {
   # 'queries_list' should be a list of lists, where each inner list represents a single query's parameters.
   # For example: list(list(nombre = "Buenos Aires"), list(id = "06"))
@@ -69,19 +68,20 @@ post_endpoint <- function(endpoint, queries_list) {
   # Convert to JSON
   json_body <- jsonlite::toJSON(body_data, auto_unbox = TRUE)
 
+
   # Comprobar si el token está presente
   if (is.null(token) || token == "") {
     response <- httr::POST(url,
-                           body = json_body,
-                           httr::content_type_json(),
-                           encode = "raw" # Using raw as json_body is already a JSON string
+                          body = json_body,
+                          httr::content_type_json(),
+                          encode = "raw" # Using raw as json_body is already a JSON string
     )
   } else {
     response <- httr::POST(url,
-                           body = json_body,
-                           httr::content_type_json(),
-                           httr::add_headers(Authorization = paste("Bearer", token)),
-                           encode = "raw"
+                          body = json_body,
+                          httr::content_type_json(),
+                          httr::add_headers(Authorization = paste("Bearer", token)),
+                          encode = "raw"
     )
   }
 
@@ -98,31 +98,37 @@ post_endpoint <- function(endpoint, queries_list) {
 
   results_list <- parsed_content$resultados
 
+  if (!endpoint %in% names(results_list)) {
+    warning(paste0("Expected data field '", endpoint, "' not found in a part of the bulk API response. Skipping this part of the result."))
+    return(dplyr::tibble())
+  }
+
   # Process each result, extracting the relevant data (e.g., 'provincias', 'departamentos')
   # The actual data is nested under a key that matches the endpoint name (plural form)
   # e.g. result$provincias, result$departamentos
-  processed_results <- purrr::map_dfr(results_list, function(result) {
-    if (length(result[[endpoint]]) == 0) {
-      # If the specific endpoint's data is empty for this result part, return an empty tibble
-      # with expected names if possible, or just an empty tibble.
-      # This handles cases where a specific query in the bulk request had no matches.
-      # Returning a tibble with 0 rows but correct column names is ideal if they can be inferred,
-      # otherwise, an empty tibble and dplyr::bind_rows will handle it.
+  processed_results <- purrr::map_dfr(results_list[[endpoint]], function(data_items) {
+    # Handle cases where the data_items might be NULL or an empty list
+    if (is.null(data_items)) {
       return(dplyr::tibble())
     }
-    # Convert the list of data items to a tibble
-    # Need to handle cases where result[[endpoint]] might be a list of lists or a data frame
-    if (is.data.frame(result[[endpoint]])) {
-        dplyr::as_tibble(result[[endpoint]])
-    } else if (is.list(result[[endpoint]])) {
-        # If it's a list of lists (e.g., for single item results within the bulk)
-        # This might need further refinement based on exact API response structure per endpoint
-        dplyr::bind_rows(lapply(result[[endpoint]], dplyr::as_tibble))
+    
+    if (is.data.frame(data_items)) {
+      # This is the most expected path with flatten = TRUE from jsonlite::fromJSON
+      return(dplyr::as_tibble(data_items))
+    } else if (is.list(data_items)) {
+      # This path might be taken if data_items is list() (from an empty JSON array '[]')
+      # or if flatten=TRUE didn't fully convert a list of lists to a data.frame
+      if (length(data_items) == 0) {
+        return(dplyr::tibble())
+      }
+      # Attempt to bind if it's a list of row-like lists
+      return(dplyr::bind_rows(lapply(data_items, dplyr::as_tibble)))
     } else {
-        dplyr::tibble() # Fallback
+      # Fallback for unexpected types
+      warning(paste0("Unexpected data type ('", class(data_items), "') for field '", endpoint, "' in API response. Skipping this part of the result."))
+      return(dplyr::tibble())
     }
   })
-
 
   # Clean column names
   if (ncol(processed_results) > 0) {
@@ -134,11 +140,10 @@ post_endpoint <- function(endpoint, queries_list) {
     warning("La consulta POST devolvio una lista vacia o no se pudieron procesar los resultados.", call. = F)
   }
   
-  # The old code had a warning for empty rows, this is harder to check precisely with bulk.
-  # The check above for nrow == 0 after processing is a general one.
-
   return(processed_results)
 }
+
+
 
 
 #' Obtener Calles
