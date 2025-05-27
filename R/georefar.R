@@ -1,6 +1,6 @@
 check_internet <- function(){
   attempt::stop_if_not(.x = curl::has_internet(),
-                       msg = "No se detecto acceso a internet. Por favor chequea tu conexion.")
+                       msg = "No se detect\u00f3 acceso a internet. Por favor chequea tu conexi\u00f3n.")
 }
 
 check_status <- function(res){
@@ -16,7 +16,7 @@ get_endpoint <- function(endpoint, args) {
   purrr::discard(args, is.null)
 
   if (! assertthat::noNA(args)) {
-    stop(c('GET no admite NAs. Los parametros siguientes tienen NAs:', sapply(names(args[is.na(args)]),
+    stop(c('GET no admite NAs. Los par\u00e1metros siguientes tienen NAs:', sapply(names(args[is.na(args)]),
                                                                               function(x) paste0(" ", x),
                                                                               USE.NAMES = F)))
   }
@@ -43,7 +43,7 @@ get_endpoint <- function(endpoint, args) {
     purrr::modify_if(is.null, list)
 
   if (length(data) == 0) {
-    warning("La consulta devolvio una lista vacia", call. = F)
+    warning("La consulta devolvi\u00f3 una lista vac\u00eda", call. = F)
   }
 
   data %>%
@@ -137,7 +137,7 @@ post_endpoint <- function(endpoint, queries_list) {
   }
   
   if (nrow(processed_results) == 0 && length(queries_list) > 0) {
-    warning("La consulta POST devolvio una lista vacia o no se pudieron procesar los resultados.", call. = F)
+    warning("La consulta POST devolvi\u00f3 una lista vac\u00eda o no se pudieron procesar los resultados.", call. = F)
   }
   
   return(processed_results)
@@ -179,8 +179,8 @@ post_endpoint <- function(endpoint, queries_list) {
 
 get_calles <- function(nombre = NULL, id = NULL, tipo = NULL, provincia = NULL, departamento = NULL, municipio = NULL, localidad_censal = NULL, categoria = NULL, interseccion = NULL, orden = NULL, max = NULL, inicio = NULL, aplanar = TRUE, campos = NULL, exacto = NULL){
 
-  assertthat::assert_that(max <= 5000 || is.null(max), msg = "parametro 'max' debe ser menor a 5000 o NULL")
-  assertthat::assert_that(max + inicio <= 10000 || is.null(max) || is.null(inicio), msg = "los parametros 'max' e 'inicio' deben sumar 10.000 o menos")
+  assertthat::assert_that(max <= 5000 || is.null(max), msg = "par\u00e1metro 'max' debe ser menor a 5000 o NULL")
+  assertthat::assert_that(max + inicio <= 10000 || is.null(max) || is.null(inicio), msg = "los par\u00e1metros 'max' e 'inicio' deben sumar 10.000 o menos")
 
   args <- list(nombre = nombre, id = id, tipo = tipo, provincia = provincia, departamento = departamento, municipio = municipio, localidad_censal = localidad_censal, categoria = categoria, interseccion = interseccion, orden = orden, inicio = inicio, aplanar = aplanar, campos = campos, exacto = exacto, max = max)
 
@@ -218,7 +218,7 @@ post_calles_bulk <- function(queries_list) {
     stop("'queries_list' debe ser una lista de listas.")
   }
   if (length(queries_list) == 0) {
-    warning("'queries_list' está vacía, no se realizará ninguna consulta.")
+    warning("'queries_list' est\u00e1 vac\u00eda, no se realizar\u00e1 ninguna consulta.")
     return(dplyr::tibble())
   }
 
@@ -232,15 +232,15 @@ post_calles_bulk <- function(queries_list) {
     param_names <- names(query)
     invalid_params <- setdiff(param_names, valid_params)
     if (length(invalid_params) > 0) {
-      warning(paste0("Consulta ", i, " en 'queries_list' para 'calles' contiene parámetro(s) no reconocido(s): ",
+      warning(paste0("Consulta ", i, " en 'queries_list' para 'calles' contiene par\u00e1metro(s) no reconocido(s): ",
                      paste(invalid_params, collapse = ", "), ". ",
-                     "Parámetros válidos son: ", paste(valid_params, collapse = ", "), "."))
+                     "Par\u00e1metros v\u00e1lidos son: ", paste(valid_params, collapse = ", "), "."))
     }
 
     current_max <- query$max
     current_inicio <- query$inicio
     if (!is.null(current_max) && current_max > 5000) {
-      stop("En una de las consultas, el parámetro 'max' debe ser menor o igual a 5000.")
+      stop("En una de las consultas, el par\u00e1metro 'max' debe ser menor o igual a 5000.")
     }
     if (!is.null(current_max) && !is.null(current_inicio) && (current_max + current_inicio > 10000)) {
       stop("En una de las consultas, la suma de 'max' e 'inicio' debe ser 10,000 o menos.")
@@ -315,7 +315,7 @@ post_departamentos_bulk <- function(queries_list) {
     stop("'queries_list' debe ser una lista de listas.")
   }
   if (length(queries_list) == 0) {
-    warning("'queries_list' está vacía, no se realizará ninguna consulta.")
+    warning("'queries_list' est\u00e1 vac\u00eda, no se realizar\u00e1 ninguna consulta.")
     return(dplyr::tibble())
   }
 
@@ -328,9 +328,9 @@ post_departamentos_bulk <- function(queries_list) {
     param_names <- names(query)
     invalid_params <- setdiff(param_names, valid_params)
     if (length(invalid_params) > 0) {
-      warning(paste0("Consulta ", i, " en 'queries_list' para 'departamentos' contiene parámetro(s) no reconocido(s): ",
+      warning(paste0("Consulta ", i, " en 'queries_list' para 'departamentos' contiene par\u00e1metro(s) no reconocido(s): ",
                      paste(invalid_params, collapse = ", "), ". ",
-                     "Parámetros válidos son: ", paste(valid_params, collapse = ", "), "."))
+                     "Par\u00e1metros v\u00e1lidos son: ", paste(valid_params, collapse = ", "), "."))
     }
   }
 
@@ -405,7 +405,7 @@ post_direcciones_bulk <- function(queries_list) {
     stop("'queries_list' debe ser una lista de listas.")
   }
   if (length(queries_list) == 0) {
-    warning("'queries_list' está vacía, no se realizará ninguna consulta.")
+    warning("'queries_list' est\u00e1 vac\u00eda, no se realizar\u00e1 ninguna consulta.")
     return(dplyr::tibble())
   }
 
@@ -423,9 +423,9 @@ post_direcciones_bulk <- function(queries_list) {
     param_names <- names(query)
     invalid_params <- setdiff(param_names, valid_params)
     if (length(invalid_params) > 0) {
-      warning(paste0("Consulta ", i, " en 'queries_list' para 'direcciones' contiene parámetro(s) no reconocido(s): ",
+      warning(paste0("Consulta ", i, " en 'queries_list' para 'direcciones' contiene par\u00e1metro(s) no reconocido(s): ",
                      paste(invalid_params, collapse = ", "), ". ",
-                     "Parámetros válidos son: ", paste(valid_params, collapse = ", "), "."))
+                     "Par\u00e1metros v\u00e1lidos son: ", paste(valid_params, collapse = ", "), "."))
     }
   }
 
@@ -499,7 +499,7 @@ post_localidades_bulk <- function(queries_list) {
     stop("'queries_list' debe ser una lista de listas.")
   }
   if (length(queries_list) == 0) {
-    warning("'queries_list' está vacía, no se realizará ninguna consulta.")
+    warning("'queries_list' est\u00e1 vac\u00eda, no se realizar\u00e1 ninguna consulta.")
     return(dplyr::tibble())
   }
 
@@ -512,9 +512,9 @@ post_localidades_bulk <- function(queries_list) {
     param_names <- names(query)
     invalid_params <- setdiff(param_names, valid_params)
     if (length(invalid_params) > 0) {
-      warning(paste0("Consulta ", i, " en 'queries_list' para 'localidades' contiene parámetro(s) no reconocido(s): ",
+      warning(paste0("Consulta ", i, " en 'queries_list' para 'localidades' contiene par\u00e1metro(s) no reconocido(s): ",
                      paste(invalid_params, collapse = ", "), ". ",
-                     "Parámetros válidos son: ", paste(valid_params, collapse = ", "), "."))
+                     "Par\u00e1metros v\u00e1lidos son: ", paste(valid_params, collapse = ", "), "."))
     }
   }
 
@@ -587,7 +587,7 @@ post_municipios_bulk <- function(queries_list) {
     stop("'queries_list' debe ser una lista de listas.")
   }
   if (length(queries_list) == 0) {
-    warning("'queries_list' está vacía, no se realizará ninguna consulta.")
+    warning("'queries_list' est\u00e1 vac\u00eda, no se realizar\u00e1 ninguna consulta.")
     return(dplyr::tibble())
   }
 
@@ -600,9 +600,9 @@ post_municipios_bulk <- function(queries_list) {
     param_names <- names(query)
     invalid_params <- setdiff(param_names, valid_params)
     if (length(invalid_params) > 0) {
-      warning(paste0("Consulta ", i, " en 'queries_list' para 'municipios' contiene parámetro(s) no reconocido(s): ",
+      warning(paste0("Consulta ", i, " en 'queries_list' para 'municipios' contiene par\u00e1metro(s) no reconocido(s): ",
                      paste(invalid_params, collapse = ", "), ". ",
-                     "Parámetros válidos son: ", paste(valid_params, collapse = ", "), "."))
+                     "Par\u00e1metros v\u00e1lidos son: ", paste(valid_params, collapse = ", "), "."))
     }
   }
 
@@ -673,11 +673,12 @@ get_provincias <- function(id = NULL, nombre = NULL, interseccion = NULL, orden 
 #' }
 post_provincias_bulk <- function(queries_list) {
   # Validaciones básicas para queries_list
-  if (!is.list(queries_list) || !all(sapply(queries_list, is.list))) {
+  if (!is.list(queries_list) || !all(sapply(queries_list, function(x) is.list(x) && length(x) > 0))) {
     stop("'queries_list' debe ser una lista de listas.")
   }
+
   if (length(queries_list) == 0) {
-    warning("'queries_list' está vacía, no se realizará ninguna consulta.")
+    warning("'queries_list' est\u00e1 vac\u00eda, no se realizar\u00e1 ninguna consulta.")
     return(dplyr::tibble())
   }
 
@@ -690,9 +691,7 @@ post_provincias_bulk <- function(queries_list) {
     param_names <- names(query)
     invalid_params <- setdiff(param_names, valid_params)
     if (length(invalid_params) > 0) {
-      warning(paste0("Consulta ", i, " en 'queries_list' para 'provincias' contiene parámetro(s) no reconocido(s): ",
-                     paste(invalid_params, collapse = ", "), ". ",
-                     "Parámetros válidos son: ", paste(valid_params, collapse = ", "), "."))
+      stop("La consulta contiene parametros invalidos")
     }
   }
 
@@ -758,7 +757,7 @@ post_ubicacion_bulk <- function(queries_list) {
     stop("'queries_list' debe ser una lista de listas.")
   }
   if (length(queries_list) == 0) {
-    warning("'queries_list' está vacía, no se realizará ninguna consulta.")
+    warning("'queries_list' est\u00e1 vac\u00eda, no se realizar\u00e1 ninguna consulta.")
     return(dplyr::tibble())
   }
 
@@ -776,9 +775,9 @@ post_ubicacion_bulk <- function(queries_list) {
     param_names <- names(query)
     invalid_params <- setdiff(param_names, valid_params)
     if (length(invalid_params) > 0) {
-      warning(paste0("Consulta ", i, " en 'queries_list' para 'ubicacion' contiene parámetro(s) no reconocido(s): ",
+      warning(paste0("Consulta ", i, " en 'queries_list' para 'ubicacion' contiene par\u00e1metro(s) no reconocido(s): ",
                      paste(invalid_params, collapse = ", "), ". ",
-                     "Parámetros válidos son: ", paste(valid_params, collapse = ", "), "."))
+                     "Par\u00e1metros v\u00e1lidos son: ", paste(valid_params, collapse = ", "), "."))
     }
   }
 
@@ -851,7 +850,7 @@ post_localidades_censales_bulk <- function(queries_list) {
     stop("'queries_list' debe ser una lista de listas.")
   }
   if (length(queries_list) == 0) {
-    warning("'queries_list' está vacía, no se realizará ninguna consulta.")
+    warning("'queries_list' est\u00e1 vac\u00eda, no se realizar\u00e1 ninguna consulta.")
     return(dplyr::tibble())
   }
 
@@ -864,9 +863,9 @@ post_localidades_censales_bulk <- function(queries_list) {
     param_names <- names(query)
     invalid_params <- setdiff(param_names, valid_params)
     if (length(invalid_params) > 0) {
-      warning(paste0("Consulta ", i, " en 'queries_list' para 'localidades-censales' contiene parámetro(s) no reconocido(s): ",
+      warning(paste0("Consulta ", i, " en 'queries_list' para 'localidades-censales' contiene par\u00e1metro(s) no reconocido(s): ",
                      paste(invalid_params, collapse = ", "), ". ",
-                     "Parámetros válidos son: ", paste(valid_params, collapse = ", "), "."))
+                     "Par\u00e1metros v\u00e1lidos son: ", paste(valid_params, collapse = ", "), "."))
     }
   }
 
@@ -940,7 +939,7 @@ post_asentamientos_bulk <- function(queries_list) {
     stop("'queries_list' debe ser una lista de listas.")
   }
   if (length(queries_list) == 0) {
-    warning("'queries_list' está vacía, no se realizará ninguna consulta.")
+    warning("'queries_list' est\u00e1 vac\u00eda, no se realizar\u00e1 ninguna consulta.")
     return(dplyr::tibble())
   }
 
@@ -953,9 +952,9 @@ post_asentamientos_bulk <- function(queries_list) {
     param_names <- names(query)
     invalid_params <- setdiff(param_names, valid_params)
     if (length(invalid_params) > 0) {
-      warning(paste0("Consulta ", i, " en 'queries_list' para 'asentamientos' contiene parámetro(s) no reconocido(s): ",
+      warning(paste0("Consulta ", i, " en 'queries_list' para 'asentamientos' contiene par\u00e1metro(s) no reconocido(s): ",
                      paste(invalid_params, collapse = ", "), ". ",
-                     "Parámetros válidos son: ", paste(valid_params, collapse = ", "), "."))
+                     "Par\u00e1metros v\u00e1lidos son: ", paste(valid_params, collapse = ", "), "."))
     }
   }
 
@@ -1008,10 +1007,10 @@ get_geodata_dump <- function(entidad, formato, path_to_save = NULL) {
   valid_formatos <- c("csv", "json", "geojson", "ndjson")
 
   if (!entidad %in% valid_entidades) {
-    stop(paste("Entidad no válida. Opciones disponibles:", paste(valid_entidades, collapse = ", ")))
+    stop(paste("Entidad no v\u00e1lida. Opciones disponibles:", paste(valid_entidades, collapse = ", ")))
   }
   if (!formato %in% valid_formatos) {
-    stop(paste("Formato no válido. Opciones disponibles:", paste(valid_formatos, collapse = ", ")))
+    stop(paste("Formato no v\u00e1lido. Opciones disponibles:", paste(valid_formatos, collapse = ", ")))
   }
 
   filename <- paste0(entidad, ".", formato)
@@ -1029,7 +1028,7 @@ get_geodata_dump <- function(entidad, formato, path_to_save = NULL) {
 
   if (!is.null(path_to_save)) {
     assertthat::assert_that(is.character(path_to_save), length(path_to_save) == 1,
-                            msg = "'path_to_save' debe ser una cadena de texto con la ruta del archivo.")
+                            msg = "'path_to_save' debe ser una cad\u00e1na de texto con la ruta del archivo.")
     tryCatch({
       writeBin(httr::content(response, "raw"), path_to_save)
       message(paste("Archivo guardado en:", path_to_save))

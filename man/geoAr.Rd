@@ -2,8 +2,8 @@
 % Please edit documentation in R/geoAr.R
 \docType{package}
 \name{geoAr}
-\alias{geoAr}
 \alias{geoAr-package}
+\alias{geoAr}
 \title{\code{geoAr} package}
 \description{
 Caja de Herramientas GEO de Argentina

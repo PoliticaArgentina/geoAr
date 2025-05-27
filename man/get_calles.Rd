@@ -5,21 +5,27 @@
 \title{Obtener Calles}
 \usage{
 get_calles(
-  id = NULL,
   nombre = NULL,
+  id = NULL,
   tipo = NULL,
   provincia = NULL,
   departamento = NULL,
+  municipio = NULL,
+  localidad_censal = NULL,
+  categoria = NULL,
+  interseccion = NULL,
+  orden = NULL,
+  max = NULL,
+  inicio = NULL,
   aplanar = TRUE,
   campos = NULL,
-  max = NULL,
   exacto = NULL
 )
 }
 \arguments{
-\item{id}{text Filtrar por ID.}
-
 \item{nombre}{text Filtrar por Nombre.}
+
+\item{id}{text Filtrar por ID.}
 
 \item{tipo}{text Tipo de calle. (Valores disponibles: calle, avenida, pasaje.)}
 
@@ -27,11 +33,23 @@ get_calles(
 
 \item{departamento}{text Filtrar por nombre o ID de departamento.}
 
+\item{municipio}{text Filtrar por nombre o ID de municipio.}
+
+\item{localidad_censal}{text Filtrar por nombre o ID de localidad censal.}
+
+\item{categoria}{text Filtrar por categoría de calle.}
+
+\item{interseccion}{text Geometría GeoJSON utilizada para filtrar resultados por intersección espacial. Sólo se soportan polígonos y multipolígonos. Ejemplo: polygon((-58.431,-34.592),(-58.430,-34.590),(-58.428,-34.593),(-58.431,-34.592)).}
+
+\item{orden}{text Campo por el cual ordenar los resultados. (Por ID o nombre)}
+
+\item{max}{integer Cantidad máxima de resultados a devolver. Debe ser menor o igual a 5000.}
+
+\item{inicio}{integer Cantidad de resultados a omitir desde el principio. La suma de 'max' e 'inicio' no debe superar 10000.}
+
 \item{aplanar}{boolean Cuando está presente, muestra el resultado JSON con una estructura plana.}
 
 \item{campos}{text Campos a incluir en la respuesta separados por comas, sin espacios. Algunos campos siempre serán incluidos, incluso si no se agregaron en la lista. Para incluir campos de sub-entidades, separar los nombres con un punto, por ejemplo: provincia.id.}
-
-\item{max}{integer Cantidad máxima de resultados a devolver.}
 
 \item{exacto}{boolean Cuando está presente, se activa el modo de búsqueda por texto exacto. Sólo tiene efecto cuando se usan campos de búsqueda por texto (por ejemplo, nombre).}
 }
@@ -45,7 +63,7 @@ Si existe GEOREFAR_TOKEN en el Renviron lo usará para hacer la consulta.
 }
 \examples{
 \dontrun{
-get_calles()
+get_calles(nombre = "Corrientes", provincia = "CIUDAD AUTONOMA DE BUENOS AIRES", max = 10)
 }
 }
 \references{

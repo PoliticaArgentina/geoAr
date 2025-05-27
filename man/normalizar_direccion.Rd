@@ -6,29 +6,38 @@
 \usage{
 normalizar_direccion(
   direccion,
-  tipo = NULL,
   provincia = NULL,
   departamento = NULL,
+  localidad_censal = NULL,
+  localidad = NULL,
+  orden = NULL,
   aplanar = TRUE,
   campos = NULL,
   max = NULL,
+  inicio = NULL,
   exacto = NULL
 )
 }
 \arguments{
 \item{direccion}{text Requerido. Direccion a normalizar, debe contener altura separada por espacio. (Ej: Colon 127)}
 
-\item{tipo}{text Tipo de calle. (Valores disponibles: calle, avenida, pasaje.)}
-
 \item{provincia}{text Filtrar por nombre o ID de provincia.}
 
 \item{departamento}{text Filtrar por nombre o ID de departamento.}
+
+\item{localidad_censal}{text Filtrar por nombre o ID de localidad censal.}
+
+\item{localidad}{text Filtrar por nombre o ID de localidad.}
+
+\item{orden}{text Campo por el cual ordenar los resultados. (Por ID o nombre)}
 
 \item{aplanar}{boolean Cuando está presente, muestra el resultado JSON con una estructura plana.}
 
 \item{campos}{text Campos a incluir en la respuesta separados por comas, sin espacios. Algunos campos siempre serán incluidos, incluso si no se agregaron en la lista. Para incluir campos de sub-entidades, separar los nombres con un punto, por ejemplo: provincia.id.}
 
-\item{max}{integer Cantidad máxima de resultados a devolver.}
+\item{max}{integer Cantidad máxima de resultados a devolver. La API limita a un máximo de 10 para este endpoint.}
+
+\item{inicio}{integer Cantidad de resultados a omitir desde el principio.}
 
 \item{exacto}{boolean Cuando está presente, se activa el modo de búsqueda por texto exacto. Sólo tiene efecto cuando se usan campos de búsqueda por texto (por ejemplo, nombre).}
 }
@@ -42,7 +51,8 @@ Si existe GEOREFAR_TOKEN en el Renviron lo usará para hacer la consulta.
 }
 \examples{
 \dontrun{
-normalizar_direccion()
+normalizar_direccion(direccion = "Corrientes 1200, Rosario")
+normalizar_direccion(direccion = "SAN MARTIN 100", provincia = "02", max = 5)
 }
 }
 \references{
