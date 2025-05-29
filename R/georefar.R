@@ -1,6 +1,32 @@
+#' @importFrom httr2 request req_url_query req_error req_auth_bearer_token resp_body_json resp_status resp_status_desc resp_url req_method req_body_json resp_body_raw resp_body_string resp_has_body resp_content_type req_perform req_perform_parallel
+#' @importFrom promises then
+NULL
+
 check_internet <- function(){
   attempt::stop_if_not(.x = curl::has_internet(),
                        msg = "No se detect\u00f3 acceso a internet. Por favor chequea tu conexi\u00f3n.")
+}
+
+#' Replace NULL Values with NA
+#'
+#' Recursively replaces NULL values with NA in a list or vector.
+#' This function is useful for handling NULL values in API responses
+#' before converting them to data frames.
+#'
+#' @param x A list, vector, or single value to process
+#' @return The input with all NULL values replaced by NA
+#' @keywords internal
+replace_null_with_na <- function(x) {
+  if (is.list(x)) {
+    # If it's a list, apply the function recursively to each element
+    lapply(x, replace_null_with_na)
+  } else if (is.null(x)) {
+    # If it's NULL, replace with NA
+    NA
+  } else {
+    # If it's not a list and not NULL, return as is
+    x
+  }
 }
 
 base_url <- "https://apis.datos.gob.ar/georef/api/"
@@ -100,33 +126,35 @@ create_query_batches <- function(all_queries,
   return(batches)
 }
 
-# Internal helper to execute a single POST batch request and return a promise of the httr2 response
-execute_post_batch_promise <- function(endpoint, single_batch_queries_list) {
+# Internal helper to PREPARE a single POST batch httr2_request object
+prepare_post_batch_request <- function(endpoint, single_batch_queries_list) {
   token <- Sys.getenv("GEOREFAR_TOKEN")
   url <- paste0(base_url, endpoint)
 
-  # The body for the API needs to be a named list, e.g., list(provincias = list_of_queries)
   body_data <- list()
   body_data[[endpoint]] <- single_batch_queries_list
 
   req <- httr2::request(url) |>
     httr2::req_method("POST") |>
-    httr2::req_body_json(data = body_data, auto_unbox = TRUE) |> # auto_unbox from original jsonlite call
+    httr2::req_body_json(data = body_data, auto_unbox = TRUE) |>
+    # httr2::req_error will convert responses with status != 200 to an R error,
+    # which req_perform_parallel(on_error="return") will then return as that error object.
+    # The httr2_error_handler provides a formatted message for such errors.
     httr2::req_error(is_error = ~ httr2::resp_status(.x) != 200, body = httr2_error_handler)
-
+    
   if (!is.null(token) && token != "") {
     req <- req |> httr2::req_auth_bearer_token(token)
   }
   
-  httr2::req_perform_promise(req) # Returns a promise that resolves to an httr2 response object
+  return(req) # Return the request object, not a promise
 }
 
 # Internal helper to process the httr2 response object of a single POST batch
 process_single_post_response <- function(response_obj, endpoint, num_queries_in_this_batch) {
+  # This function assumes response_obj is a successful httr2_response
   parsed_content <- httr2::resp_body_json(response_obj, flatten = TRUE)
 
   if (!"resultados" %in% names(parsed_content)) {
-    # Include URL in error if possible, though response_obj might not directly have it if it's an error object
     url_info <- tryCatch(httr2::resp_url(response_obj), error = function(e) "unknown URL")
     stop(paste0("La respuesta del POST para el endpoint '", endpoint, "' (URL: ", url_info, ") no contiene el campo 'resultados' esperado."), call. = FALSE)
   }
@@ -134,34 +162,39 @@ process_single_post_response <- function(response_obj, endpoint, num_queries_in_
   results_list_from_api <- parsed_content$resultados
 
   # The actual data items are expected to be in results_list_from_api[[endpoint]]
-  actual_data_items_list <- results_list_from_api[[endpoint]]
+  actual_data_items_list <- lapply(results_list_from_api, function(x) x[[endpoint]])
   
   if (is.null(actual_data_items_list)) {
-     warning(paste0("Expected data field '", endpoint, "' not found or is NULL within the 'resultados' field of the bulk API response. Available keys in 'resultados': ", paste(names(results_list_from_api), collapse=", ")), call. = FALSE)
-     return(dplyr::tibble())
+    warning(paste0("Expected data field '", endpoint, "' not found or is NULL within the 'resultados' field of the bulk API response. Available keys in 'resultados': ", paste(names(results_list_from_api), collapse=", ")), call. = FALSE)
+    return(dplyr::tibble())
   }
   
   if (!is.list(actual_data_items_list)) {
       warning(paste0("Data for endpoint '", endpoint, "' within 'resultados' is not a list as expected. Type: ", class(actual_data_items_list)), call. = FALSE)
       return(dplyr::tibble())
   }
-
+ 
   processed_results <- purrr::map_dfr(actual_data_items_list, function(data_items_for_one_original_query) {
+    
+
     if (is.null(data_items_for_one_original_query)) {
       return(dplyr::tibble())
     }
-    
     if (is.data.frame(data_items_for_one_original_query)) {
       return(dplyr::as_tibble(data_items_for_one_original_query))
     } else if (is.list(data_items_for_one_original_query)) {
       if (length(data_items_for_one_original_query) == 0) {
         return(dplyr::tibble())
       }
+      
       tryCatch({
         # Ensure that elements being bound are suitable for bind_rows (e.g., named lists or data.frames)
         # If data_items_for_one_original_query is a list of atomic vectors or unnamed lists, this might fail.
         # Assuming API returns list of objects (named lists) or list of data.frames.
-        return(dplyr::bind_rows(lapply(data_items_for_one_original_query, dplyr::as_tibble)))
+        data_items_for_one_original_query <- replace_null_with_na(data_items_for_one_original_query)
+
+        return(dplyr::bind_rows(lapply(data_items_for_one_original_query, as.data.frame)))
+        
       }, error = function(e) {
         warning(paste0("Failed to bind rows for an item in '", endpoint, "' results. Item class: ", class(data_items_for_one_original_query), ". Error: ", e$message), call. = FALSE)
         return(dplyr::tibble()) 
@@ -172,9 +205,10 @@ process_single_post_response <- function(response_obj, endpoint, num_queries_in_
     }
   })
 
+
   if (ncol(processed_results) > 0) {
-    processed_results <- processed_results |>
-      dplyr::rename_with(.fn = function(x) {gsub(pattern = "\\\\$|\\\\.", replacement = "_", x = x)})
+    # processed_results <- processed_results |>
+    #   dplyr::rename_with(.fn = function(x) {gsub(pattern = "\\\\$|\\\\.", replacement = "_", x = x)})
   }
   
   if (nrow(processed_results) == 0 && num_queries_in_this_batch > 0) {
@@ -195,40 +229,23 @@ get_endpoint <- function(endpoint, args) {
                                                                               USE.NAMES = F)))
   }
 
-  # Obtener el token de la variable de entorno
   token <- Sys.getenv("GEOREFAR_TOKEN")
 
   req <- httr2::request(paste0(base_url, endpoint)) |>
     httr2::req_url_query(!!!args_clean) |>
     httr2::req_error(is_error = ~ httr2::resp_status(.x) != 200, body = httr2_error_handler)
 
-  # Comprobar si el token esta presente
   if (!is.null(token) && token != "") {
     req <- req |> httr2::req_auth_bearer_token(token)
   }
 
-  # Perform request asynchronously and wait for the result
-  # This requires the 'promises' package.
-  # Ensure 'promises' is listed in Imports in DESCRIPTION
-  promise <- httr2::req_perform_promise(req)
-  response <- promises::promise_wait(promise) # Blocks until the promise is resolved
-
-  # httr2::resp_body_json by default uses simplifyVector = TRUE, similar to jsonlite::fromJSON
-  # It also handles content type and encoding.
+  # Use req_perform() for synchronous behavior needed by get_endpoint
+  response <- httr2::req_perform(req)
+  
   parsed <- httr2::resp_body_json(response)
 
   data_list <- parsed[[gsub(pattern = "-", replacement = "_", x = endpoint)]]
   
-  # Ensure data_list is actually a list before modifying if it's NULL
-  # purrr::modify_if expects a list. If data_list itself is NULL (e.g. endpoint not found in response),
-  # this would error. It's safer to handle NULL explicitly if that's a possibility.
-  # However, the original code `parsed[[...]] %>% purrr::modify_if(is.null, list)` implied
-  # that the result of `parsed[[...]]` could be a list containing NULLs, or NULL itself.
-  # If `data_list` is NULL, `purrr::modify_if` might not be what's intended.
-  # Let's assume `parsed[[...]]` yields a list, or if it yields NULL, `as_tibble` handles it.
-  # The original code `purrr::modify_if(is.null, list)` would turn a NULL result from `parsed[[...]]` 
-  # into `list(NULL)`, which then `as_tibble` would process.
-  # More robustly, if `data_list` could be `NULL`:
   if (is.null(data_list)) {
     data_list <- list() # Ensure it's an empty list if the key wasn't found or was null
   }
@@ -241,6 +258,7 @@ get_endpoint <- function(endpoint, args) {
   }
 
   data |>
+    dplyr::bind_rows() |>
     dplyr::as_tibble(.name_repair = function(x) {gsub(pattern = "\\$|\\.", replacement = "_", x = x)})
 }
 
@@ -323,7 +341,6 @@ post_calles_bulk <- function(queries_list) {
     return(dplyr::tibble())
   }
 
-  # Validate each query before batching
   valid_params <- c("id", "nombre", "tipo", "provincia", "departamento", "municipio", "localidad_censal", "categoria", "interseccion", "orden", "aplanar", "campos", "max", "inicio", "exacto")
   for (i in seq_along(queries_list)) {
     query <- queries_list[[i]]
@@ -333,12 +350,10 @@ post_calles_bulk <- function(queries_list) {
     param_names <- names(query)
     invalid_params <- setdiff(param_names, valid_params)
     if (length(invalid_params) > 0) {
-      # Consider making this a stop() if strict adherence to only valid params is required.
-      warning(paste0("Consulta ", i, " en 'queries_list' para 'calles' contiene par\u00e1metro(s) no reconocido(s): ",
+      stop(paste0("Consulta ", i, " en 'queries_list' para 'calles' contiene par\u00e1metro(s) no reconocido(s): ",
                      paste(invalid_params, collapse = ", "), ". ",
                      "Par\u00e1metros v\u00e1lidos son: ", paste(valid_params, collapse = ", "), ". Estos par\u00e1metros ser\u00e1n enviados a la API, pero podr\u00edan ser ignorados o causar un error si no son aceptados por el endpoint espec\u00edfico."))
     }
-
     current_max <- query$max
     current_inicio <- query$inicio
     if (!is.null(current_max) && (!is.numeric(current_max) || current_max < 0 || current_max > 5000)) {
@@ -355,79 +370,44 @@ post_calles_bulk <- function(queries_list) {
   endpoint <- "calles"
   check_internet()
   
-  # Create batches respecting API limits (max_queries, sum of 'max' param)
-  # The 'param_name_for_sum' is "max" for calles endpoint according to general API rules.
-  query_batches <- create_query_batches(queries_list, 
-                                        param_name_for_sum = "max")
-
+  query_batches <- create_query_batches(queries_list, param_name_for_sum = "max")
   if (length(query_batches) == 0 && length(queries_list) > 0) {
-      # This case should not be hit if create_query_batches works correctly 
-      # and queries_list was not empty, but as a safeguard:
-      warning("No se pudieron crear lotes de consultas para 'calles', aunque la lista de consultas no estaba vac\u00eda.", call. = FALSE)
+      warning(paste0("No se pudieron crear lotes de consultas para '", endpoint, "', aunque la lista de consultas no estaba vac\u00eda."), call. = FALSE)
       return(dplyr::tibble())
   } else if (length(query_batches) == 0) {
-      # This means queries_list was empty and already handled, or create_query_batches returned empty for other reasons.
-      return(dplyr::tibble()) # Already warned if queries_list was empty
+      return(dplyr::tibble())
   }
 
-  # List to store promises for each batch request + processing
-  all_batch_promises <- list()
-
+  all_batch_requests <- list()
   for (batch_idx in seq_along(query_batches)) {
     current_batch <- query_batches[[batch_idx]]
-    num_queries_in_current_batch <- length(current_batch)
-
-    # Get a promise for the HTTP response
-    response_promise <- execute_post_batch_promise(endpoint = endpoint, 
-                                                   single_batch_queries_list = current_batch)
-    
-    # Chain the processing of the response to the promise
-    # process_single_post_response will return a promise that resolves to a tibble
-    processed_data_promise <- promises::then(
-      response_promise,
-      onFulfilled = function(resp_obj) {
-        process_single_post_response(response_obj = resp_obj, 
-                                     endpoint = endpoint, 
-                                     num_queries_in_this_batch = num_queries_in_current_batch)
-      },
-      onRejected = function(err) {
-        # Errors from execute_post_batch_promise (via httr2_error_handler) or network issues
-        # will be caught here. We can re-throw to let promise_all handle it or customize.
-        # The httr2_error_handler already calls stop().
-        # If process_single_post_response itself throws an error (e.g., unexpected JSON structure),
-        # it would also lead to rejection.
-        stop(paste0("Error procesando el lote ", batch_idx, " para '", endpoint, "': ", err$message), call. = FALSE)
-      }
-    )
-    all_batch_promises <- append(all_batch_promises, list(processed_data_promise))
+    request_obj <- prepare_post_batch_request(endpoint = endpoint, single_batch_queries_list = current_batch)
+    all_batch_requests <- append(all_batch_requests, list(request_obj))
   }
 
-  # Wait for all batches to complete (they run in parallel where possible)
-  # promise_all collects results. If any promise rejects, promise_all rejects immediately.
-  # The result (if all succeed) will be a list of tibbles.
-  final_results_list <- tryCatch({
-    promises::promise_wait(promises::promise_all(.list = all_batch_promises))
-  }, error = function(e) {
-    # This will catch errors from promise_all (e.g., if one of the batch promises was rejected)
-    stop(paste0("Error durante la ejecuci\u00f3n de lotes paralelos para '", endpoint, "': ", e$message), call. = FALSE)
-    # return(NULL) # Or return an empty tibble if preferred on overall failure
-  })
-
-  if (is.null(final_results_list)) {
-    # This means an error occurred and was caught by tryCatch, and we decided to return NULL (or similar)
-    # However, the stop() inside the tryCatch should prevent reaching here if it throws.
-    # If we didn't re-throw, we might return an empty tibble:
-    warning("La consulta POST paralela para 'calles' fall\u00f3 o no devolvi\u00f3 resultados.", call. = FALSE)
-    return(dplyr::tibble())
+  responses_or_errors <- httr2::req_perform_parallel(all_batch_requests, on_error = "return")
+  final_results_list_of_tibbles <- list()
+  has_errors <- FALSE
+  for (i in seq_along(responses_or_errors)) {
+    item <- responses_or_errors[[i]]
+    num_queries_in_this_batch <- length(query_batches[[i]])
+    if (inherits(item, "httr2_response")) {
+      processed_tibble <- process_single_post_response(response_obj = item, endpoint = endpoint, num_queries_in_this_batch = num_queries_in_this_batch)
+      final_results_list_of_tibbles <- append(final_results_list_of_tibbles, list(processed_tibble))
+    } else if (inherits(item, "error")) {
+      has_errors <- TRUE
+      warning(paste0("Error en el lote ", i, " para '", endpoint, "': ", conditionMessage(item)), call. = FALSE)
+    } else {
+      has_errors <- TRUE
+      warning(paste0("Error desconocido o respuesta inesperada en el lote ", i, " para '", endpoint, "'. Clase del objeto: ", class(item)[1]), call. = FALSE)
+    }
   }
-
-  # Combine all tibbles from different batches
-  combined_results <- dplyr::bind_rows(final_results_list)
-
-  if (nrow(combined_results) == 0 && length(queries_list) > 0) {
-    warning(paste0("La consulta POST completa para '", endpoint, "' (", length(queries_list)," consultas originales en ", length(query_batches)," lotes) devolvi\u00f3 una lista vac\u00eda o no se pudieron procesar los resultados."), call. = FALSE)
+  combined_results <- dplyr::bind_rows(final_results_list_of_tibbles)
+  if (nrow(combined_results) == 0 && length(queries_list) > 0 && !has_errors) {
+    warning(paste0("La consulta POST completa para '", endpoint, "' (", length(queries_list)," consultas originales en ", length(query_batches)," lotes) devolvi\u00f3 una lista vac\u00eda o no se pudieron procesar los resultados, aunque no se reportaron errores directos en los lotes."), call. = FALSE)
+  } else if (nrow(combined_results) == 0 && length(queries_list) > 0 && has_errors) {
+    warning(paste0("La consulta POST completa para '", endpoint, "' (", length(queries_list)," consultas originales en ", length(query_batches)," lotes) no produjo resultados y se encontraron errores en algunos lotes."), call. = FALSE)
   }
-  
   return(combined_results)
 }
 
@@ -511,55 +491,44 @@ post_departamentos_bulk <- function(queries_list) {
                      paste(invalid_params, collapse = ", "), ". ",
                      "Par\u00e1metros v\u00e1lidos son: ", paste(valid_params, collapse = ", "), "."))
     }
-    # Add any specific per-query validation for 'departamentos' if needed, e.g., for 'max' or 'inicio'
-    # The API docs for GET /departamentos note max is 529. POST might differ or use global batch limits.
   }
-
   endpoint <- "departamentos"
   check_internet()
-
-  # Create batches. Assuming "max" is the parameter to sum for batch limits, if applicable.
-  query_batches <- create_query_batches(queries_list, 
-                                        param_name_for_sum = "max")
-
+  query_batches <- create_query_batches(queries_list, param_name_for_sum = "max")
   if (length(query_batches) == 0 && length(queries_list) > 0) {
       warning(paste0("No se pudieron crear lotes de consultas para '", endpoint, "', aunque la lista de consultas no estaba vac\u00eda."), call. = FALSE)
       return(dplyr::tibble())
   } else if (length(query_batches) == 0) {
       return(dplyr::tibble())
   }
-
-  all_batch_promises <- list()
+  all_batch_requests <- list()
   for (batch_idx in seq_along(query_batches)) {
     current_batch <- query_batches[[batch_idx]]
-    num_queries_in_current_batch <- length(current_batch)
-    response_promise <- execute_post_batch_promise(endpoint = endpoint, single_batch_queries_list = current_batch)
-    processed_data_promise <- promises::then(
-      response_promise,
-      onFulfilled = function(resp_obj) {
-        process_single_post_response(response_obj = resp_obj, endpoint = endpoint, num_queries_in_this_batch = num_queries_in_current_batch)
-      },
-      onRejected = function(err) {
-        stop(paste0("Error procesando el lote ", batch_idx, " para '", endpoint, "': ", err$message), call. = FALSE)
-      }
-    )
-    all_batch_promises <- append(all_batch_promises, list(processed_data_promise))
+    request_obj <- prepare_post_batch_request(endpoint = endpoint, single_batch_queries_list = current_batch)
+    all_batch_requests <- append(all_batch_requests, list(request_obj))
   }
-
-  final_results_list <- tryCatch({
-    promises::promise_wait(promises::promise_all(.list = all_batch_promises))
-  }, error = function(e) {
-    stop(paste0("Error durante la ejecuci\u00f3n de lotes paralelos para '", endpoint, "': ", e$message), call. = FALSE)
-  })
-
-  if (is.null(final_results_list)) {
-     warning(paste0("La consulta POST paralela para '", endpoint, "' fall\u00f3 o no devolvi\u00f3 resultados."), call. = FALSE)
-    return(dplyr::tibble())
+  responses_or_errors <- httr2::req_perform_parallel(all_batch_requests, on_error = "return")
+  final_results_list_of_tibbles <- list()
+  has_errors <- FALSE
+  for (i in seq_along(responses_or_errors)) {
+    item <- responses_or_errors[[i]]
+    num_queries_in_this_batch <- length(query_batches[[i]])
+    if (inherits(item, "httr2_response")) {
+      processed_tibble <- process_single_post_response(response_obj = item, endpoint = endpoint, num_queries_in_this_batch = num_queries_in_this_batch)
+      final_results_list_of_tibbles <- append(final_results_list_of_tibbles, list(processed_tibble))
+    } else if (inherits(item, "error")) {
+      has_errors <- TRUE
+      warning(paste0("Error en el lote ", i, " para '", endpoint, "': ", conditionMessage(item)), call. = FALSE)
+    } else {
+      has_errors <- TRUE
+      warning(paste0("Error desconocido o respuesta inesperada en el lote ", i, " para '", endpoint, "'. Clase del objeto: ", class(item)[1]), call. = FALSE)
+    }
   }
-
-  combined_results <- dplyr::bind_rows(final_results_list)
-  if (nrow(combined_results) == 0 && length(queries_list) > 0) {
-    warning(paste0("La consulta POST completa para '", endpoint, "' (", length(queries_list)," consultas originales en ", length(query_batches)," lotes) devolvi\u00f3 una lista vac\u00eda o no se pudieron procesar los resultados."), call. = FALSE)
+  combined_results <- dplyr::bind_rows(final_results_list_of_tibbles)
+  if (nrow(combined_results) == 0 && length(queries_list) > 0 && !has_errors) {
+    warning(paste0("La consulta POST completa para '", endpoint, "' (", length(queries_list)," consultas originales en ", length(query_batches)," lotes) devolvi\u00f3 una lista vac\u00eda o no se pudieron procesar los resultados, aunque no se reportaron errores directos en los lotes."), call. = FALSE)
+  } else if (nrow(combined_results) == 0 && length(queries_list) > 0 && has_errors) {
+    warning(paste0("La consulta POST completa para '", endpoint, "' (", length(queries_list)," consultas originales en ", length(query_batches)," lotes) no produjo resultados y se encontraron errores en algunos lotes."), call. = FALSE)
   }
   return(combined_results)
 }
@@ -650,55 +619,44 @@ post_direcciones_bulk <- function(queries_list) {
                      paste(invalid_params, collapse = ", "), ". ",
                      "Par\u00e1metros v\u00e1lidos son: ", paste(valid_params, collapse = ", "), "."))
     }
-    # Add specific per-query validation for 'direcciones' if needed (e.g. for 'max')
-    # GET /direcciones has max=10. POST might differ or use global batch limits.
   }
-
   endpoint <- "direcciones"
   check_internet()
-  
-  # Create batches. Assuming "max" is the parameter to sum for batch limits, if applicable.
-  query_batches <- create_query_batches(queries_list, 
-                                        param_name_for_sum = "max")
-
+  query_batches <- create_query_batches(queries_list, param_name_for_sum = "max")
   if (length(query_batches) == 0 && length(queries_list) > 0) {
       warning(paste0("No se pudieron crear lotes de consultas para '", endpoint, "', aunque la lista de consultas no estaba vac\u00eda."), call. = FALSE)
       return(dplyr::tibble())
   } else if (length(query_batches) == 0) {
       return(dplyr::tibble())
   }
-
-  all_batch_promises <- list()
+  all_batch_requests <- list()
   for (batch_idx in seq_along(query_batches)) {
     current_batch <- query_batches[[batch_idx]]
-    num_queries_in_current_batch <- length(current_batch)
-    response_promise <- execute_post_batch_promise(endpoint = endpoint, single_batch_queries_list = current_batch)
-    processed_data_promise <- promises::then(
-      response_promise,
-      onFulfilled = function(resp_obj) {
-        process_single_post_response(response_obj = resp_obj, endpoint = endpoint, num_queries_in_this_batch = num_queries_in_current_batch)
-      },
-      onRejected = function(err) {
-        stop(paste0("Error procesando el lote ", batch_idx, " para '", endpoint, "': ", err$message), call. = FALSE)
-      }
-    )
-    all_batch_promises <- append(all_batch_promises, list(processed_data_promise))
+    request_obj <- prepare_post_batch_request(endpoint = endpoint, single_batch_queries_list = current_batch)
+    all_batch_requests <- append(all_batch_requests, list(request_obj))
   }
-
-  final_results_list <- tryCatch({
-    promises::promise_wait(promises::promise_all(.list = all_batch_promises))
-  }, error = function(e) {
-    stop(paste0("Error durante la ejecuci\u00f3n de lotes paralelos para '", endpoint, "': ", e$message), call. = FALSE)
-  })
-
-  if (is.null(final_results_list)) {
-     warning(paste0("La consulta POST paralela para '", endpoint, "' fall\u00f3 o no devolvi\u00f3 resultados."), call. = FALSE)
-    return(dplyr::tibble())
+  responses_or_errors <- httr2::req_perform_parallel(all_batch_requests, on_error = "return")
+  final_results_list_of_tibbles <- list()
+  has_errors <- FALSE
+  for (i in seq_along(responses_or_errors)) {
+    item <- responses_or_errors[[i]]
+    num_queries_in_this_batch <- length(query_batches[[i]])
+    if (inherits(item, "httr2_response")) {
+      processed_tibble <- process_single_post_response(response_obj = item, endpoint = endpoint, num_queries_in_this_batch = num_queries_in_this_batch)
+      final_results_list_of_tibbles <- append(final_results_list_of_tibbles, list(processed_tibble))
+    } else if (inherits(item, "error")) {
+      has_errors <- TRUE
+      warning(paste0("Error en el lote ", i, " para '", endpoint, "': ", conditionMessage(item)), call. = FALSE)
+    } else {
+      has_errors <- TRUE
+      warning(paste0("Error desconocido o respuesta inesperada en el lote ", i, " para '", endpoint, "'. Clase del objeto: ", class(item)[1]), call. = FALSE)
+    }
   }
-
-  combined_results <- dplyr::bind_rows(final_results_list)
-  if (nrow(combined_results) == 0 && length(queries_list) > 0) {
-    warning(paste0("La consulta POST completa para '", endpoint, "' (", length(queries_list)," consultas originales en ", length(query_batches)," lotes) devolvi\u00f3 una lista vac\u00eda o no se pudieron procesar los resultados."), call. = FALSE)
+  combined_results <- dplyr::bind_rows(final_results_list_of_tibbles)
+  if (nrow(combined_results) == 0 && length(queries_list) > 0 && !has_errors) {
+    warning(paste0("La consulta POST completa para '", endpoint, "' (", length(queries_list)," consultas originales en ", length(query_batches)," lotes) devolvi\u00f3 una lista vac\u00eda o no se pudieron procesar los resultados, aunque no se reportaron errores directos en los lotes."), call. = FALSE)
+  } else if (nrow(combined_results) == 0 && length(queries_list) > 0 && has_errors) {
+    warning(paste0("La consulta POST completa para '", endpoint, "' (", length(queries_list)," consultas originales en ", length(query_batches)," lotes) no produjo resultados y se encontraron errores en algunos lotes."), call. = FALSE)
   }
   return(combined_results)
 }
@@ -785,12 +743,9 @@ post_localidades_bulk <- function(queries_list) {
                      paste(invalid_params, collapse = ", "), ". ",
                      "Par\u00e1metros v\u00e1lidos son: ", paste(valid_params, collapse = ", "), "."))
     }
-    # GET /localidades has max=2000. POST might differ or use global batch limits.
   }
-
   endpoint <- "localidades"
   check_internet()
-  
   query_batches <- create_query_batches(queries_list, param_name_for_sum = "max")
   if (length(query_batches) == 0 && length(queries_list) > 0) {
       warning(paste0("No se pudieron crear lotes de consultas para '", endpoint, "', aunque la lista de consultas no estaba vac\u00eda."), call. = FALSE)
@@ -798,38 +753,34 @@ post_localidades_bulk <- function(queries_list) {
   } else if (length(query_batches) == 0) {
       return(dplyr::tibble())
   }
-
-  all_batch_promises <- list()
+  all_batch_requests <- list()
   for (batch_idx in seq_along(query_batches)) {
     current_batch <- query_batches[[batch_idx]]
-    num_queries_in_current_batch <- length(current_batch)
-    response_promise <- execute_post_batch_promise(endpoint = endpoint, single_batch_queries_list = current_batch)
-    processed_data_promise <- promises::then(
-      response_promise,
-      onFulfilled = function(resp_obj) {
-        process_single_post_response(response_obj = resp_obj, endpoint = endpoint, num_queries_in_this_batch = num_queries_in_current_batch)
-      },
-      onRejected = function(err) {
-        stop(paste0("Error procesando el lote ", batch_idx, " para '", endpoint, "': ", err$message), call. = FALSE)
-      }
-    )
-    all_batch_promises <- append(all_batch_promises, list(processed_data_promise))
+    request_obj <- prepare_post_batch_request(endpoint = endpoint, single_batch_queries_list = current_batch)
+    all_batch_requests <- append(all_batch_requests, list(request_obj))
   }
-
-  final_results_list <- tryCatch({
-    promises::promise_wait(promises::promise_all(.list = all_batch_promises))
-  }, error = function(e) {
-    stop(paste0("Error durante la ejecuci\u00f3n de lotes paralelos para '", endpoint, "': ", e$message), call. = FALSE)
-  })
-
-  if (is.null(final_results_list)) {
-     warning(paste0("La consulta POST paralela para '", endpoint, "' fall\u00f3 o no devolvi\u00f3 resultados."), call. = FALSE)
-    return(dplyr::tibble())
+  responses_or_errors <- httr2::req_perform_parallel(all_batch_requests, on_error = "return")
+  final_results_list_of_tibbles <- list()
+  has_errors <- FALSE
+  for (i in seq_along(responses_or_errors)) {
+    item <- responses_or_errors[[i]]
+    num_queries_in_this_batch <- length(query_batches[[i]])
+    if (inherits(item, "httr2_response")) {
+      processed_tibble <- process_single_post_response(response_obj = item, endpoint = endpoint, num_queries_in_this_batch = num_queries_in_this_batch)
+      final_results_list_of_tibbles <- append(final_results_list_of_tibbles, list(processed_tibble))
+    } else if (inherits(item, "error")) {
+      has_errors <- TRUE
+      warning(paste0("Error en el lote ", i, " para '", endpoint, "': ", conditionMessage(item)), call. = FALSE)
+    } else {
+      has_errors <- TRUE
+      warning(paste0("Error desconocido o respuesta inesperada en el lote ", i, " para '", endpoint, "'. Clase del objeto: ", class(item)[1]), call. = FALSE)
+    }
   }
-
-  combined_results <- dplyr::bind_rows(final_results_list)
-  if (nrow(combined_results) == 0 && length(queries_list) > 0) {
-    warning(paste0("La consulta POST completa para '", endpoint, "' (", length(queries_list)," consultas originales en ", length(query_batches)," lotes) devolvi\u00f3 una lista vac\u00eda o no se pudieron procesar los resultados."), call. = FALSE)
+  combined_results <- dplyr::bind_rows(final_results_list_of_tibbles)
+  if (nrow(combined_results) == 0 && length(queries_list) > 0 && !has_errors) {
+    warning(paste0("La consulta POST completa para '", endpoint, "' (", length(queries_list)," consultas originales en ", length(query_batches)," lotes) devolvi\u00f3 una lista vac\u00eda o no se pudieron procesar los resultados, aunque no se reportaron errores directos en los lotes."), call. = FALSE)
+  } else if (nrow(combined_results) == 0 && length(queries_list) > 0 && has_errors) {
+    warning(paste0("La consulta POST completa para '", endpoint, "' (", length(queries_list)," consultas originales en ", length(query_batches)," lotes) no produjo resultados y se encontraron errores en algunos lotes."), call. = FALSE)
   }
   return(combined_results)
 }
@@ -915,12 +866,9 @@ post_municipios_bulk <- function(queries_list) {
                      paste(invalid_params, collapse = ", "), ". ",
                      "Par\u00e1metros v\u00e1lidos son: ", paste(valid_params, collapse = ", "), "."))
     }
-    # GET /municipios has max=2000. POST might differ or use global batch limits.
   }
-
   endpoint <- "municipios"
   check_internet()
-  
   query_batches <- create_query_batches(queries_list, param_name_for_sum = "max")
   if (length(query_batches) == 0 && length(queries_list) > 0) {
       warning(paste0("No se pudieron crear lotes de consultas para '", endpoint, "', aunque la lista de consultas no estaba vac\u00eda."), call. = FALSE)
@@ -928,38 +876,34 @@ post_municipios_bulk <- function(queries_list) {
   } else if (length(query_batches) == 0) {
       return(dplyr::tibble())
   }
-
-  all_batch_promises <- list()
+  all_batch_requests <- list()
   for (batch_idx in seq_along(query_batches)) {
     current_batch <- query_batches[[batch_idx]]
-    num_queries_in_current_batch <- length(current_batch)
-    response_promise <- execute_post_batch_promise(endpoint = endpoint, single_batch_queries_list = current_batch)
-    processed_data_promise <- promises::then(
-      response_promise,
-      onFulfilled = function(resp_obj) {
-        process_single_post_response(response_obj = resp_obj, endpoint = endpoint, num_queries_in_this_batch = num_queries_in_current_batch)
-      },
-      onRejected = function(err) {
-        stop(paste0("Error procesando el lote ", batch_idx, " para '", endpoint, "': ", err$message), call. = FALSE)
-      }
-    )
-    all_batch_promises <- append(all_batch_promises, list(processed_data_promise))
+    request_obj <- prepare_post_batch_request(endpoint = endpoint, single_batch_queries_list = current_batch)
+    all_batch_requests <- append(all_batch_requests, list(request_obj))
   }
-
-  final_results_list <- tryCatch({
-    promises::promise_wait(promises::promise_all(.list = all_batch_promises))
-  }, error = function(e) {
-    stop(paste0("Error durante la ejecuci\u00f3n de lotes paralelos para '", endpoint, "': ", e$message), call. = FALSE)
-  })
-
-  if (is.null(final_results_list)) {
-     warning(paste0("La consulta POST paralela para '", endpoint, "' fall\u00f3 o no devolvi\u00f3 resultados."), call. = FALSE)
-    return(dplyr::tibble())
+  responses_or_errors <- httr2::req_perform_parallel(all_batch_requests, on_error = "return")
+  final_results_list_of_tibbles <- list()
+  has_errors <- FALSE
+  for (i in seq_along(responses_or_errors)) {
+    item <- responses_or_errors[[i]]
+    num_queries_in_this_batch <- length(query_batches[[i]])
+    if (inherits(item, "httr2_response")) {
+      processed_tibble <- process_single_post_response(response_obj = item, endpoint = endpoint, num_queries_in_this_batch = num_queries_in_this_batch)
+      final_results_list_of_tibbles <- append(final_results_list_of_tibbles, list(processed_tibble))
+    } else if (inherits(item, "error")) {
+      has_errors <- TRUE
+      warning(paste0("Error en el lote ", i, " para '", endpoint, "': ", conditionMessage(item)), call. = FALSE)
+    } else {
+      has_errors <- TRUE
+      warning(paste0("Error desconocido o respuesta inesperada en el lote ", i, " para '", endpoint, "'. Clase del objeto: ", class(item)[1]), call. = FALSE)
+    }
   }
-
-  combined_results <- dplyr::bind_rows(final_results_list)
-  if (nrow(combined_results) == 0 && length(queries_list) > 0) {
-    warning(paste0("La consulta POST completa para '", endpoint, "' (", length(queries_list)," consultas originales en ", length(query_batches)," lotes) devolvi\u00f3 una lista vac\u00eda o no se pudieron procesar los resultados."), call. = FALSE)
+  combined_results <- dplyr::bind_rows(final_results_list_of_tibbles)
+  if (nrow(combined_results) == 0 && length(queries_list) > 0 && !has_errors) {
+    warning(paste0("La consulta POST completa para '", endpoint, "' (", length(queries_list)," consultas originales en ", length(query_batches)," lotes) devolvi\u00f3 una lista vac\u00eda o no se pudieron procesar los resultados, aunque no se reportaron errores directos en los lotes."), call. = FALSE)
+  } else if (nrow(combined_results) == 0 && length(queries_list) > 0 && has_errors) {
+    warning(paste0("La consulta POST completa para '", endpoint, "' (", length(queries_list)," consultas originales en ", length(query_batches)," lotes) no produjo resultados y se encontraron errores en algunos lotes."), call. = FALSE)
   }
   return(combined_results)
 }
@@ -1025,49 +969,29 @@ get_provincias <- function(id = NULL, nombre = NULL, interseccion = NULL, orden 
 #' print(resultados_provincias)
 #' }
 post_provincias_bulk <- function(queries_list) {
-  # Validaciones básicas para queries_list
-  if (!is.list(queries_list) || !all(sapply(queries_list, function(x) is.list(x) && length(x) > 0))) {
-    # Original check was length(x) > 0, which might be too strict if an empty query list `list()` is valid for a single query.
-    # Changing to just is.list(x) for now.
-    if (!all(sapply(queries_list, is.list))) {
-        stop("'queries_list' debe ser una lista de listas (cada elemento debe ser una lista representando una consulta).")
-    }
+  if (!is.list(queries_list) || !all(sapply(queries_list, is.list))) {
+    stop("'queries_list' debe ser una lista de listas (cada elemento debe ser una lista representando una consulta).")
   }
-
   if (length(queries_list) == 0) {
     warning("'queries_list' est\u00e1 vac\u00eda, no se realizar\u00e1 ninguna consulta.")
     return(dplyr::tibble())
   }
-
   valid_params <- c("id", "nombre", "interseccion", "orden", "aplanar", "campos", "max", "inicio", "exacto")
   for (i in seq_along(queries_list)) {
     query <- queries_list[[i]]
     if (!is.list(query)) {
       stop(paste0("Elemento ", i, " en 'queries_list' no es una lista. Cada consulta debe ser una lista."))
     }
-    # Check for empty query lists e.g. list(list(), list(nombre="Tucuman"))
-    # The API might reject an empty query object {}. Assume query lists should have named parameters.
-    if (length(query) == 0 && !is.null(names(query))) { 
-        # allow empty named list e.g. list(max=NULL) is effectively length 0 for params sent if NULLs are dropped
-        # but an actual `list()` as a query might be an issue.
-        # The original check `length(x) > 0` for `queries_list` elements might have intended this.
-        # For now, let it pass, API will error if it's an issue.
-    }
     param_names <- names(query)
     invalid_params <- setdiff(param_names, valid_params)
     if (length(invalid_params) > 0) {
-      # Original code had stop("La consulta contiene parametros invalidos") which is too abrupt for a warning-level issue.
-      # Changed to warning to match other functions.
       warning(paste0("Consulta ", i, " en 'queries_list' para 'provincias' contiene par\u00e1metro(s) no reconocido(s): ",
                      paste(invalid_params, collapse = ", "), ". ",
                      "Par\u00e1metros v\u00e1lidos son: ", paste(valid_params, collapse = ", "), "."))
     }
-     # GET /provincias has max=24. POST might differ or use global batch limits.
   }
-
   endpoint <- "provincias"
   check_internet()
-  
   query_batches <- create_query_batches(queries_list, param_name_for_sum = "max")
   if (length(query_batches) == 0 && length(queries_list) > 0) {
       warning(paste0("No se pudieron crear lotes de consultas para '", endpoint, "', aunque la lista de consultas no estaba vac\u00eda."), call. = FALSE)
@@ -1075,38 +999,34 @@ post_provincias_bulk <- function(queries_list) {
   } else if (length(query_batches) == 0) {
       return(dplyr::tibble())
   }
-
-  all_batch_promises <- list()
+  all_batch_requests <- list()
   for (batch_idx in seq_along(query_batches)) {
     current_batch <- query_batches[[batch_idx]]
-    num_queries_in_current_batch <- length(current_batch)
-    response_promise <- execute_post_batch_promise(endpoint = endpoint, single_batch_queries_list = current_batch)
-    processed_data_promise <- promises::then(
-      response_promise,
-      onFulfilled = function(resp_obj) {
-        process_single_post_response(response_obj = resp_obj, endpoint = endpoint, num_queries_in_this_batch = num_queries_in_current_batch)
-      },
-      onRejected = function(err) {
-        stop(paste0("Error procesando el lote ", batch_idx, " para '", endpoint, "': ", err$message), call. = FALSE)
-      }
-    )
-    all_batch_promises <- append(all_batch_promises, list(processed_data_promise))
+    request_obj <- prepare_post_batch_request(endpoint = endpoint, single_batch_queries_list = current_batch)
+    all_batch_requests <- append(all_batch_requests, list(request_obj))
   }
-
-  final_results_list <- tryCatch({
-    promises::promise_wait(promises::promise_all(.list = all_batch_promises))
-  }, error = function(e) {
-    stop(paste0("Error durante la ejecuci\u00f3n de lotes paralelos para '", endpoint, "': ", e$message), call. = FALSE)
-  })
-
-  if (is.null(final_results_list)) {
-     warning(paste0("La consulta POST paralela para '", endpoint, "' fall\u00f3 o no devolvi\u00f3 resultados."), call. = FALSE)
-    return(dplyr::tibble())
+  responses_or_errors <- httr2::req_perform_parallel(all_batch_requests, on_error = "return")
+  final_results_list_of_tibbles <- list()
+  has_errors <- FALSE
+  for (i in seq_along(responses_or_errors)) {
+    item <- responses_or_errors[[i]]
+    num_queries_in_this_batch <- length(query_batches[[i]])
+    if (inherits(item, "httr2_response")) {
+      processed_tibble <- process_single_post_response(response_obj = item, endpoint = endpoint, num_queries_in_this_batch = num_queries_in_this_batch)
+      final_results_list_of_tibbles <- append(final_results_list_of_tibbles, list(processed_tibble))
+    } else if (inherits(item, "error")) {
+      has_errors <- TRUE
+      warning(paste0("Error en el lote ", i, " para '", endpoint, "': ", conditionMessage(item)), call. = FALSE)
+    } else {
+      has_errors <- TRUE
+      warning(paste0("Error desconocido o respuesta inesperada en el lote ", i, " para '", endpoint, "'. Clase del objeto: ", class(item)[1]), call. = FALSE)
+    }
   }
-
-  combined_results <- dplyr::bind_rows(final_results_list)
-  if (nrow(combined_results) == 0 && length(queries_list) > 0) {
-    warning(paste0("La consulta POST completa para '", endpoint, "' (", length(queries_list)," consultas originales en ", length(query_batches)," lotes) devolvi\u00f3 una lista vac\u00eda o no se pudieron procesar los resultados."), call. = FALSE)
+  combined_results <- dplyr::bind_rows(final_results_list_of_tibbles)
+  if (nrow(combined_results) == 0 && length(queries_list) > 0 && !has_errors) {
+    warning(paste0("La consulta POST completa para '", endpoint, "' (", length(queries_list)," consultas originales en ", length(query_batches)," lotes) devolvi\u00f3 una lista vac\u00eda o no se pudieron procesar los resultados, aunque no se reportaron errores directos en los lotes."), call. = FALSE)
+  } else if (nrow(combined_results) == 0 && length(queries_list) > 0 && has_errors) {
+    warning(paste0("La consulta POST completa para '", endpoint, "' (", length(queries_list)," consultas originales en ", length(query_batches)," lotes) no produjo resultados y se encontraron errores en algunos lotes."), call. = FALSE)
   }
   return(combined_results)
 }
@@ -1172,7 +1092,7 @@ post_ubicacion_bulk <- function(queries_list) {
     return(dplyr::tibble())
   }
 
-  valid_params <- c("lat", "lon", "aplanar", "campos") # No 'max' or 'inicio' for ubicacion
+  valid_params <- c("lat", "lon", "aplanar", "campos")
   for (i in seq_along(queries_list)) {
     query <- queries_list[[i]]
     if (!is.list(query)) {
@@ -1204,37 +1124,37 @@ post_ubicacion_bulk <- function(queries_list) {
       return(dplyr::tibble())
   }
 
-  all_batch_promises <- list()
+  all_batch_requests <- list()
   for (batch_idx in seq_along(query_batches)) {
     current_batch <- query_batches[[batch_idx]]
-    num_queries_in_current_batch <- length(current_batch)
-    response_promise <- execute_post_batch_promise(endpoint = endpoint, single_batch_queries_list = current_batch)
-    processed_data_promise <- promises::then(
-      response_promise,
-      onFulfilled = function(resp_obj) {
-        process_single_post_response(response_obj = resp_obj, endpoint = endpoint, num_queries_in_this_batch = num_queries_in_current_batch)
-      },
-      onRejected = function(err) {
-        stop(paste0("Error procesando el lote ", batch_idx, " para '", endpoint, "': ", err$message), call. = FALSE)
-      }
-    )
-    all_batch_promises <- append(all_batch_promises, list(processed_data_promise))
+    request_obj <- prepare_post_batch_request(endpoint = endpoint, single_batch_queries_list = current_batch)
+    all_batch_requests <- append(all_batch_requests, list(request_obj))
   }
 
-  final_results_list <- tryCatch({
-    promises::promise_wait(promises::promise_all(.list = all_batch_promises))
-  }, error = function(e) {
-    stop(paste0("Error durante la ejecuci\u00f3n de lotes paralelos para '", endpoint, "': ", e$message), call. = FALSE)
-  })
+  responses_or_errors <- httr2::req_perform_parallel(all_batch_requests, on_error = "return")
 
-  if (is.null(final_results_list)) {
-     warning(paste0("La consulta POST paralela para '", endpoint, "' fall\u00f3 o no devolvi\u00f3 resultados."), call. = FALSE)
-    return(dplyr::tibble())
+  final_results_list_of_tibbles <- list()
+  has_errors <- FALSE
+  for (i in seq_along(responses_or_errors)) {
+    item <- responses_or_errors[[i]]
+    num_queries_in_this_batch <- length(query_batches[[i]])
+    if (inherits(item, "httr2_response")) {
+      processed_tibble <- process_single_post_response(response_obj = item, endpoint = endpoint, num_queries_in_this_batch = num_queries_in_this_batch)
+      final_results_list_of_tibbles <- append(final_results_list_of_tibbles, list(processed_tibble))
+    } else if (inherits(item, "error")) {
+      has_errors <- TRUE
+      warning(paste0("Error en el lote ", i, " para '", endpoint, "': ", conditionMessage(item)), call. = FALSE)
+    } else {
+      has_errors <- TRUE
+      warning(paste0("Error desconocido o respuesta inesperada en el lote ", i, " para '", endpoint, "'. Clase del objeto: ", class(item)[1]), call. = FALSE)
+    }
   }
-
-  combined_results <- dplyr::bind_rows(final_results_list)
-  if (nrow(combined_results) == 0 && length(queries_list) > 0) {
-    warning(paste0("La consulta POST completa para '", endpoint, "' (", length(queries_list)," consultas originales en ", length(query_batches)," lotes) devolvi\u00f3 una lista vac\u00eda o no se pudieron procesar los resultados."), call. = FALSE)
+  
+  combined_results <- dplyr::bind_rows(final_results_list_of_tibbles)
+  if (nrow(combined_results) == 0 && length(queries_list) > 0 && !has_errors) {
+    warning(paste0("La consulta POST completa para '", endpoint, "' (", length(queries_list)," consultas originales en ", length(query_batches)," lotes) devolvi\u00f3 una lista vac\u00eda o no se pudieron procesar los resultados, aunque no se reportaron errores directos en los lotes."), call. = FALSE)
+  } else if (nrow(combined_results) == 0 && length(queries_list) > 0 && has_errors) {
+    warning(paste0("La consulta POST completa para '", endpoint, "' (", length(queries_list)," consultas originales en ", length(query_batches)," lotes) no produjo resultados y se encontraron errores en algunos lotes."), call. = FALSE)
   }
   return(combined_results)
 }
@@ -1334,37 +1254,37 @@ post_localidades_censales_bulk <- function(queries_list) {
       return(dplyr::tibble())
   }
 
-  all_batch_promises <- list()
+  all_batch_requests <- list()
   for (batch_idx in seq_along(query_batches)) {
     current_batch <- query_batches[[batch_idx]]
-    num_queries_in_current_batch <- length(current_batch)
-    response_promise <- execute_post_batch_promise(endpoint = endpoint, single_batch_queries_list = current_batch)
-    processed_data_promise <- promises::then(
-      response_promise,
-      onFulfilled = function(resp_obj) {
-        process_single_post_response(response_obj = resp_obj, endpoint = endpoint, num_queries_in_this_batch = num_queries_in_current_batch)
-      },
-      onRejected = function(err) {
-        stop(paste0("Error procesando el lote ", batch_idx, " para '", endpoint, "': ", err$message), call. = FALSE)
-      }
-    )
-    all_batch_promises <- append(all_batch_promises, list(processed_data_promise))
+    request_obj <- prepare_post_batch_request(endpoint = endpoint, single_batch_queries_list = current_batch)
+    all_batch_requests <- append(all_batch_requests, list(request_obj))
   }
 
-  final_results_list <- tryCatch({
-    promises::promise_wait(promises::promise_all(.list = all_batch_promises))
-  }, error = function(e) {
-    stop(paste0("Error durante la ejecuci\u00f3n de lotes paralelos para '", endpoint, "': ", e$message), call. = FALSE)
-  })
+  responses_or_errors <- httr2::req_perform_parallel(all_batch_requests, on_error = "return")
 
-  if (is.null(final_results_list)) {
-     warning(paste0("La consulta POST paralela para '", endpoint, "' fall\u00f3 o no devolvi\u00f3 resultados."), call. = FALSE)
-    return(dplyr::tibble())
+  final_results_list_of_tibbles <- list()
+  has_errors <- FALSE
+  for (i in seq_along(responses_or_errors)) {
+    item <- responses_or_errors[[i]]
+    num_queries_in_this_batch <- length(query_batches[[i]])
+    if (inherits(item, "httr2_response")) {
+      processed_tibble <- process_single_post_response(response_obj = item, endpoint = endpoint, num_queries_in_this_batch = num_queries_in_this_batch)
+      final_results_list_of_tibbles <- append(final_results_list_of_tibbles, list(processed_tibble))
+    } else if (inherits(item, "error")) {
+      has_errors <- TRUE
+      warning(paste0("Error en el lote ", i, " para '", endpoint, "': ", conditionMessage(item)), call. = FALSE)
+    } else {
+      has_errors <- TRUE
+      warning(paste0("Error desconocido o respuesta inesperada en el lote ", i, " para '", endpoint, "'. Clase del objeto: ", class(item)[1]), call. = FALSE)
+    }
   }
 
-  combined_results <- dplyr::bind_rows(final_results_list)
-  if (nrow(combined_results) == 0 && length(queries_list) > 0) {
-    warning(paste0("La consulta POST completa para '", endpoint, "' (", length(queries_list)," consultas originales en ", length(query_batches)," lotes) devolvi\u00f3 una lista vac\u00eda o no se pudieron procesar los resultados."), call. = FALSE)
+  combined_results <- dplyr::bind_rows(final_results_list_of_tibbles)
+  if (nrow(combined_results) == 0 && length(queries_list) > 0 && !has_errors) {
+    warning(paste0("La consulta POST completa para '", endpoint, "' (", length(queries_list)," consultas originales en ", length(query_batches)," lotes) devolvi\u00f3 una lista vac\u00eda o no se pudieron procesar los resultados, aunque no se reportaron errores directos en los lotes."), call. = FALSE)
+  } else if (nrow(combined_results) == 0 && length(queries_list) > 0 && has_errors) {
+    warning(paste0("La consulta POST completa para '", endpoint, "' (", length(queries_list)," consultas originales en ", length(query_batches)," lotes) no produjo resultados y se encontraron errores en algunos lotes."), call. = FALSE)
   }
   return(combined_results)
 }
@@ -1465,38 +1385,58 @@ post_asentamientos_bulk <- function(queries_list) {
       return(dplyr::tibble())
   }
 
-  all_batch_promises <- list()
+  # List to store httr2_request objects for each batch
+  all_batch_requests <- list()
   for (batch_idx in seq_along(query_batches)) {
     current_batch <- query_batches[[batch_idx]]
-    num_queries_in_current_batch <- length(current_batch)
-    response_promise <- execute_post_batch_promise(endpoint = endpoint, single_batch_queries_list = current_batch)
-    processed_data_promise <- promises::then(
-      response_promise,
-      onFulfilled = function(resp_obj) {
-        process_single_post_response(response_obj = resp_obj, endpoint = endpoint, num_queries_in_this_batch = num_queries_in_current_batch)
-      },
-      onRejected = function(err) {
-        stop(paste0("Error procesando el lote ", batch_idx, " para '", endpoint, "': ", err$message), call. = FALSE)
-      }
-    )
-    all_batch_promises <- append(all_batch_promises, list(processed_data_promise))
+    # Prepare the request object for the current batch
+    request_obj <- prepare_post_batch_request(endpoint = endpoint, 
+                                              single_batch_queries_list = current_batch)
+    all_batch_requests <- append(all_batch_requests, list(request_obj))
   }
 
-  final_results_list <- tryCatch({
-    promises::promise_wait(promises::promise_all(.list = all_batch_promises))
-  }, error = function(e) {
-    stop(paste0("Error durante la ejecuci\u00f3n de lotes paralelos para '", endpoint, "': ", e$message), call. = FALSE)
-  })
+  # Perform all batch requests in parallel
+  # on_error = "return" ensures that errors are returned as objects in the list
+  # instead of stopping the whole operation.
+  responses_or_errors <- httr2::req_perform_parallel(all_batch_requests, on_error = "return")
 
-  if (is.null(final_results_list)) {
-     warning(paste0("La consulta POST paralela para '", endpoint, "' fall\u00f3 o no devolvi\u00f3 resultados."), call. = FALSE)
-    return(dplyr::tibble())
+  # Process results
+  final_results_list_of_tibbles <- list()
+  has_errors <- FALSE
+  for (i in seq_along(responses_or_errors)) {
+    item <- responses_or_errors[[i]]
+    num_queries_in_this_batch <- length(query_batches[[i]])
+
+    if (inherits(item, "httr2_response")) {
+      # If req_error was set up correctly, non-200 status should have been converted to an R error object by httr2
+      # So, if we get an httr2_response, it *should* be a successful one (status 200)
+      # However, an extra check for status doesn't hurt, or rely on req_error having done its job.
+      # For now, assume if it's an httr2_response, it's good to process based on req_error setup.
+      processed_tibble <- process_single_post_response(response_obj = item, 
+                                                       endpoint = endpoint, 
+                                                       num_queries_in_this_batch = num_queries_in_this_batch)
+      final_results_list_of_tibbles <- append(final_results_list_of_tibbles, list(processed_tibble))
+    } else if (inherits(item, "error")) {
+      # This is an error object, possibly from httr2_error_handler via req_error,
+      # or a lower-level error from httr2/curl during the request that req_perform_parallel caught.
+      has_errors <- TRUE
+      warning(paste0("Error en el lote ", i, " para '", endpoint, "': ", conditionMessage(item)), call. = FALSE)
+    } else {
+      # Unexpected item type
+      has_errors <- TRUE
+      warning(paste0("Error desconocido o respuesta inesperada en el lote ", i, " para '", endpoint, "'. Clase del objeto: ", class(item)[1]), call. = FALSE)
+    }
   }
 
-  combined_results <- dplyr::bind_rows(final_results_list)
-  if (nrow(combined_results) == 0 && length(queries_list) > 0) {
-    warning(paste0("La consulta POST completa para '", endpoint, "' (", length(queries_list)," consultas originales en ", length(query_batches)," lotes) devolvi\u00f3 una lista vac\u00eda o no se pudieron procesar los resultados."), call. = FALSE)
+  # Combine all tibbles from successfully processed batches
+  combined_results <- dplyr::bind_rows(final_results_list_of_tibbles)
+
+  if (nrow(combined_results) == 0 && length(queries_list) > 0 && !has_errors) {
+    warning(paste0("La consulta POST completa para '", endpoint, "' (", length(queries_list)," consultas originales en ", length(query_batches)," lotes) devolvi\u00f3 una lista vac\u00eda o no se pudieron procesar los resultados, aunque no se reportaron errores directos en los lotes."), call. = FALSE)
+  } else if (nrow(combined_results) == 0 && length(queries_list) > 0 && has_errors) {
+    warning(paste0("La consulta POST completa para '", endpoint, "' (", length(queries_list)," consultas originales en ", length(query_batches)," lotes) no produjo resultados y se encontraron errores en algunos lotes."), call. = FALSE)
   }
+  
   return(combined_results)
 }
 
@@ -1562,10 +1502,8 @@ get_geodata_dump <- function(entidad, formato, path_to_save = NULL) {
     req <- req |> httr2::req_auth_bearer_token(token)
   }
 
-  promise <- httr2::req_perform_promise(req)
-  response <- promises::promise_wait(promise)
-
-  # check_status(response) # Removed, handled by req_error
+  # Use req_perform() for synchronous behavior
+  response <- httr2::req_perform(req)
 
   if (!is.null(path_to_save)) {
     assertthat::assert_that(is.character(path_to_save), length(path_to_save) == 1,

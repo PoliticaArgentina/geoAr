@@ -1,6 +1,6 @@
 Package: geoAr
 Title: Argentina's Spatial Data Toolbox
-Version: 1.1.0
+Version: 1.2.0
 Authors@R: 
    c( person(given = "Juan Pablo",
            family = "Ruiz Nicolini",
@@ -34,7 +34,8 @@ Depends:
 Imports: 
     dplyr,
     sf,
-    httr,
+    httr2 (>= 1.0.0),
+    promises (>= 1.2.0),
     assertthat,
     attempt,
     tidyr,
