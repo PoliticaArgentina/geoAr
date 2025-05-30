@@ -1,7 +1,6 @@
 url: https://politicaargentina.github.io/geoAr/
 template:
-  params:
-    bootswatch: cerulean
+  bootstrap: 5
 home:
   strip_header: true
 authors:
@@ -31,6 +30,16 @@ reference:
   - 'get_asentamientos'
   - 'get_localidades_censales'
   - 'normalizar_direccion'
+  - 'get_geodata_dump'
+  - 'post_asentamientos_bulk'
+  - 'post_calles_bulk'
+  - 'post_departamentos_bulk'
+  - 'post_direcciones_bulk'
+  - 'post_localidades_bulk'
+  - 'post_localidades_censales_bulk'
+  - 'post_municipios_bulk'
+  - 'post_provincias_bulk'
+  - 'post_ubicacion_bulk'
 - title: Grids
   desc: Functions to work with '{geofacet}' ('ggplot2' facet grids as maps)
   contents:
