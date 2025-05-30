@@ -46,6 +46,6 @@ Imports:
     leaflet, 
     jsonlite, 
     purrr
-URL: https://github.com/PoliticaArgentina/geoAr
+URL: https://politicaargentina.github.io/geoAr, https://github.com/PoliticaArgentina/geoAr
 BugReports: https://github.com/PoliticaArgentina/geoAr/issues
 VignetteBuilder: knitr
