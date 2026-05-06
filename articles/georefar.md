@@ -1,0 +1,158 @@
+# geoAr & georeaf-ar
+
+Dice la [documentación
+oficial](https://georef-ar-api.readthedocs.io/es/latest/) de la **API
+del Servicio de Normalización de Datos Geográficos de la Argentina**
+(`georef-ar`):
+
+> Permite normalizar y codificar los nombres de unidades territoriales
+> de la Argentina (provincias, departamentos, municipios y localidades)
+> y de sus calles, así como ubicar coordenadas dentro de ellas.
+
+> En la [Guía para la identificación y uso de entidades
+> interoperables](https://datosgobar.github.io/paquete-apertura-datos/guia-interoperables/)
+> se explica cómo funcionan las [unidades territoriales internas de la
+> Argentina](https://datosgobar.github.io/paquete-apertura-datos/guia-interoperables/#divisiones-o-unidades-territoriales-internas)
+> y la relación entre ellas.
+
+## Ejemplos mínimos de uso
+
+#### NORMALIZAR (con `R`)
+
+¿Cómo normalizar? Tomemos como ejemplo el siguiente listado de nombres
+de provincias *crudo*:
+
+``` r
+
+library(geoAr) # Argentina's Spatial Data Toolbox, CRAN v0.1.4.2.1
+library(dplyr) # A Grammar of Data Manipulation, CRAN v1.1.0
+```
+
+``` r
+
+
+normalizar_provincia <- tibble::tribble(
+  ~provincia,
+  "S. CRUZ",
+  "Santiago",
+  "TUCUMAN",
+  "Sgo. del Estero",
+  "mendoza",
+  "CABA"
+)
+```
+
+Veamos que sucede cuando pedimos a la API nos devuelva los datos de uno
+de los distritos de ese listado (CABA, el sexto elemento):
+
+``` r
+
+  geoAr::get_provincias(nombre = normalizar_provincia$provincia[6], max = 1)
+#> # A tibble: 1 × 4
+#>   centroide_lat centroide_lon id    nombre                         
+#>           <dbl>         <dbl> <chr> <chr>                          
+#> 1         -34.6         -58.4 02    Ciudad Autónoma de Buenos Aires
+```
+
+La función `get_provincia` devuelve el nombre del distrito, el `id` y
+las coordenadas de latitud y longitud del centroide.
+
+Podemos generar una función como la que sigue para luego iterar la
+consulta para todo el listado:
+
+``` r
+
+
+normalizar <- function(base){
+
+  tmp <- get_provincias(nombre = base, max = 1)
+
+  tmp$nombre
+}
+```
+
+Tomamos el `data.frame` original y generamos una nueva columna
+(`mutate`) dentro de la cual iteramos. Con ayuda de `map_chr` del
+paquete `purrr` pasamos la función antes creada al vector de nombres de
+provincias de nuestra base `normalizar_provincia`.
+
+``` r
+
+
+(base_normalizada <- normalizar_provincia %>%
+  dplyr::mutate(normalizada = purrr::map_chr(.x = provincia,
+                                      .f = ~ normalizar(base = .x)
+                                      )
+         ))
+#> # A tibble: 6 × 2
+#>   provincia       normalizada                    
+#>   <chr>           <chr>                          
+#> 1 S. CRUZ         Santa Cruz                     
+#> 2 Santiago        Santiago del Estero            
+#> 3 TUCUMAN         Tucumán                        
+#> 4 Sgo. del Estero Santiago del Estero            
+#> 5 mendoza         Mendoza                        
+#> 6 CABA            Ciudad Autónoma de Buenos Aires
+```
+
+### ENRIQUECER DATOS
+
+Supongamos ahora que tenemos las coordenadas de lo que nos dicen es la
+ubicación del estadio del mejor equipo de fútbol del mundo, pero solo
+tenemos esa información:
+
+``` r
+
+enriquecer_coordenadas <- tibble::tribble(
+  ~latitud, ~longitud,
+  -26.8129225,-65.1998249
+)
+
+leaflet::leaflet() %>%
+  leaflet::addCircles(lng = enriquecer_coordenadas$longitud,
+                      lat = enriquecer_coordenadas$latitud) %>%
+  geoAr::addArgTiles()
+#> Error in s$close(): attempt to apply non-function
+```
+
+Con `get_ubicacion` podemos agregarle información a nuestros datos de
+entrada:
+
+``` r
+
+
+geoAr::get_ubicacion(lat = enriquecer_coordenadas$latitud,
+                     lon = enriquecer_coordenadas$longitud)
+#> # A tibble: 1 × 8
+#>   departamento_id departamento_nombre   lat   lon municipio_id municipio_nombre     provincia_id provincia_nombre
+#>   <chr>           <chr>               <dbl> <dbl> <chr>        <chr>                <chr>        <chr>           
+#> 1 90084           Capital             -26.8 -65.2 900014       San Miguel de Tucum… 90           Tucumán
+```
+
+### GENERAR EL TOKEN
+
+Los usuarios de organismos de la Administración Pública Nacional de
+Argentina pueden pedir un token para incrementar su cuota de uso de la
+API de Georef (ver
+<https://datosgobar.github.io/georef-ar-api/jwt-token/>).
+
+Una vez que recibimos el secret y el key de la API de Georef, debemos
+generar el token y guardarlo en el Renviron. Las funciones de `geoAr`
+que consultan a la API de Georef van a buscar si existe el token en
+nuestro Renviron y van usarlo para realizar las consultas a la API.
+
+Para generar el token a partir del secret y el key se puede usar el
+paquete `jose`
+
+    key <- "codigokey"
+    secreto <- "codigosecreto"
+
+    token <- jose::jwt_encode_hmac(claim = jose::jwt_claim(iss = key),
+                                   secret = secreto)
+
+    print(token)
+
+El token generado debe ser guardado en el .Renviron con el siguiente
+formato:
+
+    GEOREFAR_TOKEN = "Xkxka1011skzlkz20201"
