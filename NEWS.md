@@ -1,3 +1,9 @@
+# geoAr 1.2.1
+
+## Fix bug
+Added lang = es,en to DESCRITPION file to solve Nu HTML checker problem as requested by CRAN Team
+
+
 # geoAr 1.2.0
 
 ## Major Refactoring & Performance Improvements

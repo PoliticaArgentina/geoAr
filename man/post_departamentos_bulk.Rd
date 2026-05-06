@@ -21,7 +21,7 @@ Realiza la consulta POST al endpoint /departamentos de georef-ar-api.
 \examples{
 \dontrun{
 consultas_deptos <- list(
-  list(provincia = "22", nombre = "Ledesma"), 
+  list(provincia = "22", nombre = "Ledesma"),
   list(id = "14028")
 )
 resultados_deptos <- post_departamentos_bulk(queries_list = consultas_deptos)

@@ -29,7 +29,7 @@ Dependiendo de 'path_to_save' y 'formato':
 }
 \description{
 Permite descargar listados completos de entidades geográficas en diversos formatos.
-Accede al endpoint /{filename} de la georef-ar-api.
+Accede al endpoint de la georef-ar-api.
 Si existe GEOREFAR_TOKEN en el Renviron lo usará para hacer la consulta (aunque generalmente no es necesario para estos endpoints públicos).
 }
 \examples{

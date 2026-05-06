@@ -1,3 +1,22 @@
+## Version 1.2.1
+
+### Test environments
+* local Windows 11 install, R 4.5.0
+* ubuntu 22.04 (on r-hub), R 4.4.0
+* win-builder (devel and release)
+
+### R CMD check results
+
+0 errors | 0 warnings | 0 notes
+
+### Submission summary
+This is a patch release to address the accessibility issue reported by the CRAN Team regarding the HTML manual language specification.
+
+* Added 'Language: es' to DESCRIPTION to ensure the HTML 'lang' attribute is correctly set to Spanish.
+* Updated 'R' dependency to (>= 4.1.0) due to the use of native pipe syntax (|>) in 'georefar.R', as detected during R CMD check.
+* Updated 'RoxygenNote' to 7.3.2.
+
+
 ## Version 1.0.0 (Third submission attempt)
 
 Checked and fixed all possible invalid URLs in vignettes and in README. All working properly for me. 

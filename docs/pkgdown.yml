@@ -1,12 +1,11 @@
-pandoc: 2.19.2
-pkgdown: 1.6.1
+pandoc: 3.1.1
+pkgdown: 2.1.2
 pkgdown_sha: ~
 articles:
   geoAr_geofacet: geoAr_geofacet.html
   geoAr_leaflet: geoAr_leaflet.html
   georefar: georefar.html
-last_built: 2023-07-04T21:07Z
+last_built: 2026-05-06T18:35Z
 urls:
-  reference: https://politicaargentina.github.io/geoAr//reference
-  article: https://politicaargentina.github.io/geoAr//articles
-
+  reference: https://politicaargentina.github.io/geoAr/reference
+  article: https://politicaargentina.github.io/geoAr/articles

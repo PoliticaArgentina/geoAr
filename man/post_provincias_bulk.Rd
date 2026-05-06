@@ -23,7 +23,7 @@ Si existe GEOREFAR_TOKEN en el Renviron lo usará para hacer la consulta.
 \examples{
 \dontrun{
 consultitas <- list(
-  list(nombre = "santiago del estero"), 
+  list(nombre = "santiago del estero"),
   list(id = "82", campos = "id,nombre,centroide.lat,centroide.lon"),
   list(nombre = "tierra del fuego", campos = "completo")
 )

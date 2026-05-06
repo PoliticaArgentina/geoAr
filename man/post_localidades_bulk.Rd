@@ -21,7 +21,7 @@ Realiza la consulta POST al endpoint /localidades de georef-ar-api.
 \examples{
 \dontrun{
 consultas_loc <- list(
-  list(provincia = "Tucuman", departamento = "Capital"), 
+  list(provincia = "Tucuman", departamento = "Capital"),
   list(id = "22056140000")
 )
 resultados_loc <- post_localidades_bulk(queries_list = consultas_loc)

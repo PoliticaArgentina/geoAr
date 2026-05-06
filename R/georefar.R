@@ -74,7 +74,7 @@ create_query_batches <- function(all_queries,
 
   for (query_idx in seq_along(all_queries)) {
     query <- all_queries[[query_idx]]
-    
+
     query_param_val <- 0
     # Calculate the value of the parameter to be summed (e.g., 'max') for the current query
     if (!is.null(param_name_for_sum) && !is.null(query[[param_name_for_sum]])) {
@@ -86,12 +86,12 @@ create_query_batches <- function(all_queries,
 
     # Determine if this query can be added to the current batch
     can_add_to_current_batch <- TRUE
-    
+
     # Check query count limit
     if ((current_query_count_in_batch + 1) > max_queries_per_batch) {
       can_add_to_current_batch <- FALSE
     }
-    
+
     # Check sum of parameter limit (if applicable)
     if (can_add_to_current_batch && !is.null(max_sum_of_a_param) && !is.null(param_name_for_sum)) {
       if ((current_sum_val_in_batch + query_param_val) > max_sum_of_a_param && query_param_val > 0) {
@@ -109,7 +109,7 @@ create_query_batches <- function(all_queries,
       current_query_count_in_batch <- 0
       current_sum_val_in_batch <- 0
     }
-    
+
     # Add query to current batch (which might be new or the existing one)
     current_batch_queries <- append(current_batch_queries, list(query))
     current_query_count_in_batch <- current_query_count_in_batch + 1
@@ -122,7 +122,7 @@ create_query_batches <- function(all_queries,
   if (length(current_batch_queries) > 0) {
     batches <- append(batches, list(current_batch_queries))
   }
-  
+
   return(batches)
 }
 
@@ -141,11 +141,11 @@ prepare_post_batch_request <- function(endpoint, single_batch_queries_list) {
     # which req_perform_parallel(on_error="return") will then return as that error object.
     # The httr2_error_handler provides a formatted message for such errors.
     httr2::req_error(is_error = ~ httr2::resp_status(.x) != 200, body = httr2_error_handler)
-    
+
   if (!is.null(token) && token != "") {
     req <- req |> httr2::req_auth_bearer_token(token)
   }
-  
+
   return(req) # Return the request object, not a promise
 }
 
@@ -163,19 +163,19 @@ process_single_post_response <- function(response_obj, endpoint, num_queries_in_
 
   # The actual data items are expected to be in results_list_from_api[[endpoint]]
   actual_data_items_list <- lapply(results_list_from_api, function(x) x[[endpoint]])
-  
+
   if (is.null(actual_data_items_list)) {
     warning(paste0("Expected data field '", endpoint, "' not found or is NULL within the 'resultados' field of the bulk API response. Available keys in 'resultados': ", paste(names(results_list_from_api), collapse=", ")), call. = FALSE)
     return(dplyr::tibble())
   }
-  
+
   if (!is.list(actual_data_items_list)) {
       warning(paste0("Data for endpoint '", endpoint, "' within 'resultados' is not a list as expected. Type: ", class(actual_data_items_list)), call. = FALSE)
       return(dplyr::tibble())
   }
- 
+
   processed_results <- purrr::map_dfr(actual_data_items_list, function(data_items_for_one_original_query) {
-    
+
 
     if (is.null(data_items_for_one_original_query)) {
       return(dplyr::tibble())
@@ -186,7 +186,7 @@ process_single_post_response <- function(response_obj, endpoint, num_queries_in_
       if (length(data_items_for_one_original_query) == 0) {
         return(dplyr::tibble())
       }
-      
+
       tryCatch({
         # Ensure that elements being bound are suitable for bind_rows (e.g., named lists or data.frames)
         # If data_items_for_one_original_query is a list of atomic vectors or unnamed lists, this might fail.
@@ -194,10 +194,10 @@ process_single_post_response <- function(response_obj, endpoint, num_queries_in_
         data_items_for_one_original_query <- replace_null_with_na(data_items_for_one_original_query)
 
         return(dplyr::bind_rows(lapply(data_items_for_one_original_query, as.data.frame)))
-        
+
       }, error = function(e) {
         warning(paste0("Failed to bind rows for an item in '", endpoint, "' results. Item class: ", class(data_items_for_one_original_query), ". Error: ", e$message), call. = FALSE)
-        return(dplyr::tibble()) 
+        return(dplyr::tibble())
       })
     } else {
       warning(paste0("Unexpected data type ('", class(data_items_for_one_original_query), "') for an item in '", endpoint, "' results. Skipping this item."), call. = FALSE)
@@ -210,12 +210,12 @@ process_single_post_response <- function(response_obj, endpoint, num_queries_in_
     # processed_results <- processed_results |>
     #   dplyr::rename_with(.fn = function(x) {gsub(pattern = "\\\\$|\\\\.", replacement = "_", x = x)})
   }
-  
+
   if (nrow(processed_results) == 0 && num_queries_in_this_batch > 0) {
     # This warning applies to a single batch. The overall warning will be in the calling post_*_bulk function.
     warning(paste0("Una tanda de ", num_queries_in_this_batch, " consultas POST para '", endpoint, "' devolvi\\u00f3 una lista vac\\u00eda o no se pudieron procesar sus resultados."), call. = FALSE)
   }
-  
+
   return(processed_results)
 }
 
@@ -241,15 +241,15 @@ get_endpoint <- function(endpoint, args) {
 
   # Use req_perform() for synchronous behavior needed by get_endpoint
   response <- httr2::req_perform(req)
-  
+
   parsed <- httr2::resp_body_json(response)
 
   data_list <- parsed[[gsub(pattern = "-", replacement = "_", x = endpoint)]]
-  
+
   if (is.null(data_list)) {
     data_list <- list() # Ensure it's an empty list if the key wasn't found or was null
   }
-  
+
   data <- data_list |>
     purrr::modify_if(is.null, list) # Convert NULL elements within the list to list() for as_tibble
 
@@ -315,7 +315,7 @@ get_calles <- function(nombre = NULL, id = NULL, tipo = NULL, provincia = NULL, 
 #' Permite realizar múltiples búsquedas sobre el listado de vías de circulación en una sola llamada POST.
 #' Realiza la consulta POST al endpoint /calles de georef-ar-api.
 #'
-#' @param queries_list Lista de listas. Cada lista interna debe contener los parámetros 
+#' @param queries_list Lista de listas. Cada lista interna debe contener los parámetros
 #'        para una consulta de calle individual.
 #'        Parámetros válidos por consulta: nombre, id, tipo, provincia, departamento, municipio, localidad_censal, categoria, max, inicio, aplanar, campos, exacto.
 #' @return Un Data Frame (tibble) con los resultados combinados de todas las consultas.
@@ -369,7 +369,7 @@ post_calles_bulk <- function(queries_list) {
 
   endpoint <- "calles"
   check_internet()
-  
+
   query_batches <- create_query_batches(queries_list, param_name_for_sum = "max")
   if (length(query_batches) == 0 && length(queries_list) > 0) {
       warning(paste0("No se pudieron crear lotes de consultas para '", endpoint, "', aunque la lista de consultas no estaba vac\u00eda."), call. = FALSE)
@@ -452,7 +452,7 @@ get_departamentos <- function(id = NULL, nombre = NULL, provincia = NULL, inters
 #' Permite realizar múltiples búsquedas sobre el listado de departamentos en una sola llamada POST.
 #' Realiza la consulta POST al endpoint /departamentos de georef-ar-api.
 #'
-#' @param queries_list Lista de listas. Cada lista interna debe contener los parámetros 
+#' @param queries_list Lista de listas. Cada lista interna debe contener los parámetros
 #'        para una consulta de departamento individual (e.g., list(nombre = "Rosario"), list(provincia = "02")).
 #'        Parámetros válidos por consulta: id, nombre, provincia, orden, aplanar, campos, max, exacto.
 #' @return Un Data Frame (tibble) con los resultados combinados de todas las consultas.
@@ -463,7 +463,7 @@ get_departamentos <- function(id = NULL, nombre = NULL, provincia = NULL, inters
 #' @examples
 #' \dontrun{
 #' consultas_deptos <- list(
-#'   list(provincia = "22", nombre = "Ledesma"), 
+#'   list(provincia = "22", nombre = "Ledesma"),
 #'   list(id = "14028")
 #' )
 #' resultados_deptos <- post_departamentos_bulk(queries_list = consultas_deptos)
@@ -576,7 +576,7 @@ normalizar_direccion <- function(direccion, provincia = NULL, departamento = NUL
 #' Permite normalizar múltiples direcciones en una sola llamada POST.
 #' Realiza la consulta POST al endpoint /direcciones de georef-ar-api.
 #'
-#' @param queries_list Lista de listas. Cada lista interna debe contener los parámetros 
+#' @param queries_list Lista de listas. Cada lista interna debe contener los parámetros
 #'        para una consulta de normalización de dirección individual.
 #'        Parámetro requerido por consulta: 'direccion' (e.g., "AV SAN MARTIN 123").
 #'        Otros parámetros válidos: tipo, provincia, departamento, aplanar, campos, max, exacto.
@@ -704,7 +704,7 @@ get_localidades <- function(id = NULL, nombre = NULL, provincia = NULL, departam
 #' Permite realizar múltiples búsquedas sobre el listado de localidades en una sola llamada POST.
 #' Realiza la consulta POST al endpoint /localidades de georef-ar-api.
 #'
-#' @param queries_list Lista de listas. Cada lista interna debe contener los parámetros 
+#' @param queries_list Lista de listas. Cada lista interna debe contener los parámetros
 #'        para una consulta de localidad individual.
 #'        Parámetros válidos por consulta: id, nombre, provincia, departamento, municipio, orden, aplanar, campos, max, exacto.
 #' @return Un Data Frame (tibble) con los resultados combinados de todas las consultas.
@@ -715,7 +715,7 @@ get_localidades <- function(id = NULL, nombre = NULL, provincia = NULL, departam
 #' @examples
 #' \dontrun{
 #' consultas_loc <- list(
-#'   list(provincia = "Tucuman", departamento = "Capital"), 
+#'   list(provincia = "Tucuman", departamento = "Capital"),
 #'   list(id = "22056140000")
 #' )
 #' resultados_loc <- post_localidades_bulk(queries_list = consultas_loc)
@@ -827,7 +827,7 @@ get_municipios <- function(id = NULL, nombre = NULL, provincia = NULL, departame
 #' Permite realizar múltiples búsquedas sobre el listado de municipios en una sola llamada POST.
 #' Realiza la consulta POST al endpoint /municipios de georef-ar-api.
 #'
-#' @param queries_list Lista de listas. Cada lista interna debe contener los parámetros 
+#' @param queries_list Lista de listas. Cada lista interna debe contener los parámetros
 #'        para una consulta de municipio individual.
 #'        Parámetros válidos por consulta: id, nombre, provincia, departamento, orden, aplanar, campos, max, exacto.
 #' @return Un Data Frame (tibble) con los resultados combinados de todas las consultas.
@@ -838,7 +838,7 @@ get_municipios <- function(id = NULL, nombre = NULL, provincia = NULL, departame
 #' @examples
 #' \dontrun{
 #' consultas_muni <- list(
-#'   list(provincia = "06", nombre = "La Plata"), 
+#'   list(provincia = "06", nombre = "La Plata"),
 #'   list(id = "540098")
 #' )
 #' resultados_muni <- post_municipios_bulk(queries_list = consultas_muni)
@@ -949,10 +949,10 @@ get_provincias <- function(id = NULL, nombre = NULL, interseccion = NULL, orden 
 #' Realiza la consulta POST al endpoint /provincias de georef-ar-api.
 #' Si existe GEOREFAR_TOKEN en el Renviron lo usará para hacer la consulta.
 #'
-#' @param queries_list Lista de listas. Cada lista interna debe contener los parámetros 
+#' @param queries_list Lista de listas. Cada lista interna debe contener los parámetros
 #'        para una consulta de provincia individual (e.g., list(nombre = "Tucuman"), list(id = "06")).
 #'        Parámetros válidos por consulta: id, nombre, orden, aplanar, campos, max, exacto.
-#' @return Un Data Frame (tibble) con los resultados combinados de todas las consultas. 
+#' @return Un Data Frame (tibble) con los resultados combinados de todas las consultas.
 #'         Las respuestas de la API para cada consulta en el lote se apilan.
 #' @export
 #' @rdname post_provincias_bulk
@@ -961,7 +961,7 @@ get_provincias <- function(id = NULL, nombre = NULL, interseccion = NULL, orden 
 #' @examples
 #' \dontrun{
 #' consultitas <- list(
-#'   list(nombre = "santiago del estero"), 
+#'   list(nombre = "santiago del estero"),
 #'   list(id = "82", campos = "id,nombre,centroide.lat,centroide.lon"),
 #'   list(nombre = "tierra del fuego", campos = "completo")
 #' )
@@ -1066,7 +1066,7 @@ get_ubicacion <- function(lat, lon, aplanar = TRUE, campos = NULL){
 #' Permite realizar georreferenciación inversa para múltiples puntos (lat, lon) en una sola llamada POST.
 #' Realiza la consulta POST al endpoint /ubicacion de georef-ar-api.
 #'
-#' @param queries_list Lista de listas. Cada lista interna debe contener los parámetros 
+#' @param queries_list Lista de listas. Cada lista interna debe contener los parámetros
 #'        'lat' y 'lon' para un punto.
 #'        Otros parámetros válidos por consulta: aplanar, campos.
 #' @return Un Data Frame (tibble) con los resultados combinados de todas las georreferenciaciones.
@@ -1112,8 +1112,8 @@ post_ubicacion_bulk <- function(queries_list) {
 
   endpoint <- "ubicacion"
   check_internet()
-  
-  # 'ubicacion' endpoint does not use 'max', so sum limit is not applicable based on 'max'. 
+
+  # 'ubicacion' endpoint does not use 'max', so sum limit is not applicable based on 'max'.
   # Batching will be based on query count only.
   query_batches <- create_query_batches(queries_list, param_name_for_sum = NULL)
 
@@ -1149,7 +1149,7 @@ post_ubicacion_bulk <- function(queries_list) {
       warning(paste0("Error desconocido o respuesta inesperada en el lote ", i, " para '", endpoint, "'. Clase del objeto: ", class(item)[1]), call. = FALSE)
     }
   }
-  
+
   combined_results <- dplyr::bind_rows(final_results_list_of_tibbles)
   if (nrow(combined_results) == 0 && length(queries_list) > 0 && !has_errors) {
     warning(paste0("La consulta POST completa para '", endpoint, "' (", length(queries_list)," consultas originales en ", length(query_batches)," lotes) devolvi\u00f3 una lista vac\u00eda o no se pudieron procesar los resultados, aunque no se reportaron errores directos en los lotes."), call. = FALSE)
@@ -1202,7 +1202,7 @@ get_localidades_censales <- function(id = NULL, nombre = NULL, provincia = NULL,
 #' Permite realizar múltiples búsquedas sobre el listado de localidades censales en una sola llamada POST.
 #' Realiza la consulta POST al endpoint /localidades-censales de georef-ar-api.
 #'
-#' @param queries_list Lista de listas. Cada lista interna debe contener los parámetros 
+#' @param queries_list Lista de listas. Cada lista interna debe contener los parámetros
 #'        para una consulta de localidad censal individual.
 #'        Parámetros válidos por consulta: id, nombre, provincia, departamento, municipio, orden, aplanar, campos, max, exacto.
 #' @return Un Data Frame (tibble) con los resultados combinados de todas las consultas.
@@ -1245,7 +1245,7 @@ post_localidades_censales_bulk <- function(queries_list) {
 
   endpoint <- "localidades-censales"
   check_internet()
-  
+
   query_batches <- create_query_batches(queries_list, param_name_for_sum = "max")
   if (length(query_batches) == 0 && length(queries_list) > 0) {
       warning(paste0("No se pudieron crear lotes de consultas para '", endpoint, "', aunque la lista de consultas no estaba vac\u00eda."), call. = FALSE)
@@ -1333,7 +1333,7 @@ get_asentamientos <- function(id = NULL, nombre = NULL, provincia = NULL, depart
 #' Permite realizar múltiples búsquedas sobre el listado de asentamientos BAHRA en una sola llamada POST.
 #' Realiza la consulta POST al endpoint /asentamientos de georef-ar-api.
 #'
-#' @param queries_list Lista de listas. Cada lista interna debe contener los parámetros 
+#' @param queries_list Lista de listas. Cada lista interna debe contener los parámetros
 #'        para una consulta de asentamiento individual.
 #'        Parámetros válidos por consulta: id, nombre, provincia, departamento, municipio, localidad_censal, orden, aplanar, campos, max, exacto.
 #' @return Un Data Frame (tibble) con los resultados combinados de todas las consultas.
@@ -1376,7 +1376,7 @@ post_asentamientos_bulk <- function(queries_list) {
 
   endpoint <- "asentamientos"
   check_internet()
-  
+
   query_batches <- create_query_batches(queries_list, param_name_for_sum = "max")
   if (length(query_batches) == 0 && length(queries_list) > 0) {
       warning(paste0("No se pudieron crear lotes de consultas para '", endpoint, "', aunque la lista de consultas no estaba vac\u00eda."), call. = FALSE)
@@ -1390,7 +1390,7 @@ post_asentamientos_bulk <- function(queries_list) {
   for (batch_idx in seq_along(query_batches)) {
     current_batch <- query_batches[[batch_idx]]
     # Prepare the request object for the current batch
-    request_obj <- prepare_post_batch_request(endpoint = endpoint, 
+    request_obj <- prepare_post_batch_request(endpoint = endpoint,
                                               single_batch_queries_list = current_batch)
     all_batch_requests <- append(all_batch_requests, list(request_obj))
   }
@@ -1412,8 +1412,8 @@ post_asentamientos_bulk <- function(queries_list) {
       # So, if we get an httr2_response, it *should* be a successful one (status 200)
       # However, an extra check for status doesn't hurt, or rely on req_error having done its job.
       # For now, assume if it's an httr2_response, it's good to process based on req_error setup.
-      processed_tibble <- process_single_post_response(response_obj = item, 
-                                                       endpoint = endpoint, 
+      processed_tibble <- process_single_post_response(response_obj = item,
+                                                       endpoint = endpoint,
                                                        num_queries_in_this_batch = num_queries_in_this_batch)
       final_results_list_of_tibbles <- append(final_results_list_of_tibbles, list(processed_tibble))
     } else if (inherits(item, "error")) {
@@ -1436,26 +1436,26 @@ post_asentamientos_bulk <- function(queries_list) {
   } else if (nrow(combined_results) == 0 && length(queries_list) > 0 && has_errors) {
     warning(paste0("La consulta POST completa para '", endpoint, "' (", length(queries_list)," consultas originales en ", length(query_batches)," lotes) no produjo resultados y se encontraron errores en algunos lotes."), call. = FALSE)
   }
-  
+
   return(combined_results)
 }
 
 #' Descargar Datos Geográficos Completos
 #'
 #' Permite descargar listados completos de entidades geográficas en diversos formatos.
-#' Accede al endpoint /{filename} de la georef-ar-api.
+#' Accede al endpoint de la georef-ar-api.
 #' Si existe GEOREFAR_TOKEN en el Renviron lo usará para hacer la consulta (aunque generalmente no es necesario para estos endpoints públicos).
 #'
-#' @param entidad Cadena de texto. La entidad geográfica a descargar. 
-#'        Valores posibles: "provincias", "departamentos", "municipios", 
+#' @param entidad Cadena de texto. La entidad geográfica a descargar.
+#'        Valores posibles: "provincias", "departamentos", "municipios",
 #'        "localidades", "localidades-censales", "asentamientos", "calles", "cuadras".
-#' @param formato Cadena de texto. El formato deseado para el archivo. 
+#' @param formato Cadena de texto. El formato deseado para el archivo.
 #'        Valores posibles: "csv", "json", "geojson", "ndjson".
-#' @param path_to_save Cadena de texto opcional. Ruta completa (incluyendo nombre de archivo y extensión) 
-#'        donde guardar el archivo descargado. Si es NULL (por defecto), la función devolverá el contenido 
+#' @param path_to_save Cadena de texto opcional. Ruta completa (incluyendo nombre de archivo y extensión)
+#'        donde guardar el archivo descargado. Si es NULL (por defecto), la función devolverá el contenido
 #'        parseado (para json/geojson/ndjson) o un data frame (para csv).
 #'        Si se especifica una ruta, la función guardará el archivo y devolverá la ruta del archivo guardado.
-#' @return Dependiendo de 'path_to_save' y 'formato': 
+#' @return Dependiendo de 'path_to_save' y 'formato':
 #'         - Si 'path_to_save' se especifica: la ruta al archivo guardado (invisiblemente).
 #'         - Si 'path_to_save' es NULL:
 #'           - Para "csv": un data.frame.

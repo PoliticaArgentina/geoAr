@@ -13,6 +13,7 @@ See the README on
 \seealso{
 Useful links:
 \itemize{
+  \item \url{https://politicaargentina.github.io/geoAr}
   \item \url{https://github.com/PoliticaArgentina/geoAr}
   \item Report bugs at \url{https://github.com/PoliticaArgentina/geoAr/issues}
 }
