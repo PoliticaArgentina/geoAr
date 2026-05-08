@@ -1,6 +1,6 @@
 Package: geoAr
 Title: Argentina's Spatial Data Toolbox
-Version: 1.2.1
+Version: 1.2.2
 Authors@R: 
    c( person(given = "Juan Pablo",
            family = "Ruiz Nicolini",
@@ -47,6 +47,6 @@ Imports:
     leaflet, 
     jsonlite, 
     purrr
-URL: https://politicaargentina.github.io/geoAr, https://github.com/PoliticaArgentina/geoAr
+URL: https://politicaargentina.github.io/geoAr/, https://github.com/PoliticaArgentina/geoAr
 BugReports: https://github.com/PoliticaArgentina/geoAr/issues
 VignetteBuilder: knitr

@@ -86,7 +86,7 @@ show_arg_codes() # Preview avialable data
 
 **CENSOS históricos**
 
--   Se facilita el acceso a la reconstrucción de los polígonos utilizados para los censos desde 1869 hasta 2010. Recuperado del proyecto *Base cartográfica de departamentos para los censos nacionales de la República Argentina desde 1869 a 2010* de [Gonzalo Rodriguez y Pablo De Grande](https://ri.conicet.gov.ar/handle/11336/149867).
+-   Se facilita el acceso a la reconstrucción de los polígonos utilizados para los censos desde 1869 hasta 2010. Recuperado del proyecto *Base cartográfica de departamentos para los censos nacionales de la República Argentina desde 1869 a 2010* de [Gonzalo Rodriguez y Pablo De Grande](https://hdl.handle.net/11336/149867).
 
 **Encuesta Permanente de Hogares (EPH)**
 

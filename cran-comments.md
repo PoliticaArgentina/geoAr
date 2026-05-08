@@ -1,3 +1,24 @@
+## Versin 1.2.2
+
+### Submission summary
+
+This version (1.2.2) fixes the HTML language specification issue reported by the CRAN Team. It also corrects URLs that were causing 301 redirects or timeouts in the previous pre-test. The 'future file timestamps' note is a local environment artifact.
+
+This is a patch release addressing URL issues found during automated pre-tests:
+
+* Updated GitHub Pages URL to include the trailing slash (https://politicaargentina.github.io/geoAr/) to avoid 301 redirects.
+* Re-verified the CONICET RI link;The CONICET repository URL (handle) is correct and was verified manually. The previous timeout was likely a temporary server lag on their end.Updated to a new URL, also manually veriefied and correct redirecting to source. 
+
+
+
+── R CMD check results ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── geoAr 1.2.2 ────
+Duration: 1m 55.8s
+
+❯ checking for future file timestamps ... NOTE
+  unable to verify current time
+
+0 errors ✔ | 0 warnings ✔ | 1 note ✖
+
 ## Version 1.2.1
 
 ### Test environments
