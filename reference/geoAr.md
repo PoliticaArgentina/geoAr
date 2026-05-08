@@ -7,7 +7,7 @@ Caja de Herramientas GEO de Argentina See the README on
 
 Useful links:
 
-- <https://politicaargentina.github.io/geoAr>
+- <https://politicaargentina.github.io/geoAr/>
 
 - <https://github.com/PoliticaArgentina/geoAr>
 

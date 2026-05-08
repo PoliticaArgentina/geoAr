@@ -31,7 +31,7 @@ histórico
 
 ``` r
 get_censo(censo = "1947", simplified = TRUE)
-#> Los datos fueron obtenidos del proyecto 'Base cartografica de departamentos para los censos nacionales de la Republica Argentina desde 1869 a 2010' de Gonzalo Rodriguez y Pablo De Grande el 06 May de 2026. La documentacion se encuetra disponible en https://ri.conicet.gov.ar/handle/11336/149867
+#> Los datos fueron obtenidos del proyecto 'Base cartografica de departamentos para los censos nacionales de la Republica Argentina desde 1869 a 2010' de Gonzalo Rodriguez y Pablo De Grande el 08 May de 2026. La documentacion se encuetra disponible en https://ri.conicet.gov.ar/handle/11336/149867
 #> Simple feature collection with 488 features and 4 fields
 #> Geometry type: MULTIPOLYGON
 #> Dimension:     XY

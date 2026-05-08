@@ -16,13 +16,13 @@ Source:
 [`DESCRIPTION`](https://github.com/PoliticaArgentina/geoAr/blob/main/DESCRIPTION)
 
 Ruiz Nicolini J, Del Boca P, Juara J (2026). *geoAr: Argentina's Spatial
-Data Toolbox*. R package version 1.2.1,
-<https://politicaargentina.github.io/geoAr>.
+Data Toolbox*. R package version 1.2.2,
+<https://politicaargentina.github.io/geoAr/>.
 
     @Manual{,
       title = {geoAr: Argentina's Spatial Data Toolbox},
       author = {Juan Pablo {Ruiz Nicolini} and Patricio {Del Boca} and Juan Gabriel Juara},
       year = {2026},
-      note = {R package version 1.2.1},
-      url = {https://politicaargentina.github.io/geoAr},
+      note = {R package version 1.2.2},
+      url = {https://politicaargentina.github.io/geoAr/},
     }

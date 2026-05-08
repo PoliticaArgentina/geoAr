@@ -1,6 +1,6 @@
 ## `geo`grafía `Ar`rgentina usando `R` ![](reference/figures/logo.png)
 
-[geoAr](https://politicaargentina.github.io/geoAr) brinda herramientas
+[geoAr](https://politicaargentina.github.io/geoAr/) brinda herramientas
 que facilitan el acceso y el trabajo con datos espaciales de Argentina
 desde `R`.
 

@@ -14,7 +14,7 @@ library(geofacet) # 'ggplot2' Faceting Utilities for Geographical Data, CRAN v0.
 #>      (status 2 uses the sf package in place of rgdal)
 ```
 
-[geoAr](https://politicaargentina.github.io/geoAr) está pensado para
+[geoAr](https://politicaargentina.github.io/geoAr/) está pensado para
 facilitar el acceso a datos y el trabajo con información geográfica de
 argentina. Una de las posibilidades es la descarga de capas ge
 geometrías con el objetivo de visualizar información. Una alternativa

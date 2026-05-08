@@ -6,7 +6,7 @@ library(geoAr) # Argentina's Spatial Data Toolbox, [github::PoliticaArgentina/ge
 library(leaflet) # Create Interactive Web Maps with the JavaScript 'Leaflet' Library, CRAN v2.0.4.1
 ```
 
-[geoAr](https://politicaargentina.github.io/geoAr) facilita la descarga
+[geoAr](https://politicaargentina.github.io/geoAr/) facilita la descarga
 de polígonos para distintos niveles de agregación o división política de
 Argentina. Por ejemplo se puede descargar un mapa de todo el país al
 nivel de radios censales, departamentos o provincial. En el siguiente
