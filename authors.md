@@ -13,7 +13,7 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/PoliticaArgentina/geoAr/blob/main/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/PoliticaArgentina/geoAr/blob/v1.2.2/DESCRIPTION)
 
 Ruiz Nicolini J, Del Boca P, Juara J (2026). *geoAr: Argentina's Spatial
 Data Toolbox*. R package version 1.2.2,
